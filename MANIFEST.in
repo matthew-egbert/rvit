@@ -1,0 +1,6 @@
+recursive-include rvit *
+include *.txt
+include *.rst
+recursive-exclude rvit *.swp
+recursive-exclude rvit *.pyc
+recursive-exclude rvit *.pyo
