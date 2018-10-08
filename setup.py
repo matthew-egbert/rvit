@@ -8,5 +8,5 @@ setup(name='rvit',
       author_email='mde@matthewegbert.com',
       license='GPLv3',
       packages=['rvit'],
-      install_requires=['kivy', 'cython'],
+      install_requires=['kivy', 'cython', 'jinja2'],
       zip_safe=False)
