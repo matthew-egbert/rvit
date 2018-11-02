@@ -23,7 +23,7 @@ setup(
     license='GPLv3',
     packages=['rvit'],
     install_requires=[
-        'kivy',
+        'kivy @ git+https://github.com/flaviusb/kivy.git@change_check_for_cython',
         'cython',
         'jinja2',
     ],
