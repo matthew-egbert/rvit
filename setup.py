@@ -26,6 +26,8 @@ setup(
         'kivy @ git+https://github.com/flaviusb/kivy.git@change_check_for_cython',
         'cython',
         'jinja2',
+        'numpy',
+        'pygame',
     ],
     include_package_data=True,
     zip_safe=False,
