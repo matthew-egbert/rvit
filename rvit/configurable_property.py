@@ -5,7 +5,7 @@ from kivy.uix.textinput import TextInput
 from kivy.properties import ObjectProperty, StringProperty, NumericProperty, OptionProperty, BooleanProperty
 from functools import partial
 import rvit
-import rvit.rvit as rvcontext
+from rvit.rvit import *
 
 
 class ConfigurableProperty(object):
@@ -17,8 +17,8 @@ class ConfigurableProperty(object):
         # load values from the previous run
         if self.key in rvitcontext.pars.keys():
             print('configurableProperty %s being loaded from a previous run to be %s' % (self.key,
-                                                                                         rvcontext.pars[self.key]))
-            self.prop.set(self.owner, rvcontext.pars[self.key])
+                                                                                         pars[self.key]))
+            self.prop.set(self.owner, pars[self.key])
             self.prop.dispatch(self.owner)
 
     def getConfigurationSubpanel(self):
@@ -30,7 +30,7 @@ class ConfigurableProperty(object):
 
                     def setNewValue(_, new_value=''):
                         self.prop.set(self.owner, new_value)
-                        rvcontext.pars[self.key] = new_value
+                        pars[self.key] = new_value
 
                     set_fn = partial(setNewValue, new_value=opt)
                     btn = ToggleButton(text=opt, group=self.prop.name,
@@ -41,7 +41,7 @@ class ConfigurableProperty(object):
         elif isinstance(self.prop, StringProperty):
             def on_text(instance, value):
                 self.prop.set(self.owner, value)
-                rvcontext.pars[self.key] = value
+                pars[self.key] = value
 
             ti = TextInput(text=str(self.prop.get(self.owner)),
                            multiline=False, size_hint=(1.0, 1.0))
@@ -62,7 +62,7 @@ class ConfigurableProperty(object):
                     value = float(value)
                     print('heere')
                     self.prop.set(self.owner, value)
-                    rvcontext.pars[self.key] = value
+                    pars[self.key] = value
 
             ti = TextInput(text=str(self.prop.get(self.owner)),
                            multiline=False, size_hint=(1.0, 1.0))
