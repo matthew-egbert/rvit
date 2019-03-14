@@ -44,35 +44,35 @@ def loadFonts():
         LabelBase.register(**font)
 
 
-def activate(skivy_path=None):
+def activate(rvit_path=None):
     pass
     global path, pfile_path, pars, inspection_path
 
-    Logger.info('==== Activating SKivy ====')
+    Logger.info('==== Activating Rvit ====')
 
-    if skivy_path is None:
-        skivy_path = os.path.dirname(sys.argv[0])
-        skivy_path = os.path.join(skivy_path, '.skivy')
-        skivy_path = os.path.abspath(skivy_path)
+    if rvit_path is None:
+        rvit_path = os.path.dirname(sys.argv[0])
+        rvit_path = os.path.join(rvit_path, '.rvit')
+        rvit_path = os.path.abspath(rvit_path)
 
-    # if no skivy dir exists, create it
+    # if no rvit dir exists, create it
     try:
-        Logger.info('Creating directory (%s) for SKivy.' % (skivy_path))
-        os.makedirs(skivy_path)
+        Logger.info('Creating directory (%s) for Rvit.' % (rvit_path))
+        os.makedirs(rvit_path)
     except os.error:
         pass
 
-    path = skivy_path
+    path = rvit_path
     inspection_path = os.path.join(path, 'inspections')
 
     # if no parameter file exists, create it
-    pfile_path = os.path.join(skivy_path, 'parameters.p')
+    pfile_path = os.path.join(rvit_path, 'parameters.p')
     pars = shelve.open(pfile_path)
     Logger.info('Parameter file: %s' % (pfile_path))
 
     loadFonts()
     kv_file_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                                'skivy.kv')
+                                'rvit.kv')
     Builder.load_file(kv_file_path)
 
     # if not os.path.isfile(pfile_path) :
