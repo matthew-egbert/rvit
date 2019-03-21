@@ -1,6 +1,6 @@
 ---VERTEX SHADER---
-#version 150
-// #version 300 es
+// #version 150
+#version 300 es
 
 
 #ifdef GL_ES
@@ -28,8 +28,8 @@ void main() {
 }
 
 ---FRAGMENT SHADER--- 
-#version 150
-// #version 300 es
+// #version 150
+#version 300 es
 
 #ifdef GL_ES
     precision highp float;
