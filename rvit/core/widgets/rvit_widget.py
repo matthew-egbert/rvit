@@ -35,7 +35,7 @@ class RvitWidget(FloatLayout):
 
     def __init__(self, *args, **kwargs):
         self.render_context = RenderContext()
-        super(SkivyWidget, self).__init__(**kwargs)
+        super(RvitWidget, self).__init__(**kwargs)
         self.top_buttons = BoxLayout(orientation='horizontal',
                                      size_hint=(1.0, None),
                                      size=(0, 20),
@@ -88,10 +88,10 @@ class RvitWidget(FloatLayout):
         self.configurable_properties.pop(prop.name)
 
     def registerConfigurableProperties(self):
-        self.addConfigurableProperty(SkivyWidget.xmin)
-        self.addConfigurableProperty(SkivyWidget.xmax)
-        self.addConfigurableProperty(SkivyWidget.ymin)
-        self.addConfigurableProperty(SkivyWidget.ymax)
+        self.addConfigurableProperty(RvitWidget.xmin)
+        self.addConfigurableProperty(RvitWidget.xmax)
+        self.addConfigurableProperty(RvitWidget.ymin)
+        self.addConfigurableProperty(RvitWidget.ymax)
 
     def on_unique_name(self, obj, unique_name):
         """Once the widget is given a non-empty unique name, set up its
@@ -235,7 +235,7 @@ class RvitWidget(FloatLayout):
             self.update_event = Clock.schedule_interval(iterate, self.update_interval)
 
 
-class ScaledValues(SkivyWidget):
+class ScaledValues(RvitWidget):
     # minimum_value = OptionProperty('auto',options=['0','-1','-pi','auto'])
     # maximum_value = OptionProperty('auto',options=['0','1','pi','auto'])
     minimum_value = StringProperty('auto')  # ,options=['0','-1','-pi','auto'])
@@ -266,7 +266,7 @@ class ScaledValues(SkivyWidget):
         self.addConfigurableProperty(ScaledValues.maximum_value)
 
 
-class SecondaryDataSource(SkivyWidget):
+class SecondaryDataSource(RvitWidget):
     secondary_varname = StringProperty('')
 
     def __init__(self, *args, **kwargs):
