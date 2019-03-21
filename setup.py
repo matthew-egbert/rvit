@@ -21,7 +21,7 @@ setup(
     # package_dir={'': 'src'},
     namespace_packages=['rvit'],
     license='GPLv3',
-    packages=['rvit.core'],
+    packages=['rvit.core', 'rvit.core.widgets', 'rvit.core.shaders', 'rvit.core.fonts'],
     install_requires=[
         'kivy @ git+https://github.com/flaviusb/kivy.git@change_check_for_cython',
         'cython',
