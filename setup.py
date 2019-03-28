@@ -23,7 +23,7 @@ setup(
     license='GPLv3',
     packages=['rvit.core', 'rvit.core.widgets', 'rvit.core.shaders', 'rvit.core.fonts'],
     install_requires=[
-        'kivy @ git+https://github.com/flaviusb/kivy.git@change_check_for_cython',
+        'kivy @ git+https://github.com/kivy/kivy.git',
         'cython',
         'jinja2',
         'numpy',
