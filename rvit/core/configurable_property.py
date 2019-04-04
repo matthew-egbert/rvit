@@ -5,7 +5,7 @@ from kivy.uix.textinput import TextInput
 from kivy.properties import ObjectProperty, StringProperty, NumericProperty, OptionProperty, BooleanProperty
 from functools import partial
 from rvit.core import *
-
+import rvit.core
 
 class ConfigurableProperty(object):
     def __init__(self, prop, owner):
