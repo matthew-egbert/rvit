@@ -14,10 +14,10 @@ class ConfigurableProperty(object):
         self.key = self.owner.unique_name + '.' + self.prop.name
 
         # load values from the previous run
-        if self.key in pars.keys():
+        if self.key in rvit.core.pars.keys():
             print('configurableProperty %s being loaded from a previous run to be %s' % (self.key,
-                                                                                         pars[self.key]))
-            self.prop.set(self.owner, pars[self.key])
+                                                                                         rvit.core.pars[self.key]))
+            self.prop.set(self.owner, rvit.core.pars[self.key])
             self.prop.dispatch(self.owner)
 
     def getConfigurationSubpanel(self):
@@ -29,7 +29,7 @@ class ConfigurableProperty(object):
 
                     def setNewValue(_, new_value=''):
                         self.prop.set(self.owner, new_value)
-                        pars[self.key] = new_value
+                        rvit.core.pars[self.key] = new_value
 
                     set_fn = partial(setNewValue, new_value=opt)
                     btn = ToggleButton(text=opt, group=self.prop.name,
@@ -40,7 +40,7 @@ class ConfigurableProperty(object):
         elif isinstance(self.prop, StringProperty):
             def on_text(instance, value):
                 self.prop.set(self.owner, value)
-                pars[self.key] = value
+                rvit.core.pars[self.key] = value
 
             ti = TextInput(text=str(self.prop.get(self.owner)),
                            multiline=False, size_hint=(1.0, 1.0))
@@ -61,7 +61,7 @@ class ConfigurableProperty(object):
                     value = float(value)
                     print('heere')
                     self.prop.set(self.owner, value)
-                    pars[self.key] = value
+                    rvit.core.pars[self.key] = value
 
             ti = TextInput(text=str(self.prop.get(self.owner)),
                            multiline=False, size_hint=(1.0, 1.0))
