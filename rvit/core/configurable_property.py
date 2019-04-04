@@ -14,7 +14,7 @@ class ConfigurableProperty(object):
         self.key = self.owner.unique_name + '.' + self.prop.name
 
         # load values from the previous run
-        if self.key in rvitcontext.pars.keys():
+        if self.key in pars.keys():
             print('configurableProperty %s being loaded from a previous run to be %s' % (self.key,
                                                                                          pars[self.key]))
             self.prop.set(self.owner, pars[self.key])
