@@ -113,7 +113,7 @@ class RvitWidget(FloatLayout):
 
                 self.configure_button = Button(text='configure',
                                                on_press=test,
-                                               background_color=skivy.BLUE,
+                                               background_color=rvit.BLUE,
                                                pos_hint={'x': 0.0, 'top': 1.0})
 
                 self.top_buttons.add_widget(self.configure_button, index=2)
@@ -123,7 +123,7 @@ class RvitWidget(FloatLayout):
         w = float(Window.width)
         h = float(Window.height)
         m = Matrix().identity()
-        p = skivy.BUTTON_BORDER_HEIGHT
+        p = rvit.BUTTON_BORDER_HEIGHT
         # self.projection_r = min(self.size[0],self.size[1]-p)
         # m.scale(self.projection_r/w*2,
         #         self.projection_r/h*2,1.0)
