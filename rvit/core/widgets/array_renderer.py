@@ -25,8 +25,8 @@ class ArrayRenderer(ScaledValues):
         super(ArrayRenderer, self).__init__(**kwargs)
 
         self.render_context.shader.source = resource_find('array_renderer_greys.glsl')
-        self.mesh = Mesh(mode='triangles', fmt=[('v_pos', 2, 'float'),
-                                                ('v_tc0', 2, 'float'), ])
+        self.mesh = Mesh(mode='triangles', fmt=[(b'v_pos', 2, 'float'),
+                                                (b'v_tc0', 2, 'float'), ])
         self.mesh.indices = [0, 1, 2, 0, 3, 2]
         self.mesh.vertices = [0.0, 0.0, 0.0, 0.0,
                               0.0, 1.0, 0.0, 1.0,
