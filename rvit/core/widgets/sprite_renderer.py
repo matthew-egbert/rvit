@@ -11,7 +11,7 @@ from kivy.properties import ObjectProperty, StringProperty, NumericProperty, Opt
 
 from kivy.resources import resource_find, resource_add_path
 
-from rvit_widget import RvitWidget, ConfigurableProperty, SecondaryDataSource
+from .rvit_widget import RvitWidget, ConfigurableProperty, SecondaryDataSource
 from kivy.graphics.opengl import *
 
 from ..glsl_utils import loadShaders
