@@ -1,6 +1,6 @@
 import re
 import os
-from jinja2 import Environment, PackageLoader, FileSystemLoader
+from jinja2 import Environment, PackageLoader, FileSystemLoader, select_autoescape
 
 packageEnv = Environment(
     loader=PackageLoader('rvit', 'shaders'),
