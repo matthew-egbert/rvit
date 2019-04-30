@@ -11,7 +11,7 @@ from kivy.properties import ObjectProperty, StringProperty, NumericProperty, Opt
 
 from kivy.resources import resource_find, resource_add_path
 
-from skivy_widget import SkivyWidget, ConfigurableProperty, SecondaryDataSource
+from rvit_widget import RvitWidget, ConfigurableProperty, SecondaryDataSource
 from kivy.graphics.opengl import *
 
 from ..glsl_utils import loadShaders
@@ -31,8 +31,8 @@ class SpriteRenderer(SecondaryDataSource):
         super(SpriteRenderer, self).__init__(**kwargs)
         self.loadShaders()
 
-        self.mesh = Mesh(mode='triangles', fmt=[('v_pos', 2, 'float'),
-                                                ('v_tc0', 2, 'float'), ])
+        self.mesh = Mesh(mode='triangles', fmt=[(b'v_pos', 2, 'float'),
+                                                (b'v_tc0', 2, 'float'), ])
         self.mesh.indices = [0, 1, 2, 0, 3, 2]
         self.mesh.vertices = [0.0, 0.0, 0.0, 0.0,
                               0.0, 1.0, 0.0, 1.0,
