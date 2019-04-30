@@ -10,7 +10,7 @@ from kivy.properties import ObjectProperty, StringProperty, NumericProperty, Opt
 
 from kivy.resources import resource_find, resource_add_path
 
-from skivy_widget import SkivyWidget, ConfigurableProperty, SecondaryDataSource, ScaledValues
+from rvit_widget import RvitWidget, ConfigurableProperty, SecondaryDataSource, ScaledValues
 from kivy.graphics.opengl import *
 
 from ..glsl_utils import loadShaders
@@ -33,8 +33,8 @@ class PointRenderer(ScaledValues, SecondaryDataSource):
         super(PointRenderer, self).__init__(**kwargs)        
         self.loadShaders()
 
-        self.mesh = Mesh(mode='points', fmt=[('v_pos', 2, 'float'),
-                                             ('parm', 1, 'float')])  # ,pointsize=1000)
+        self.mesh = Mesh(mode='points', fmt=[(b'v_pos', 2, 'float'),
+                                             (b'parm', 1, 'float')])  # ,pointsize=1000)
         self.render_context.add(self.mesh)
 
         self.updateModelViewMatrix()
