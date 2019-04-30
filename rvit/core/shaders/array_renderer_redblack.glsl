@@ -1,7 +1,6 @@
 ---VERTEX SHADER---
-#version 150
-// #version 300 es
-
+// #version 150
+#version 300 es
 
 #ifdef GL_ES
     precision highp float;
@@ -28,8 +27,8 @@ void main() {
 }
 
 ---FRAGMENT SHADER--- 
-#version 150
-// #version 300 es
+// #version 150
+#version 300 es
 
 #ifdef GL_ES
     precision highp float;
@@ -44,8 +43,9 @@ out vec4 Out_Color;
 
 void main (){
   vec4 t = texture2D(texture0, tex_coord0);
-  //vec4 t = texture(texture0, tex_coord0);
-  Out_Color = t;//vec4(-t.r,t.r,0.0,1.0);
+  Out_Color = vec4(2.0*abs(t.r-0.5),
+		   2.0*(t.r-0.5),
+		   2.0*(t.r-0.5),1.0);
 }
 
 /* Local Variables: */
