@@ -8,7 +8,7 @@ import midi.sequencer as sequencer
 import numpy as np
 from kivy.properties import ObjectProperty, StringProperty, NumericProperty, OptionProperty, BooleanProperty
 from kivy.clock import Clock
-from skivy_controller import SkivySlider
+from rvit_controller import RvitSlider
 
 
 class XTouch(object):
@@ -52,7 +52,7 @@ class XTouch(object):
 xtouch = XTouch()
 
 
-class XTouchSlider(SkivySlider):
+class XTouchSlider(RvitSlider):
     slider_index = NumericProperty(-1)
 
     def __init__(self, *args, **kwargs):

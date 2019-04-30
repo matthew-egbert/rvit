@@ -11,12 +11,12 @@ from kivy.core.window import Window
 from kivy.graphics.transformation import Matrix
 from functools import partial
 import os
-import skivy
+import rvit.core
 from ..configurable_property import ConfigurableProperty
 from kivy.graphics.context_instructions import *
 
 
-class SkivySlider(BoxLayout):
+class RvitSlider(BoxLayout):
     unique_name = StringProperty('')
     target_object = ObjectProperty(None)
     target_varname = StringProperty('')
@@ -27,7 +27,7 @@ class SkivySlider(BoxLayout):
         kwargs['orientation'] = 'vertical'
         self.slider = Slider(orientation=self.orientation,
                              size_hint=(1.0, 1.0))
-        super(SkivySlider, self).__init__(**kwargs)
+        super(RvitSlider, self).__init__(**kwargs)
 
         self.configurable_properties = {}
         self.title_label = Label(text='test', size_hint=(1.0, None), size=(0, 20))
@@ -63,7 +63,7 @@ class SkivySlider(BoxLayout):
 
                 self.configure_button = Button(text='configure',
                                                on_press=test,
-                                               background_color=skivy.BLUE,
+                                               background_color=rvit.core.BLUE,
                                                pos_hint={'x': 0.0, 'top': 1.0})
 
                 self.top_buttons.add_widget(self.configure_button, index=2)
