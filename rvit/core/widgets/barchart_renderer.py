@@ -23,7 +23,7 @@ class BarChartRenderer(ScaledValues):
         super(BarChartRenderer, self).__init__(**kwargs)
         self.render_context.shader.source = resource_find('graph_renderer.glsl')
 
-        self.mesh = Mesh(fmt=[('v_pos', 2, 'float')])
+        self.mesh = Mesh(fmt=[(b'v_pos', 2, 'float')])
         self.mesh.mode = 'lines'
         self.N = 0
         self.render_context.add(self.mesh)
