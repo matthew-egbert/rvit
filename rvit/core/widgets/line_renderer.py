@@ -11,9 +11,9 @@ from kivy.properties import ObjectProperty, StringProperty, NumericProperty, Opt
 
 from kivy.resources import resource_find, resource_add_path
 
-from skivy_widget import SkivyWidget, ConfigurableProperty, ScaledValues, SecondaryDataSource
+from rvit_widget import RvitWidget, ConfigurableProperty, ScaledValues, SecondaryDataSource
 
-import skivy
+import rvit.core
 
 import os
 module_path = os.path.dirname(os.path.realpath(__file__))
@@ -27,8 +27,8 @@ class LineRenderer(SecondaryDataSource):
         super(LineRenderer, self).__init__(**kwargs)
 
         self.render_context.shader.source = resource_find('line_renderer.glsl')
-        self.mesh = Mesh(fmt=[('v_pos', 2, 'float'),
-                              ('v_parm', 1, 'float')])
+        self.mesh = Mesh(fmt=[(b'v_pos', 2, 'float'),
+                              (b'v_parm', 1, 'float')])
         self.mesh.mode = 'lines'
 
         self.render_context.add(self.mesh)
