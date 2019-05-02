@@ -22,7 +22,7 @@ This is a standard python package, so you can use it through the normal dependan
 
 Then import it as needed.
 
-The core functionality is provided through the package `rvit.core`, with widgets in `rvit.core.widgets`. Rvit builds upon kivy, but does not needlessly wrap this functionality - you can access it through kivy packages as if you were building a kivy project. The quickstart project demonstrates how to set up an application and use a `.kv` file to arrange a gui. Further documentation about the Kv file format can be found in the kivy documentation: https://kivy.org/doc/stable/guide/lang.html
+The core functionality is provided through the package `rvit.core`, with widgets in `rvit.core.widgets`. Rvit builds upon kivy, but does not needlessly wrap this functionality - you can access it through kivy packages as if you were building a kivy project. The quickstart project demonstrates how to set up an application and use a `.kv` file to arrange a gui. Further documentation about the Kv file format can be found in the kivy documentation: [https://kivy.org/doc/stable/guide/lang.html](https://kivy.org/doc/stable/guide/lang.html)
 
 ## Install
 
@@ -36,7 +36,8 @@ Next, install pip and virtualenv - you can do this through a package manager suc
 sudo emerge --ask dev-python/pip virtualenv
 ```
 
-Alternatively, there are complete instructions for installing virtualenv and pip here: https://virtualenv.pypa.io/en/stable/installation/
+Alternatively, there are complete instructions for installing virtualenv and pip here: [https://virtualenv.pypa.io/en/stable/installation/](https://virtualenv.pypa.io/en/stable/installation/)
+
 
 Create a virtualenv and install dependencies:
 
