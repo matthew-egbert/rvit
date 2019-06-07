@@ -3,7 +3,7 @@ import os
 from jinja2 import Environment, PackageLoader, FileSystemLoader, select_autoescape
 
 packageEnv = Environment(
-    loader=PackageLoader('rvit', 'shaders'),
+    loader=PackageLoader('rvit', 'core/shaders'),
     autoescape=select_autoescape(default=False, default_for_string=False)
 )
 
@@ -16,7 +16,7 @@ envs = {True: packageEnv, False: systemEnv}
 
 # Utilities
 def loadShaders(fn, substitutions, packaged=True):
-    template = envs[packaged].getTemplate(fn)
+    template = envs[packaged].get_template(fn)
     shader_text = template.render(substitutions)
     ss = shader_text.split('---VERTEX SHADER---')
     ss = ss[1].split('---FRAGMENT SHADER---')

@@ -47,14 +47,16 @@ class PointRenderer(ScaledValues, SecondaryDataSource):
         if self.enabled:
             pos_data = np.array(self.a, dtype=np.float32)
             pos_data = self.apply_preprocessing(pos_data)
-            N = np.size(pos_data) / 2
+            N = int(np.ceil(np.size(pos_data) / 2))
             pos_data = pos_data.reshape(N, 2)
 
             if self.secondary_varname != '':
-                parm_data = np.array(self.b, dtype=np.float32).reshape(N, 1)
+                parm_data = np.array(self.b, dtype=np.float32).reshape(2*N, 1)
                 parm_data = self.apply_secondary_preprocessing(parm_data)
             else:
                 parm_data = np.ones(N, dtype=np.float32).reshape(N, 1)
+            print(np.shape(pos_data))
+            print(np.shape(parm_data))
             data = np.hstack([pos_data, parm_data])
             if N > 0:
                 self.mesh.indices = np.arange(N)  # ,dtype=np.float32)
