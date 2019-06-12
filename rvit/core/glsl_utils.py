@@ -15,9 +15,9 @@ systemEnv = Environment(
 envs = {True: packageEnv, False: systemEnv}
 
 # Utilities
-def loadShaders(fn, substitutions, packaged=True):
+def loadShaders(fn, template_variables, packaged=True):
     template = envs[packaged].get_template(fn)
-    shader_text = template.render(substitutions)
+    shader_text = template.render(template_variables)
     ss = shader_text.split('---VERTEX SHADER---')
     ss = ss[1].split('---FRAGMENT SHADER---')
     vertex_shader = str(ss[0])

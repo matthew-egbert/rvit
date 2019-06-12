@@ -15,8 +15,9 @@ class ConfigurableProperty(object):
 
         # load values from the previous run
         if self.key in rvit.core.pars.keys():
-            print('configurableProperty %s being loaded from a previous run to be %s' % (self.key,
-                                                                                         rvit.core.pars[self.key]))
+            # print('configurableProperty %s being '+
+            #       'loaded from a previous run to be %s' % (self.key,
+            #                                                rvit.core.pars[self.key]))
             self.prop.set(self.owner, rvit.core.pars[self.key])
             self.prop.dispatch(self.owner)
 
@@ -48,7 +49,6 @@ class ConfigurableProperty(object):
             ti.bind(text=on_text)
         elif isinstance(self.prop, NumericProperty):
             def is_number(s):
-                print(s, s, s, s)
                 try:
                     float(s)
                     return True
@@ -56,10 +56,8 @@ class ConfigurableProperty(object):
                     return False
 
             def on_text(instance, value):
-                print('value L::: ', value)
                 if(is_number(value)):
                     value = float(value)
-                    print('heere')
                     self.prop.set(self.owner, value)
                     rvit.core.pars[self.key] = value
 

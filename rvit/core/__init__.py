@@ -1,3 +1,7 @@
+"""
+rvit.core docstring
+"""
+
 import sys
 import os
 from kivy.logger import Logger

@@ -6,11 +6,15 @@
  
 /* Outputs to the fragment shader */
 varying vec4 frag_color;
-varying vec2 tex_coord0;
 
 /* vertex attributes */
 attribute vec2     v_pos;
-attribute float    parm;
+{% if uses_color_data %}
+attribute float    colors;
+{% endif %}
+{% if uses_size_data %}
+attribute float    sizes;
+{% endif %}
 
 /* uniform variables */
 uniform mat4       modelview_mat;
@@ -24,11 +28,19 @@ vec3 hsv2rgb(vec3 c) {
 }
 
 void main() {
-  vec3 rgb = hsv2rgb(vec3(parm,1.0,1.0));
-  //vec3 rgb = vec3(parm,parm,parm);
+  {% if uses_color_data %}
+  vec3 rgb = hsv2rgb(vec3(colors,1.0,1.0));
   frag_color = vec4(rgb,color.w) ;
-  tex_coord0 = vec2(0.0,0.0);
+  {% else %}
+  frag_color = color;
+  {% endif %}
+
+  {% if uses_size_data %}
+  gl_PointSize = sizes * {{point_size}};
+  {% else %}
   gl_PointSize = {{point_size}};
+  {% endif %}
+  
   gl_Position = projection_mat * modelview_mat * vec4(v_pos.xy, 0.0, 1.0);
 }
 
@@ -40,19 +52,10 @@ void main() {
 
 /* Outputs from the vertex shader */
 varying vec4 frag_color;
-varying vec2 tex_coord0;
-
-// /* uniform texture samplers */
-// uniform sampler2D texture0;
-
-
 
 void main (void){
   float a = step(0.5,2.0*(0.5-distance(vec2(0.5,0.5),gl_PointCoord)));
-  //float a = smoothstep(0.45,0.55,2.0*(0.5-distance(vec2(0.5,0.5),gl_PointCoord)));
-  gl_FragColor = vec4(frag_color.rgb,a);
-  gl_FragColor = vec4(frag_color.rgb,frag_color.w);
-
+  gl_FragColor = vec4(frag_color.rgba);
 }
 
 /* Local Variables: */
