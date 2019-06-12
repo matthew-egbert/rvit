@@ -16,7 +16,8 @@ from kivy.graphics import RenderContext
 from kivy.clock import Clock
 
 import rvit.core
-from ..configurable_property import ConfigurableProperty
+from rvit.core.configurable_property import ConfigurableProperty
+
 
 class RvitWidget(FloatLayout):
     unique_name = StringProperty('')
