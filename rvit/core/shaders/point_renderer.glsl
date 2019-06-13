@@ -6,6 +6,7 @@
  
 /* Outputs to the fragment shader */
 varying vec4 frag_color;
+varying vec2 tex_coord0;
 
 /* vertex attributes */
 attribute vec2     v_pos;
@@ -40,7 +41,8 @@ void main() {
   {% else %}
   gl_PointSize = {{point_size}};
   {% endif %}
-  
+
+  tex_coord0 = vec2(0,0);
   gl_Position = projection_mat * modelview_mat * vec4(v_pos.xy, 0.0, 1.0);
 }
 
@@ -52,6 +54,8 @@ void main() {
 
 /* Outputs from the vertex shader */
 varying vec4 frag_color;
+varying vec2 tex_coord0;
+
 
 void main (void){
   float a = step(0.5,2.0*(0.5-distance(vec2(0.5,0.5),gl_PointCoord)));

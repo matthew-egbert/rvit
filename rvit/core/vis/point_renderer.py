@@ -74,15 +74,15 @@ class PointRenderer(TwoDee,XData,YData,ColorData,SizeData):
             data = data.reshape(N, 2)
 
             if hasattr(self,'colors'):
-                parm_data = np.array(self.colors, dtype=np.float32).reshape(N, 1)
-                ## TODO: preprocessing of various data sources
-                # parm_data = self.apply_secondary_preprocessing(parm_data) 
-                data = np.hstack([data, parm_data])
+                color_data = np.array(self.colors, dtype=np.float32).reshape(N, 1)
+                if hasattr(self,'preprocess_colors') :
+                    color_data = self.preprocess_colors(color_data)
+                data = np.hstack([data, color_data])
             if hasattr(self,'sizes'):
-                parm_data = np.array(self.sizes, dtype=np.float32).reshape(N, 1)
-                ## TODO: preprocessing of various data sources
-                # parm_data = self.apply_secondary_preprocessing(parm_data)
-                data = np.hstack([data, parm_data])
+                size_data = np.array(self.sizes, dtype=np.float32).reshape(N, 1)
+                if hasattr(self,'preprocess_sizes') :
+                    size_data = self.preprocess_sizes(size_data)
+                data = np.hstack([data, size_data])
             
             if N > 0:
                 self.mesh.indices = np.arange(N)

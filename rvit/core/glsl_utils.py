@@ -22,5 +22,6 @@ def loadShaders(fn, template_variables, packaged=True):
     ss = ss[1].split('---FRAGMENT SHADER---')
     vertex_shader = str(ss[0])
     frag_shader = str(ss[1])
+    #print(shader_text)
     return {'vs': vertex_shader,
             'fs': frag_shader}

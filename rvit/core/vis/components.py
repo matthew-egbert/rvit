@@ -4,6 +4,7 @@ from kivy.graphics.transformation import Matrix
 from kivy.core.window import Window
 import rvit.core
 import re
+import numpy as np
 
 class TwoDee(RvitWidget):
     """Provides four configurable parameters that determine the limits of a 2D display.
@@ -67,22 +68,19 @@ class TwoDee(RvitWidget):
     def on_ymax(self, obj, value):
         self.updateModelViewMatrix()
 
-# class ColorData(RvitWidget):
-#     color_varname = StringProperty('')
+# class ColorMap(RvitWidget):
+#     colormap = NumericProperty(-1.) #: x-coord of left border 
 
 #     def __init__(self, *args, **kwargs):
 #         super().__init__(**kwargs)
 
-#     def on_color_varname(self, obj, value):
-#         self.color_varname = value
-#         if self.target_object is not None and self.color_varname != '':
-#             s = 'self.color = self.target_object.%s' % (self.color_varname)
-#             exec(s)
-
-## TODO: consolidate target_object and target varname into a single string?
-## TODO: create an view-assigner component generator that generates things like 
-## ColorData and SizeData and maybe even the main data that is loaded.
-
+#     def registerConfigurableProperties(self):
+#         super().registerConfigurableProperties()
+#         self.addConfigurableProperty(ColorMap.colormap)
+        
+#     def on_colormap(self, obj, value):
+#         pass
+        
 
 def generateViewAssigner(component_name,
                          property_name,
@@ -97,9 +95,13 @@ def generateViewAssigner(component_name,
 
     s = """
 class {{component_name}}(RvitWidget):
-    """+docstring+"""
+    '''"""+docstring+"""
+
+    '''
 
     {{property_name}} = StringProperty('')
+    {{property_name}}_preprocess = StringProperty('')
+    
 
     def __init__(self, *args, **kwargs):
         super().__init__(**kwargs)
@@ -109,6 +111,12 @@ class {{component_name}}(RvitWidget):
         if self.target_object is not None and self.{{property_name}} != '':
             s = 'self.{{variable_name}} = self.target_object.%s' % (self.{{property_name}})
             exec(s)
+
+    def on_{{property_name}}_preprocess(self, obj, value):
+        # self.preprocess_fn = value
+        s = 'self.preprocess_{{variable_name}} = %s' % (value)
+        exec(s)
+
 """
     s = s.replace('{{component_name}}',component_name)
     s = s.replace('{{property_name}}',property_name)
@@ -117,34 +125,32 @@ class {{component_name}}(RvitWidget):
 
 s = generateViewAssigner('XData', 
                          'x_data',
-                         'xs','''"""
+                         'xs','''
     Specifies a vector that contains the x-values of data to be plotted.
-    """''') 
+    ''') 
 exec(s)
-
-
+print(s)
 
 s = generateViewAssigner('YData', 
                          'y_data',
-                         'ys','''"""
+                         'ys','''
     Specifies a vector that contains the x-values of data to be plotted.
-    """''') 
+    ''') 
 exec(s)
-
-
     
 s = generateViewAssigner('ColorData', 
                          'color_data',
-                         'colors','''"""
+                         'colors','''
     Specifies a vector that determines the color of each plotted element.
-    """''') 
+    ''')
+print(s)
 exec(s)
 
 s = generateViewAssigner('SizeData', 
                          'size_data',
-                         'sizes','''"""
+                         'sizes','''
     Specifies a vector that determines the size of each plotted element.
-    """''') 
+                         ''') 
 exec(s)
 
 
