@@ -14,6 +14,8 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import sphinx_py3doc_enhanced_theme
+
 
 # -- Project information -----------------------------------------------------
 
@@ -27,7 +29,14 @@ author = 'Matthew Egbert'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc','sphinxcontrib.fulltoc','sphinx.ext.autosectionlabel']
+extensions = ['sphinx.ext.autodoc',
+              'sphinxcontrib.fulltoc',
+              'sphinx.ext.autosectionlabel',
+              # 'sphinx.ext.autosummary',
+              #'autodocsumm',
+              'sphinx_automodapi.automodapi',
+
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -48,7 +57,57 @@ exclude_patterns = []
 #html_theme = 'sphinxdoc'
 html_theme = 'pyramid'
 
+html_theme = "sphinx_py3doc_enhanced_theme"
+html_theme_path = [sphinx_py3doc_enhanced_theme.get_html_theme_path()]
+
+
+
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+css_mods = """
+div.body code.descclassname { display: none }
+
+div.related {
+height: 0px;
+margin: 0px;
+padding:0px;
+}
+
+div.sphinxsidebar {
+border-radius: 0px;
+width:260px;
+}
+
+div.bodywrapper{
+margin-left: 260px;
+}
+
+
+div.body {
+    font-family: 'arial';
+    padding-top: 1em;
+}
+
+dl.class {
+padding: 0.8em;
+background-color: #efefef;
+border-radius: 5px;
+}
+
+div.body h2 {
+background-color: #000;
+color: #fff;
+text-align: right;
+}
+
+"""
+
+html_theme_options = {
+    'appendcss': css_mods,
+}
+
+
+    

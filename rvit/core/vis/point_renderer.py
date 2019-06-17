@@ -12,12 +12,14 @@ from kivy.properties import ObjectProperty, StringProperty, NumericProperty, Opt
 from kivy.resources import resource_find, resource_add_path
 from kivy.graphics.opengl import *
 
-from rvit.core.vis.rvit_widget import RvitWidget
+from rvit.core.vis.rvi_element import RVIElement
 from rvit.core.configurable_property import ConfigurableProperty
 from rvit.core.vis.components import *
+from rvit.core.vis.data_streams import *
 import rvit.core.glsl_utils as glsl_utils
 
-class PointRenderer(TwoDee,XData,YData,ColorData,SizeData):
+# class PointRenderer(TwoDee,XData,YData,ColorData,SizeData):
+class PointRenderer(xy_bounds,x_data,y_data,color_data,size_data):
     """The PointRenderer is used to display a scatter diagram of 2D points. 
     
     It can use a :class:`.SecondaryDataSource` to determine the color or size 
@@ -36,7 +38,7 @@ class PointRenderer(TwoDee,XData,YData,ColorData,SizeData):
        PointRenderer:
             pos_hint: {'x':0.0, 'y':0.0}
             size_hint:  (1.0,1.0)
-            target_object: model.chemistry
+            target_object: model
             x_data: 'chemistry.pos[:,0]'
             y_data: 'chemistry.pos[:,1]'
             color_data: 'chemistry.zone'
@@ -52,7 +54,17 @@ class PointRenderer(TwoDee,XData,YData,ColorData,SizeData):
        
     """
     color = ListProperty([1.] * 4)
+    """a 4-tuple (red,green,blue,alpha) :: when the **color_data**
+parameter is not provided, this property specifies the color for all
+plotted points. When color_data is provided, the alpha value is still
+used."""
+    
     point_size = NumericProperty(10.0)
+    """a float :: when the **size_data** parameter is not provided, this
+property specifies the color for all plotted points. When color_data
+is provided, the alpha value is still used.
+
+    """
 
     def __init__(self, *args, **kwargs):
         glEnable(0x8642)  # equivalend to glEnable(GL_VERTEX_PROGRAM_POINT_SIZE)
@@ -69,7 +81,7 @@ class PointRenderer(TwoDee,XData,YData,ColorData,SizeData):
         if self.enabled:
             data = np.column_stack([self.xs.astype(np.float32),
                                     self.ys.astype(np.float32)])
-            data = self.apply_preprocessing(data) ## TODO: preprocessing of various data sources
+            # data = self.apply_preprocessing(data) ## TODO: preprocessing of various data sources
             N = int(np.ceil(np.size(data) / 2))
             data = data.reshape(N, 2)
 

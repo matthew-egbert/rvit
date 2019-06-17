@@ -1,7 +1,16 @@
+High-priority
+==============
+
+* Rename all *Renderers to *Visualizers  
+
+
+Low-priority
+============
+Make color_data take different formats (RGBA vs. color index)
+
 ====
 Bugs
 ====
-
 
 PointRenderer renders as squares on some versions of openGL
 ===========================================================

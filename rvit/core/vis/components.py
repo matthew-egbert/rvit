@@ -1,12 +1,12 @@
-from .rvit_widget import RvitWidget
+from rvit.core.vis.rvi_element import RVIElement
 from kivy.properties import *
-from kivy.graphics.transformation import Matrix
+import kivy.graphics.transformation 
 from kivy.core.window import Window
 import rvit.core
 import re
 import numpy as np
 
-class TwoDee(RvitWidget):
+class xy_bounds(RVIElement):
     """Provides four configurable parameters that determine the limits of a 2D display.
     """
     
@@ -21,15 +21,15 @@ class TwoDee(RvitWidget):
         
     def registerConfigurableProperties(self):
         super().registerConfigurableProperties()
-        self.addConfigurableProperty(TwoDee.xmin)
-        self.addConfigurableProperty(TwoDee.xmax)
-        self.addConfigurableProperty(TwoDee.ymin)
-        self.addConfigurableProperty(TwoDee.ymax)
+        self.addConfigurableProperty(xy_bounds.xmin)
+        self.addConfigurableProperty(xy_bounds.xmax)
+        self.addConfigurableProperty(xy_bounds.ymin)
+        self.addConfigurableProperty(xy_bounds.ymax)
 
     def updateProjectionMatrices(self):
         w = float(Window.width)
         h = float(Window.height)
-        m = Matrix().identity()
+        m = kivy.graphics.transformation.Matrix().identity()
         p = rvit.core.BUTTON_BORDER_HEIGHT
         m.scale(2.0 * self.width / w,
                 2.0 * (self.height - p) / h, 1.0)
@@ -39,7 +39,7 @@ class TwoDee(RvitWidget):
         self.render_context['projection_mat'] = m
 
     def updateModelViewMatrix(self):
-        m = Matrix().identity()
+        m = kivy.graphics.transformation.Matrix().identity()
         hr = max(0.00001, (self.xmax - self.xmin))
         vr = max(0.00001, (self.ymax - self.ymin))
         m.scale(1.0 / hr,
@@ -68,7 +68,9 @@ class TwoDee(RvitWidget):
     def on_ymax(self, obj, value):
         self.updateModelViewMatrix()
 
-# class ColorMap(RvitWidget):
+
+        
+# class ColorMap(RVIElement):
 #     colormap = NumericProperty(-1.) #: x-coord of left border 
 
 #     def __init__(self, *args, **kwargs):
@@ -82,88 +84,4 @@ class TwoDee(RvitWidget):
 #         pass
         
 
-def generateViewAssigner(component_name,
-                         property_name,
-                         variable_name,
-                         docstring):
-    """ A factory for generating data-view components. 
 
-    component_name: the name of the component object, e.g.: ColorData
-    property_name: what is specified in the rvit.kv file e.g. color_data
-    variable_name: how to reference the view from inside the vis e.g. colors
-    """
-
-    s = """
-class {{component_name}}(RvitWidget):
-    '''"""+docstring+"""
-
-    '''
-
-    {{property_name}} = StringProperty('')
-    {{property_name}}_preprocess = StringProperty('')
-    
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(**kwargs)
-
-    def on_{{property_name}}(self, obj, value):
-        self.{{property_name}} = value
-        if self.target_object is not None and self.{{property_name}} != '':
-            s = 'self.{{variable_name}} = self.target_object.%s' % (self.{{property_name}})
-            exec(s)
-
-    def on_{{property_name}}_preprocess(self, obj, value):
-        # self.preprocess_fn = value
-        s = 'self.preprocess_{{variable_name}} = %s' % (value)
-        exec(s)
-
-"""
-    s = s.replace('{{component_name}}',component_name)
-    s = s.replace('{{property_name}}',property_name)
-    s = s.replace('{{variable_name}}',variable_name)
-    return(s)
-
-s = generateViewAssigner('XData', 
-                         'x_data',
-                         'xs','''
-    Specifies a vector that contains the x-values of data to be plotted.
-    ''') 
-exec(s)
-print(s)
-
-s = generateViewAssigner('YData', 
-                         'y_data',
-                         'ys','''
-    Specifies a vector that contains the x-values of data to be plotted.
-    ''') 
-exec(s)
-    
-s = generateViewAssigner('ColorData', 
-                         'color_data',
-                         'colors','''
-    Specifies a vector that determines the color of each plotted element.
-    ''')
-print(s)
-exec(s)
-
-s = generateViewAssigner('SizeData', 
-                         'size_data',
-                         'sizes','''
-    Specifies a vector that determines the size of each plotted element.
-                         ''') 
-exec(s)
-
-
-
-# class SecondaryDataSource(RvitWidget):
-#     """Specifies a """
-#     secondary_varname = StringProperty('')
-
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(**kwargs)
-
-#     def on_secondary_varname(self, obj, value):
-#         self.secondary_varname = value
-#         if self.target_object is not None and self.secondary_varname != '':
-#             s = 'self.b = self.target_object.%s' % (self.secondary_varname)
-#             exec(s)
