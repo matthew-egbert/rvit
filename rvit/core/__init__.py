@@ -81,7 +81,7 @@ def disactivate():
     global pars
     pars.close()
 
-def start_rvit(model_object,rvit_kv_string,window_size=(900,900)):
+def init_rvit(model_object,rvit_kv_string,window_size=(900,900)):
     import pkg_resources
     from kivy import platform
     from kivy.config import Config
