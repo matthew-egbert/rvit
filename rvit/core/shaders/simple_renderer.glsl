@@ -9,18 +9,14 @@ varying vec4 frag_color;
 varying vec2 tex_coord0;
 
 /* vertex attributes */
-attribute vec2     v_pos;
-{% if uses_color_data %}
-attribute float    colors;
-{% endif %}
-{% if uses_size_data %}
-attribute float    sizes;
-{% endif %}
+{{ attributes | join('\n') }}
 
 /* uniform variables */
 uniform mat4       modelview_mat;
 uniform mat4       projection_mat;
 uniform vec4       color;
+
+{{ vertex_shader_functions | join('\n') }}
 
 vec3 hsv2rgb(vec3 c) {
   vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
@@ -29,20 +25,21 @@ vec3 hsv2rgb(vec3 c) {
 }
 
 void main() {
-  {% if uses_color_data %}
-  vec3 rgb = hsv2rgb(vec3(colors,1.0,1.0));
+  {% if 'attribute float color1D;' in attributes %}
+  vec3 rgb = hsv2rgb(vec3(color1D,1.0,1.0));
   frag_color = vec4(rgb,color.w) ;
   {% else %}
   frag_color = color;
   {% endif %}
-
-  {% if uses_size_data %}
-  gl_PointSize = sizes * {{point_size}};
+  
+  {% if 'attribute float size;' in attributes %}
+  gl_PointSize = size * {{point_size}};
   {% else %}
-  gl_PointSize = {{point_size}};
+  gl_PointSize = {{point_size|default('1.0')}};
   {% endif %}
 
   tex_coord0 = vec2(0,0);
+  vec2 v_pos = vec2(x,y);
   gl_Position = projection_mat * modelview_mat * vec4(v_pos.xy, 0.0, 1.0);
 }
 
@@ -55,7 +52,6 @@ void main() {
 /* Outputs from the vertex shader */
 varying vec4 frag_color;
 varying vec2 tex_coord0;
-
 
 void main (void){
   float a = step(0.5,2.0*(0.5-distance(vec2(0.5,0.5),gl_PointCoord)));
