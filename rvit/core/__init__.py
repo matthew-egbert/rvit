@@ -9,6 +9,7 @@ import pickle
 import shelve
 from kivy.lang import Builder
 from kivy.core.text import LabelBase
+from kivy.app import App
 
 # expose things to importers of this module
 #import widgets
@@ -31,7 +32,6 @@ BUTTON_BORDER_HEIGHT = 20
 path, pfile_path, pars, inspection_path = (None, None, None, None,)
 
 def loadFonts():
-    pass
     font_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                              'fonts/')
 
@@ -42,9 +42,6 @@ def loadFonts():
             "fn_bold": os.path.join(font_path, "uasquare.ttf"),
             "fn_italic": os.path.join(font_path, "uasquare.ttf"),
             "fn_bolditalic": os.path.join(font_path, "uasquare.ttf"),
-            # "fn_bold": font_path+"/uasquare.ttf",
-            # "fn_italic": font_path+"/uasquare.ttf",
-            # "fn_bolditalic": font_path+"/uasquare.ttf"
         }]
 
     for font in KIVY_FONTS:
@@ -80,13 +77,32 @@ def activate(rvit_path=None):
                                 'rvit.kv')
     Builder.load_file(kv_file_path)
 
-    # if not os.path.isfile(pfile_path) :
-    #     #ipdict = {}
-    #     #pickle.dump( pdict, open( pfile_path, "wb" ) )
-
-    # ##
-
-
 def disactivate():
     global pars
     pars.close()
+
+def start_rvit(model_object,rvit_kv_string,window_size=(900,900)):
+    import pkg_resources
+    from kivy import platform
+    from kivy.config import Config
+    if platform == 'linux':
+        Config.set('graphics', 'width', str(int(window_size[0])))
+        Config.set('graphics', 'height', str(int(window_size[0])))
+    
+    class RvitApp(App):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args,**kwargs)
+            self.model = model_object
+
+        def get_simulation(self):
+            return self.model
+
+        def build(self):
+                return Builder.load_string(rvit_kv_string, filename='rvit.kv')
+
+        def on_stop(self):
+            disactivate()
+
+    activate()
+    app = RvitApp().run()
+

@@ -11,8 +11,11 @@ class {{property_name}}(RVIElement):
         super().__init__(**kwargs)
 
     def on_{{property_name}}(self, obj, value):
+        if not hasattr(self,'simulation'):
+            self.simulation = App.get_running_app().get_simulation()
+        
         self.{{property_name}} = value
-        if self.simulation is not None and self.{{property_name}} != '':
+        if self.{{property_name}} != '':
             s = 'self.{{variable_name}} = self.simulation.%s' % (self.{{property_name}})
             exec(s)
             s = 'self.n_elements = len(self.{{variable_name}})'

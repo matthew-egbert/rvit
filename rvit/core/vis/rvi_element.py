@@ -27,10 +27,6 @@ class RVIElement(FloatLayout):
     """Every RVIElement should specify one of these. It is a unique identifier that
     allows RVIT to save properties that have been adjusted during execution."""
 
-    simulation = ObjectProperty(None)
-    """Every RVIElement should specify one of these. This specifies where
-    the data stream variables can be found."""
-
     show_controls = BooleanProperty(True)
     """Boolean for whether or not this RVI element should show its
     control-bar buttons and name. Defaults to True."""
@@ -68,9 +64,9 @@ class RVIElement(FloatLayout):
         self.format_has_changed = True
         
         prop = self.property('fps')
-        # dispatch this property on the button instance
         prop.dispatch(self)
 
+ 
     def addControlBar(self):
         """ Adds bar to top of widget with various controls for that widget. """
         self.top_buttons = BoxLayout(orientation='horizontal',
@@ -170,8 +166,6 @@ class RVIElement(FloatLayout):
                         """ ; ipython -i """ + inspection_script_name + """ " """]
         call(instructions)
 
-    def on_simulation(self, inst, value):
-        self.simulation = value
 
     def on_fps(self, obj, value):
         if self.update_event is not None:

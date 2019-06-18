@@ -69,6 +69,7 @@ if __name__ == '__main__':
 
 from rvit.core.vis.rvi_element import RVIElement
 from kivy.properties import *
+from kivy.app import App
 import numpy as np
 
 {{classes}}

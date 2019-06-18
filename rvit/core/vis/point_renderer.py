@@ -59,7 +59,7 @@ is provided, the alpha value is still used.
     """
 
     def __init__(self, *args, **kwargs):
-        glEnable(0x8642)  # equivalend to glEnable(GL_VERTEX_PROGRAM_POINT_SIZE)
+        glEnable(0x8642)  # equivalend to glEnable(GL_PROGRAM_POINT_SIZE)
         super().__init__(**kwargs)        
         
     def registerConfigurableProperties(self):

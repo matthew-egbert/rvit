@@ -4,6 +4,7 @@
 
 from rvit.core.vis.rvi_element import RVIElement
 from kivy.properties import *
+from kivy.app import App
 import numpy as np
 
 
@@ -19,8 +20,11 @@ class x_data(RVIElement):
         super().__init__(**kwargs)
 
     def on_x_data(self, obj, value):
+        if not hasattr(self,'simulation'):
+            self.simulation = App.get_running_app().get_simulation()
+        
         self.x_data = value
-        if self.simulation is not None and self.x_data != '':
+        if self.x_data != '':
             s = 'self.xs = self.simulation.%s' % (self.x_data)
             exec(s)
             s = 'self.n_elements = len(self.xs)'
@@ -57,8 +61,11 @@ class y_data(RVIElement):
         super().__init__(**kwargs)
 
     def on_y_data(self, obj, value):
+        if not hasattr(self,'simulation'):
+            self.simulation = App.get_running_app().get_simulation()
+        
         self.y_data = value
-        if self.simulation is not None and self.y_data != '':
+        if self.y_data != '':
             s = 'self.ys = self.simulation.%s' % (self.y_data)
             exec(s)
             s = 'self.n_elements = len(self.ys)'
@@ -95,8 +102,11 @@ class color1d_data(RVIElement):
         super().__init__(**kwargs)
 
     def on_color1d_data(self, obj, value):
+        if not hasattr(self,'simulation'):
+            self.simulation = App.get_running_app().get_simulation()
+        
         self.color1d_data = value
-        if self.simulation is not None and self.color1d_data != '':
+        if self.color1d_data != '':
             s = 'self.colors = self.simulation.%s' % (self.color1d_data)
             exec(s)
             s = 'self.n_elements = len(self.colors)'
@@ -136,8 +146,11 @@ class size_data(RVIElement):
         super().__init__(**kwargs)
 
     def on_size_data(self, obj, value):
+        if not hasattr(self,'simulation'):
+            self.simulation = App.get_running_app().get_simulation()
+        
         self.size_data = value
-        if self.simulation is not None and self.size_data != '':
+        if self.size_data != '':
             s = 'self.sizes = self.simulation.%s' % (self.size_data)
             exec(s)
             s = 'self.n_elements = len(self.sizes)'
