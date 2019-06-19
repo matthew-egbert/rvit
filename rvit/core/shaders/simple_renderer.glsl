@@ -54,12 +54,6 @@ varying vec4 frag_color;
 varying vec2 tex_coord0;
 
 void main (void){
-  float a = step(0.5,2.0*(0.5-distance(vec2(0.5,0.5),gl_PointCoord)));
-  gl_FragColor = vec4(frag_color.rgba);
+  float a = step(0.5,2.0*(0.5-distance(vec2(0.5,0.5),gl_PointCoord))) * frag_color.a;  
+  gl_FragColor = vec4(frag_color.rgb,a);
 }
-
-/* Local Variables: */
-/* compile-command: "cd .. && python main.py" */
-/* python-main-file: "main.py" */
-/* python-working-dir: "../" */
-/* End: */

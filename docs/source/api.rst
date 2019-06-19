@@ -2,6 +2,12 @@
 API Reference
 ===============
 
+API: Core
+##########
+
+.. autofunction:: rvit.core.init_rvit.init_rvit
+
+
 API: Visualizers
 ################
 .. autosummary:: rvit.core.vis.rvi_element.RVIElement
@@ -11,8 +17,7 @@ API: Visualizers
    :nosignatures:
       
 .. autoclass:: rvit.core.vis.rvi_element.RVIElement
-   :members: unique_name, simulation, show_controls, self_update,
-	     fps
+   :members: unique_name, show_controls, self_update, fps
    	  
 .. autoclass:: rvit.core.vis.point_renderer.PointRenderer
    :members:
@@ -39,4 +44,5 @@ API: Data Streams
 
 .. automodule:: rvit.core.vis.data_streams
    :members:
-      
+
+

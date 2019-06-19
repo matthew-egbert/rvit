@@ -60,6 +60,7 @@ is provided, the alpha value is still used.
 
     def __init__(self, *args, **kwargs):
         glEnable(0x8642)  # equivalend to glEnable(GL_PROGRAM_POINT_SIZE)
+        
         super().__init__(**kwargs)        
         
     def registerConfigurableProperties(self):
@@ -70,27 +71,25 @@ is provided, the alpha value is still used.
         subs.update(
             {'point_size': 0.025 * self.point_size * min(Window.width, Window.height),
         })
-
         super().loadShaders('points',subs=subs)
-
         
-    # def on_point_size(self, obj, value):
-    #     # for a single points size (and to scale diverse point sizes)
-    #     self.loadShaders()
+    def on_point_size(self, obj, value):
+        # for a single points size (and to scale diverse point sizes)
+        self.loadShaders()
 
-    # def on_size(self, inst, value):
-    #     ## the point size is dynamically set in loadShaders in a way that
-    #     ## responds to the overall window size. Accordingly this callback
-    #     ## calls loadShaders (to allow response to window resizing).
-    #     super().on_size(inst, value)
-    #     self.loadShaders()
+    def on_size(self, inst, value):
+        ## the point size is dynamically set in loadShaders in a way that
+        ## responds to the overall window size. Accordingly this callback
+        ## calls loadShaders (to allow response to window resizing).
+        super().on_size(inst, value)
+        self.loadShaders()
 
-    # def on_pos(self, inst, value):
-    #     ## the point size is dynamically set in loadShaders in a way that
-    #     ## responds to the overall window size. Accordingly this callback
-    #     ## calls loadShaders (to allow response to window resizing).
-    #     super().on_pos(inst, value)
-    #     self.loadShaders()
+    def on_pos(self, inst, value):
+        ## the point size is dynamically set in loadShaders in a way that
+        ## responds to the overall window size. Accordingly this callback
+        ## calls loadShaders (to allow response to window resizing).
+        super().on_pos(inst, value)
+        self.loadShaders()
         
         
 # ### Local Variables: ###

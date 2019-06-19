@@ -7,9 +7,7 @@
 ==========================================================
 RVIT: Realtime Visualization and Interaction Toolkit
 ==========================================================
-
     
-
 .. toctree::
    :maxdepth: 2
 
