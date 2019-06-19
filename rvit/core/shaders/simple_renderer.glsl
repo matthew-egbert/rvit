@@ -33,9 +33,9 @@ void main() {
   {% endif %}
   
   {% if 'attribute float size;' in attributes %}
-  gl_PointSize = size * {{point_size}};
+  gl_PointSize = 100.0;//size * {{point_size}};
   {% else %}
-  gl_PointSize = {{point_size|default('1.0')}};
+  gl_PointSize = 100.0;//{{point_size|default('1.0')}};
   {% endif %}
 
   tex_coord0 = vec2(0,0);
@@ -54,6 +54,10 @@ varying vec4 frag_color;
 varying vec2 tex_coord0;
 
 void main (void){
-  float a = step(0.5,2.0*(0.5-distance(vec2(0.5,0.5),gl_PointCoord))) * frag_color.a;  
+  float a = step(0.5,2.0*(0.5-distance(vec2(0.5,0.5),gl_PointCoord))) * frag_color.a;
+  // if(float(gl_PointCoord) == float(0.0)) {
+  //   a = frag_color.a;
+  // }
+  a += float(float(gl_PointCoord) == float(0.0)) * frag_color.a;
   gl_FragColor = vec4(frag_color.rgb,a);
 }

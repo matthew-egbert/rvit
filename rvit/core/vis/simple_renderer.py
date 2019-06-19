@@ -5,7 +5,7 @@ from kivy.properties import ObjectProperty, StringProperty, NumericProperty,\
 from rvit.core.vis.rvi_element import RVIElement
 from rvit.core.configurable_property import ConfigurableProperty
 from rvit.core.vis.components import *
-from rvit.core.vis.data_streams import *
+from rvit.core.vis.data_sources import *
 import rvit.core.glsl_utils as glsl_utils
 
 
@@ -24,9 +24,9 @@ used."""
         if self.format_has_changed :
             self.format_has_changed = False
             self.loadShaders()
-            self.data_per_element = self.n_data_streams
+            self.data_per_element = self.n_data_sources
             self.data_to_shader = np.zeros((self.n_elements,
-                                            self.n_data_streams), dtype=np.float32)
+                                            self.n_data_sources), dtype=np.float32)
 
         if self.enabled:
             super().update()

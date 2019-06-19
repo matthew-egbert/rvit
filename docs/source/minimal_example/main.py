@@ -17,5 +17,7 @@ class DiffusionModel(object):
         init_rvit(self,rvit_file='rvit.kv') ## <-- Starts RVIT!!
 
 if __name__ == '__main__':
-    DiffusionModel()
+    model = DiffusionModel()
+    ## An alternative, equivalent way to start rvit...
+    # init_rvit(model ,rvit_file='rvit.kv') 
 

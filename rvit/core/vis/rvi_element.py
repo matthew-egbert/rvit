@@ -60,7 +60,7 @@ class RVIElement(FloatLayout):
 
         self.shader_substitutions = defaultdict(list)
         self.fmt = []
-        self.n_data_streams = 0
+        self.n_data_sources = 0
         self.format_has_changed = True
         
         prop = self.property('fps')

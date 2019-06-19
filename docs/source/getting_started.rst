@@ -13,7 +13,7 @@ To augment your simulation with RVIT you must do the following two things.
 1. Start RVIT
 -------------
 
-The code snippet below defines a simple model of particles moving in a random
+The script below defines a simple model of particles moving in a random
 walk. The highlighted line with the call to :meth:`~rvit.core.init_rvit.init_rvit()`  
 shows how rvit is started. 
 
@@ -23,10 +23,12 @@ shows how rvit is started.
     
 :meth:`~rvit.core.init_rvit.init_rvit()` takes two arguments. The first tells
 RVIT where it can find all of the data that it will visualize and modify. In
-this example all of the data to be visualized is in the DiffusionModel
-object, so we pass `self`. The second argument tells RVIT where it can find
-the GUI-specification file. This is a file that you will write to specify
-which visualization and interactive elements are to be displayed--see Step 2!
+this example all of the data to be visualized is in the DiffusionModel object,
+so we pass `self`. An equally good solution would be to create the model and
+start rvit afterwards (as suggested by the final, commented line). The second
+argument tells RVIT where it can find the GUI-specification file. This is a file
+that you will write to specify which visualization and interactive elements are
+to be displayed--see Step 2!
 
 2. Write a RVIT GUI-specification file
 --------------------------------------

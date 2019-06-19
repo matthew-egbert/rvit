@@ -12,7 +12,9 @@ import rvit.core.glsl_utils as glsl_utils
 from rvit.core.vis.rvi_element import RVIElement
 from rvit.core.vis.simple_renderer import SimpleRenderer
 from rvit.core.vis.components import *
-from rvit.core.vis.data_streams import *
+from rvit.core.vis.data_sources import *
+
+from OpenGL.GL import glPointSize
 
 
     
@@ -59,6 +61,7 @@ is provided, the alpha value is still used.
     """
 
     def __init__(self, *args, **kwargs):
+        glPointSize(100.0)
         glEnable(0x8642)  # equivalend to glEnable(GL_PROGRAM_POINT_SIZE)
         
         super().__init__(**kwargs)        

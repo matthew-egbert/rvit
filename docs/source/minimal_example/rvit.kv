@@ -1,12 +1,12 @@
 #:kivy 1.0
-#:import PointRenderer rvit.core.vis.point_renderer
+#:import PointRenderer rvit.core.vis.point_renderer 
 
 FloatLayout:
-    PointRenderer:
+    PointRenderer: # <-- A visualizer 
         pos_hint: {'x':0.0, 'y':0.0}
         size_hint:  (1.0,1.0)
-        x_data: 'pos[:,0]'
-        y_data: 'pos[:,1]'
+        x_data: 'pos[:,0]' # <-- data source
+        y_data: 'pos[:,1]' # <-- data source
         point_size: 0.25
-        color: [0.0,1.0,1.0,0.25]
+        color: [0.0,1.0,1.0,0.5]
         unique_name: 'pos'

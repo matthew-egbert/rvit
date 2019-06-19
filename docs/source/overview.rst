@@ -26,7 +26,8 @@ RVIT's primary design goals are to...
    understanding of the artifact's properties---intuition that can guide and
    improve subsequent systematic investigation.
 
-If you use RVIT in a work that is published, please cite it. 
+If you use RVIT in a work that is published, please cite it.
+
 
 * Egbert, M.D. (2019) RVIT: Realtime Visualization and Interaction
   Toolkit. GitHub repository, https://github.com/matthew-egbert/rvit

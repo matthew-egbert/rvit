@@ -20,8 +20,8 @@ class {{property_name}}(RVIElement):
             exec(s)
             s = 'self.n_elements = len(self.{{variable_name}})'
             exec(s)
-            self.data_index_{{variable_name}} = self.n_data_streams
-            self.n_data_streams += 1
+            self.data_index_{{variable_name}} = self.n_data_sources
+            self.n_data_sources += 1
         {% if vertex_shader_functions is defined -%}
         self.shader_substitutions['vertex_shader_functions'].append({{vertex_shader_functions}})
         {% endif -%}
