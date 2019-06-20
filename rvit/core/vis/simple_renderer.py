@@ -9,13 +9,7 @@ from rvit.core.vis.data_sources import *
 import rvit.core.glsl_utils as glsl_utils
 
 
-class SimpleRenderer(RVIElement):
-    color = ListProperty([1.] * 4)
-    """a 4-tuple (red,green,blue,alpha) :: when the **color_data**
-parameter is not provided, this property specifies the color for all
-plotted points. When color_data is provided, the alpha value is still
-used."""
-
+class SimpleRenderer(color):    
     def __init__(self, *args, **kwargs):
         super().__init__(**kwargs)        
         self.shader_fn = 'simple_renderer.glsl'
@@ -49,6 +43,3 @@ used."""
         self.mesh = Mesh(mode=mesh_mode, fmt=self.fmt)
         self.render_context.add(self.mesh)
 
-    def on_color(self, obj, value):
-        # for single color setting
-        self.render_context['color'] = [float(v) for v in self.color]

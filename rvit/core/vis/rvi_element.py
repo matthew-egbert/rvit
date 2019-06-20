@@ -18,7 +18,10 @@ from kivy.clock import Clock
 
 import rvit.core
 from rvit.core.configurable_property import ConfigurableProperty
+from kivy.uix.stencilview import StencilView
 
+class DrawArea(StencilView):
+    pass
 
 class RVIElement(FloatLayout):
     """All Visualizers (and interactors?) have the following properties. """
@@ -35,7 +38,6 @@ class RVIElement(FloatLayout):
     """Boolean flag indicating whether this widget should be responsible
     for autonomously updating its own data (i.e. pulling the data from
     the simulation at a regular interval). Defaults to True.
-
     """ 
 
     fps = NumericProperty(30.0)
@@ -141,7 +143,7 @@ class RVIElement(FloatLayout):
         else:
             if self.top_buttons in self.children:
                 self.remove_widget(self.top_buttons)
-
+        
     def createInspectionDumpFile(self):
         try:
             os.makedirs(skivy.inspection_path)

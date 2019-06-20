@@ -33,9 +33,9 @@ void main() {
   {% endif %}
   
   {% if 'attribute float size;' in attributes %}
-  gl_PointSize = 100.0;//size * {{point_size}};
+  gl_PointSize = size * {{point_size}};
   {% else %}
-  gl_PointSize = 100.0;//{{point_size|default('1.0')}};
+  gl_PointSize = {{point_size|default('1.0')}};
   {% endif %}
 
   tex_coord0 = vec2(0,0);

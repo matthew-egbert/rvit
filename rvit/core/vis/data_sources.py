@@ -27,6 +27,12 @@ class x_data(RVIElement):
         if self.x_data != '':
             s = 'self.xs = self.simulation.%s' % (self.x_data)
             exec(s)
+#             s  = """
+# if not isinstance(self.xs,(float,int)):
+#     self.n_elements = len(self.xs)
+# else: 
+#     self.n_elements = 1
+# """
             s = 'self.n_elements = len(self.xs)'
             exec(s)
             self.data_index_xs = self.n_data_sources
@@ -68,6 +74,12 @@ class y_data(RVIElement):
         if self.y_data != '':
             s = 'self.ys = self.simulation.%s' % (self.y_data)
             exec(s)
+#             s  = """
+# if not isinstance(self.ys,(float,int)):
+#     self.n_elements = len(self.ys)
+# else: 
+#     self.n_elements = 1
+# """
             s = 'self.n_elements = len(self.ys)'
             exec(s)
             self.data_index_ys = self.n_data_sources
@@ -109,6 +121,12 @@ class color1d_data(RVIElement):
         if self.color1d_data != '':
             s = 'self.colors = self.simulation.%s' % (self.color1d_data)
             exec(s)
+#             s  = """
+# if not isinstance(self.colors,(float,int)):
+#     self.n_elements = len(self.colors)
+# else: 
+#     self.n_elements = 1
+# """
             s = 'self.n_elements = len(self.colors)'
             exec(s)
             self.data_index_colors = self.n_data_sources
@@ -153,6 +171,12 @@ class size_data(RVIElement):
         if self.size_data != '':
             s = 'self.sizes = self.simulation.%s' % (self.size_data)
             exec(s)
+#             s  = """
+# if not isinstance(self.sizes,(float,int)):
+#     self.n_elements = len(self.sizes)
+# else: 
+#     self.n_elements = 1
+# """
             s = 'self.n_elements = len(self.sizes)'
             exec(s)
             self.data_index_sizes = self.n_data_sources

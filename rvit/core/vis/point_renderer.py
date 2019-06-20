@@ -14,9 +14,6 @@ from rvit.core.vis.simple_renderer import SimpleRenderer
 from rvit.core.vis.components import *
 from rvit.core.vis.data_sources import *
 
-from OpenGL.GL import glPointSize
-
-
     
 class PointRenderer(SimpleRenderer,xy_bounds,x_data,y_data,color1d_data,size_data):
     """The PointRenderer is used to display a scatter diagram of 2D points. 
@@ -61,7 +58,6 @@ is provided, the alpha value is still used.
     """
 
     def __init__(self, *args, **kwargs):
-        glPointSize(100.0)
         glEnable(0x8642)  # equivalend to glEnable(GL_PROGRAM_POINT_SIZE)
         
         super().__init__(**kwargs)        

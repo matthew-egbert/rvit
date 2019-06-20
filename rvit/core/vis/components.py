@@ -68,8 +68,24 @@ class xy_bounds(RVIElement):
     def on_ymax(self, obj, value):
         self.updateModelViewMatrix()
 
+class color(RVIElement):
+    """Provides a single 4-tuple parameter [R,G,B,A] that can be used to
+    specify the the primary color of the visualizer. May be
+    (partially) overridden by the color data sources...but in some
+    cases (e.g. the color_1d data source) the alpha component still is used.
 
-        
+    """
+    
+    color = ListProperty([1.] * 4)
+    """a 4-tuple (red,green,blue,alpha) :: when the **color_data**
+parameter is not provided, this property specifies the color for all
+plotted points. When color_data is provided, the alpha value is still
+used."""
+
+    def on_color(self, obj, value):
+        # for single color setting
+        self.render_context['color'] = [float(v) for v in self.color]
+   
 # class ColorMap(RVIElement):
 #     colormap = NumericProperty(-1.) #: x-coord of left border 
 

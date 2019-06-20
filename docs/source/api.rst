@@ -34,15 +34,15 @@ API: Components
 .. automodule:: rvit.core.vis.components
    :members:
 
-API: Data Streams
+API: Data Sources
 #################
       
-.. automodsumm:: rvit.core.vis.data_streams
+.. automodsumm:: rvit.core.vis.data_sources
    :skip:
       BooleanProperty,NumericProperty,ObjectProperty,OptionProperty,RVIElement,StringProperty,DictProperty,ListProperty,Property,ConfigParserProperty,BoundedNumericProperty,VariableListProperty,AliasProperty,ReferenceListProperty
    :nosignatures:
 
-.. automodule:: rvit.core.vis.data_streams
+.. automodule:: rvit.core.vis.data_sources
    :members:
 
 

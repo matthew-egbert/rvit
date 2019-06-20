@@ -41,6 +41,15 @@ if __name__ == '__main__':
         'fmt' : (b'y', 1, 'float'),
     })
 
+    # classes += generate_data_source_class({
+    #     'property_name' : 'scalar_data',
+    #     'variable_name' : 'scalar',
+    #     'docstring' : 'scalar value used in tracker',
+    #     'attribute_defn' : 'attribute float scalar;',
+    #     'fmt' : (b'scalar', 1, 'float')
+    # })
+
+    
     classes += generate_data_source_class({
         'property_name' : 'color1d_data',
         'variable_name' : 'colors',

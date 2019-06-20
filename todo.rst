@@ -1,7 +1,14 @@
+=============
 High-priority
-==============
-Make color_data take different formats (RGBA vs. color index).
+=============
 
+unique_name
+-----------
+Why did I say that this has to be specified last. Make that not the case!
+
+
+Make color_data take different formats (RGBA vs. color index).
+---------------------------------------------------------------
 The shader needs to depend upon which properties are set.
 
 on_color_data should be replaced with
@@ -19,6 +26,7 @@ and new properties should be added
 
 and these should dynamically modify the shader code accordingly  
 
+============
 Low-priority
 ============
 

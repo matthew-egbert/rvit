@@ -18,6 +18,12 @@ class {{property_name}}(RVIElement):
         if self.{{property_name}} != '':
             s = 'self.{{variable_name}} = self.simulation.%s' % (self.{{property_name}})
             exec(s)
+#             s  = """
+# if not isinstance(self.{{variable_name}},(float,int)):
+#     self.n_elements = len(self.{{variable_name}})
+# else: 
+#     self.n_elements = 1
+# """
             s = 'self.n_elements = len(self.{{variable_name}})'
             exec(s)
             self.data_index_{{variable_name}} = self.n_data_sources

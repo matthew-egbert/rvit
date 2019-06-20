@@ -6,6 +6,10 @@ Installation
 ============
 <<Insert instructions from github.>>
 
+Requirements
+
+* Python 3.5 or later
+
 Basic Instructions
 ==================
 To augment your simulation with RVIT you must do the following two things.
@@ -39,7 +43,46 @@ The contents of `rvit.kv` might look something like this:
     :language: python
 	          
    
-A minimal working example
-=========================
+Download and run a minimal working example
+==========================================
+If you want a base project to build from, you can install a quickstart project
+plus all the dependencies using cookiecutter.
 
-<<Insert cookie-cutter instructions from github.>>
+You will need Python 3.5 or later first. If you do not already have this on your
+system, you can get it from [python.org](https://python.org), or by using your
+system's package manager.
+
+Next, install pip and virtualenv - you can do this through a package manager
+such as apt, emerge, or brew, if you have one. For example, with emerge:
+
+.. code-block:: bash
+
+    bash sudo emerge --ask dev-python/pip virtualenv
+
+Alternatively, there are complete instructions for installing virtualenv and pip
+here:
+
+* https://virtualenv.pypa.io/en/stable/installation/
+
+
+Create a virtualenv and install dependencies:
+
+.. code-block:: bash
+
+    virtualenv env && source ./env/bin/activate && pip install cookiecutter
+
+If you have already activated a virtualenv, and you need to reinstall a fresh
+virtualenv and example code, you can run this command instead:
+
+.. code-block:: bash
+
+    bash deactivate && rm -rf rvit_example env && virtualenv env && \
+        source ./env/bin/activate && pip install cookiecutter
+
+
+Create, install, and run an example application:
+
+.. code-block:: bash
+
+    bash cookiecutter -f --no-input gh:flaviusb/rvit-template && pip \ 
+        install -U --upgrade-strategy eager -e rvit_example && rvit_example 
