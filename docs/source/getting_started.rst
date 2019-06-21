@@ -9,6 +9,7 @@ Installation
 Requirements
 
 * Python 3.5 or later
+* On linux you need to install the apt packages `xsel` and `xclip`
 
 Basic Instructions
 ==================

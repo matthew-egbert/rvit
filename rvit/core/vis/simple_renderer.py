@@ -42,4 +42,5 @@ class SimpleRenderer(color):
             self.render_context.remove(self.mesh)            
         self.mesh = Mesh(mode=mesh_mode, fmt=self.fmt)
         self.render_context.add(self.mesh)
+        
 

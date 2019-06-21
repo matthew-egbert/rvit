@@ -51,7 +51,7 @@ def activate(rvit_path=None):
     rvit.core.pars = shelve.open(pfile_path)
     Logger.info('Parameter file: %s' % (pfile_path))
 
-    loadFonts()
+    #loadFonts()
     kv_file_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                 'rvit.kv')
     Builder.load_file(kv_file_path)

@@ -14,26 +14,34 @@ from rvit.core.vis.simple_renderer import SimpleRenderer
 from rvit.core.vis.components import *
 from rvit.core.vis.data_sources import *
 from kivy.graphics import Mesh
-#from kivy.uix.stencilview import StencilView
     
-class ScalarTracker(xy_bounds):
+class ScalarTracker(xy_bounds,color):
     """
     takes a single scalar value data source and keeps
     track of its recent history.
 
     """
-
-    num_samples = NumericProperty(100) #: history length in samples
+    line_width = NumericProperty(0.02)
+    
+    num_samples = NumericProperty(255) #: history length in samples
     tracked_scalar = StringProperty('') #: variable which is to be tracked
+
+    fill = OptionProperty('none', options=['none', 'to bottom', 'to top'])
 
     def __init__(self, *args, **kwargs):
         super().__init__(**kwargs)
         self.on_num_samples(self,self.num_samples) # TODO: dispatch
         self._x = 0
+        # self.scalar_data = 0.
         
     def registerConfigurableProperties(self):
         super().registerConfigurableProperties()
         self.addConfigurableProperty(ScalarTracker.num_samples)
+        self.addConfigurableProperty(ScalarTracker.fill)
+        self.addConfigurableProperty(ScalarTracker.line_width)
+        self.addConfigurableProperty(color.color)
+        
+
 
     def on_num_samples(self, obj, value):
         self.num_samples = value
@@ -48,6 +56,15 @@ class ScalarTracker(xy_bounds):
         self.tri_indices = tri_indices.ravel()[:-6]
         self.loadShaders()
 
+    def on_fill(self, obj, value):
+        self.fill = value
+        if self.fill == 'to top':            
+            self.data[self.num_samples:,1] = 1.0
+        if self.fill == 'to bottom':
+            self.data[self.num_samples:,1] = 0.0
+        # else:
+        #     self.data[self.num_samples:,1] = self.scalar_data
+
     def on_tracked_scalar(self, obj, value):
         if not hasattr(self,'simulation'):
             self.simulation = App.get_running_app().get_simulation()
@@ -61,14 +78,18 @@ class ScalarTracker(xy_bounds):
     def update(self):
         super().update()
         exec(self.get_value_command)
-        self.data[self._x,1] = self.scalar
+        if self.fill == 'none':
+            r = (self.ymax-self.ymin)*self.line_width/2
+            self.data[self._x,1] = self.scalar - r
+            self.data[self._x+self.num_samples,1] = self.scalar + r
+        else :
+            self.data[self._x,1] = self.scalar
         self._x = (self._x + 1) % self.num_samples
         self.updateModelViewMatrix()
 
         if self.enabled:
             # self.curve_mesh.indices = np.arange(self.num_samples)
             # self.curve_mesh.vertices = self.data.ravel()
-
             self.fill_mesh.indices = self.tri_indices
             self.fill_mesh.vertices = self.data.ravel()
             self.render_context.ask_update()
@@ -92,7 +113,7 @@ class ScalarTracker(xy_bounds):
             self.render_context.remove(self.fill_mesh)
         fmt =[(b'v_pos', 2, 'float')]
         self.fill_mesh = Mesh(mode='triangles', fmt=fmt)
-        self.render_context['color'] = [0.1,0.1,1.0,1.0]
+        #self.render_context['color'] = [0.1,0.1,1.0,1.0]
         self.render_context.add(self.fill_mesh)
 
         

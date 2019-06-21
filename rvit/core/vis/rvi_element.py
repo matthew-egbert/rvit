@@ -7,7 +7,7 @@ from kivy.uix.label import Label
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.stacklayout import StackLayout
-from kivy.properties import ObjectProperty, StringProperty, NumericProperty, OptionProperty, BooleanProperty
+from kivy.properties import ObjectProperty, StringProperty, NumericProperty, OptionProperty, BooleanProperty, ListProperty
 from kivy.core.window import Window
 from kivy.graphics.transformation import Matrix
 from functools import partial
@@ -19,10 +19,13 @@ from kivy.clock import Clock
 import rvit.core
 from rvit.core.configurable_property import ConfigurableProperty
 from kivy.uix.stencilview import StencilView
+from kivy.graphics import Color, Rectangle
 
-class DrawArea(StencilView):
-    pass
+from rvit.core import glsl_utils
+from kivy.graphics import Mesh
+from kivy.graphics.stencil_instructions import *
 
+        
 class RVIElement(FloatLayout):
     """All Visualizers (and interactors?) have the following properties. """
 
@@ -45,13 +48,14 @@ class RVIElement(FloatLayout):
     RVI element should update its data per second. Only relevant when
     self_update is True. Defaults to 30.
 
-    """ 
-
+    """
+    
+    background_color = ListProperty([0.0] * 4)
+    
     def __init__(self, *args, **kwargs):
         self.render_context = RenderContext()
         super().__init__(**kwargs)
         self.configurable_properties = {}
-        self.addControlBar()
 
         self.render_context['modelview_mat'] = Matrix().identity()
         self.render_context['projection_mat'] = Matrix().identity()
@@ -67,6 +71,16 @@ class RVIElement(FloatLayout):
         
         prop = self.property('fps')
         prop.dispatch(self)
+        with self.canvas:
+            StencilPush()
+            Color(0,1,1,mode='hsv')
+            self.stencil = Rectangle(pos=(10,10),size=(self.size))
+            StencilUse()
+            self.stencil_color = Color(*self.background_color)
+            Rectangle(pos=(-100,-100),size=(10000,1000000))
+            self.render_context = RenderContext()
+            StencilPop()
+        self.addControlBar()
 
  
     def addControlBar(self):
@@ -106,6 +120,8 @@ class RVIElement(FloatLayout):
 
         ## add all created buttons to layout (i.e. display them all)
         self.add_widget(self.top_buttons)
+        # print(self.width)
+        # quit()
         
     def addConfigurableProperty(self, prop):
         self.configurable_properties[prop.name] = ConfigurableProperty(prop, self)
@@ -115,6 +131,7 @@ class RVIElement(FloatLayout):
 
     def registerConfigurableProperties(self):
         pass
+        #self.addConfigurableProperty(RVIElement.background_color)
 
     def on_unique_name(self, obj, unique_name):
         if unique_name != '':
@@ -187,9 +204,5 @@ class RVIElement(FloatLayout):
     def update(self):
         pass
 
-
-# ### Local Variables: ###
-# ### mode: python ###
-# ### python-main-file: "main.py" ###
-# ### python-working-dir: "../minimal_project/" ###
-# ### End: ###
+    def on_background_color(self,obj,value):
+        self.stencil_color.rgba = value

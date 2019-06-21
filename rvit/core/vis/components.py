@@ -3,6 +3,7 @@ from kivy.properties import *
 import kivy.graphics.transformation 
 from kivy.core.window import Window
 import rvit.core
+from rvit.core.properties import ColorProperty
 import re
 import numpy as np
 
@@ -33,6 +34,11 @@ class xy_bounds(RVIElement):
         p = rvit.core.BUTTON_BORDER_HEIGHT
         m.scale(2.0 * self.width / w,
                 2.0 * (self.height - p) / h, 1.0)
+
+        # self.stencil.size = (2.0 * self.width / w,
+        #                      2.0 * (self.height - p) / h)
+        self.stencil.size = self.size
+        self.stencil.pos = self.pos
         m.translate(-1.0 + (self.pos[0]) * 2.0 / w,
                     -1.0 + (self.pos[1]) * 2.0 / h,
                     0.0)
@@ -67,7 +73,7 @@ class xy_bounds(RVIElement):
 
     def on_ymax(self, obj, value):
         self.updateModelViewMatrix()
-
+            
 class color(RVIElement):
     """Provides a single 4-tuple parameter [R,G,B,A] that can be used to
     specify the the primary color of the visualizer. May be
@@ -75,17 +81,25 @@ class color(RVIElement):
     cases (e.g. the color_1d data source) the alpha component still is used.
 
     """
+
+    r = BoundedNumericProperty(1,min=0,max=1)
+    g = BoundedNumericProperty(1,min=0,max=1)
+    b = BoundedNumericProperty(1,min=0,max=1)
+    a = BoundedNumericProperty(1,min=0,max=1)
     
-    color = ListProperty([1.] * 4)
-    """a 4-tuple (red,green,blue,alpha) :: when the **color_data**
+    color = ColorProperty(r,g,b,a)
+    """a 4-tuple '[red,green,blue,alpha]' :: when the **color_data**
 parameter is not provided, this property specifies the color for all
 plotted points. When color_data is provided, the alpha value is still
-used."""
+used.
 
+    """
+    
     def on_color(self, obj, value):
         # for single color setting
-        self.render_context['color'] = [float(v) for v in self.color]
-   
+        self.render_context['color'] = list(value)
+
+        
 # class ColorMap(RVIElement):
 #     colormap = NumericProperty(-1.) #: x-coord of left border 
 

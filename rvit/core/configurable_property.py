@@ -2,7 +2,10 @@ from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.textinput import TextInput
+from kivy.graphics import Color
+from kivy.uix.colorpicker import ColorPicker,ColorWheel
 from kivy.properties import ObjectProperty, StringProperty, NumericProperty, OptionProperty, BooleanProperty
+from rvit.core.properties import ColorProperty
 from functools import partial
 from rvit.core import *
 import rvit.core
@@ -24,7 +27,23 @@ class ConfigurableProperty(object):
     def getConfigurationSubpanel(self):
         subpanel = BoxLayout(size_hint=(1.0, None), height=(40))
         subpanel.add_widget(Label(text=self.prop.name, size_hint=(1.0, 1.0)))
-        if isinstance(self.prop, OptionProperty):
+        if isinstance(self.prop, ColorProperty):
+            clr_picker = ColorPicker()
+            if(self.key in rvit.core.pars.keys()) :
+                current_color = rvit.core.pars[self.key]
+                clr_picker.color = current_color
+            def on_color(instance, value):
+                # print("RGBA = ", instance.color)
+                # print(type(instance.color))
+                # print("HSV = ", str(instance.hsv))
+                # print("HEX = ", str(instance.hex_color))
+                self.prop.set(self.owner, list(instance.color))
+                rvit.core.pars[self.key] = list(instance.color)
+            subpanel.add_widget(clr_picker)
+            clr_picker.bind(color=on_color)
+            subpanel.height = 300
+            subpanel.background = [0,0,0,1]
+        elif isinstance(self.prop, OptionProperty):
             if len(self.prop.options) < 5:
                 for opt in self.prop.options:
 
@@ -64,8 +83,7 @@ class ConfigurableProperty(object):
             ti = TextInput(text=str(self.prop.get(self.owner)),
                            multiline=False, size_hint=(1.0, 1.0))
             subpanel.add_widget(ti)
-            ti.bind(text=on_text)
-
+            ti.bind(text=on_text)        
         else:
             subpanel.add_widget(Label(text=str(self.prop.get(self.owner)),
                                       size_hint=(1.0, 1.0)))
