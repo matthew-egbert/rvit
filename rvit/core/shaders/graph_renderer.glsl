@@ -10,18 +10,19 @@ varying vec2 tex_coord0;
 
 /* vertex attributes */
 attribute vec2     v_pos;
+{{ attributes | join('\n') }}
+
 
 /* uniform variables */
 uniform mat4       modelview_mat;
 uniform mat4       projection_mat;
 uniform vec4       color;
-//uniform float zero_scaled; // the y-values have been scaled to between 0 and 1. This is where 0 is.
+uniform float      vmin; // scales gradient
+uniform float      vmax; // scales gradient
 
 void main() {
-  //frag_color = vec4(1.0,abs(v_pos.y)<5.05,abs(v_pos.y)<5.05,1.0);
   frag_color = color;
-  //frag_color.y = 0.0;
-  tex_coord0 = vec2(0,0);
+  tex_coord0 = vec2(0.0,(v_pos.y-vmin)/(vmax-vmin));
   gl_Position = projection_mat * modelview_mat * vec4(v_pos.xy, 0.0, 1.0);
 }
 
@@ -36,12 +37,18 @@ varying vec4 frag_color;
 varying vec2 tex_coord0;
 
 /* uniform texture samplers */
-//uniform sampler2D texture0;
+uniform sampler2D texture0;
 
 uniform vec2 player_pos;
 uniform vec2 window_size; // in pixels
 void main (void){
-  gl_FragColor = frag_color;
+  {% if uses_gradient == True %}
+  vec4 t = texture2D(texture0, tex_coord0);
+  gl_FragColor = vec4(t.rgb,1.0);
+  {% else %}
+  gl_FragColor = vec4(frag_color);
+  {% endif %}
+
 }
 
 /* Local Variables: */

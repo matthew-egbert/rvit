@@ -2,6 +2,10 @@
 High-priority
 =============
 
+need to fix the configurable property thing to make customizing the
+configuration panels more straight forward
+
+
 unique_name
 -----------
 Why did I say that this has to be specified last. Make that not the case!

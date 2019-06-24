@@ -123,8 +123,8 @@ class RVIElement(FloatLayout):
         # print(self.width)
         # quit()
         
-    def addConfigurableProperty(self, prop):
-        self.configurable_properties[prop.name] = ConfigurableProperty(prop, self)
+    def addConfigurableProperty(self, prop, rank = 0):
+        self.configurable_properties[prop.name] = ConfigurableProperty(prop, self, rank)
 
     def removeConfigurableProperty(self, prop):
         self.configurable_properties.pop(prop.name)
@@ -139,10 +139,17 @@ class RVIElement(FloatLayout):
             self.registerConfigurableProperties()
             if len(self.configurable_properties) > 0:
                 def test(value):
-                    content = StackLayout()
-                    for k in self.configurable_properties.keys():
-                        content.add_widget(
-                            self.configurable_properties[k].getConfigurationSubpanel())
+                    content = StackLayout(orientation='tb-lr')
+                    content.spacing=(40,20)
+                    content.padding=5
+
+                    cps = list(self.configurable_properties.values())
+                    for cp in sorted(cps,key=lambda x: x.rank) :
+                        print(cp.rank)
+                        content.add_widget(cp.getConfigurationSubpanel())
+                    # for k in self.configurable_properties.keys():
+                    #     content.add_widget(
+                    #         self.configurable_properties[k].getConfigurationSubpanel())
                     popup = Popup(title='Configure', content=content)
                     popup.open()
 
