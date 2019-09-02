@@ -1,0 +1,16 @@
+#:kivy 1.0
+#:import LineRenderer rvit.core.vis.line_renderer
+
+
+FloatLayout: 
+    LineRenderer: # A Visualizer 
+        x_data: 'pos[:,0]'         # a DataSource
+        y_data: 'pos[:,1]'         # a DataSource
+        indices: 'inds'
+        pos_hint: {'x':0., 'y':0.} # parameter (from Kivy Widget) 
+        size_hint: (1.0,1.0)       # parameter (from Kivy Widget) 
+        color: [1.0,1.0,1.0,0.5]  # parameter (from PointRenderer's
+                                   #            component `color`)
+        unique_name: 'positions'   # a unique identifier for this visualizer
+
+    
