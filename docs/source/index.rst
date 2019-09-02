@@ -13,6 +13,7 @@ RVIT: Realtime Visualization and Interaction Toolkit
 
    overview
    getting_started
-   framework
+   concepts_visualizers
+   concepts_interactors 
    api
    

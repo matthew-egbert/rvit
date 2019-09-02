@@ -1,5 +1,4 @@
 
-
 class {{property_name}}(RVIElement):
     """{{docstring}}
     """
@@ -18,13 +17,7 @@ class {{property_name}}(RVIElement):
         if self.{{property_name}} != '':
             s = 'self.{{variable_name}} = self.simulation.%s' % (self.{{property_name}})
             exec(s)
-#             s  = """
-# if not isinstance(self.{{variable_name}},(float,int)):
-#     self.n_elements = len(self.{{variable_name}})
-# else: 
-#     self.n_elements = 1
-# """
-            s = 'self.n_elements = len(self.{{variable_name}})'
+            s = 'self.n_elements = len(np.ravel(self.{{variable_name}}))'
             exec(s)
             self.data_index_{{variable_name}} = self.n_data_sources
             self.n_data_sources += 1
@@ -39,7 +32,9 @@ class {{property_name}}(RVIElement):
     def update(self):
         super().update()
         if hasattr(self,'{{variable_name}}'):
-            data = np.array(self.{{variable_name}}, dtype=np.float32)#.reshape(N, 1)
+            data = np.repeat(
+                np.array(self.{{variable_name}}, dtype=np.float32),
+                self.vertices_per_datum)
             if hasattr(self,'preprocess_{{variable_name}}') :
                 data = self.preprocess_{{variable_name}}(data)
             self.data_to_shader[:,self.data_index_{{variable_name}}] = data.ravel()
@@ -47,5 +42,4 @@ class {{property_name}}(RVIElement):
     def on_{{property_name}}_preprocess(self, obj, value):
         s = 'self.preprocess_{{variable_name}} = %s' % (value)
         exec(s)
-
     

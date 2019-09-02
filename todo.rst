@@ -2,13 +2,15 @@
 High-priority
 =============
 
-need to fix the configurable property thing to make customizing the
-configuration panels more straight forward
-
 
 unique_name
 -----------
 Why did I say that this has to be specified last. Make that not the case!
+
+
+===============
+Medium-priority
+===============
 
 
 Make color_data take different formats (RGBA vs. color index).
@@ -29,6 +31,9 @@ and new properties should be added
   color_4D_scheme: HSVA
 
 and these should dynamically modify the shader code accordingly  
+
+Make sprite-shader capable of drawing square textures when the xy-bounds are not
+square. A tick box or something.
 
 ============
 Low-priority

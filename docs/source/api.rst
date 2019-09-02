@@ -10,10 +10,17 @@ API: Core
 
 API: Visualizers
 ################
+
 .. autosummary:: rvit.core.vis.rvi_element.RVIElement
    :nosignatures:
-
+            
 .. autosummary:: rvit.core.vis.point_renderer.PointRenderer
+   :nosignatures:
+
+.. autosummary:: rvit.core.vis.sprite_renderer.SpriteRenderer
+   :nosignatures:      
+      
+.. autosummary:: rvit.core.vis.scalar_tracker.ScalarTracker
    :nosignatures:
       
 .. autoclass:: rvit.core.vis.rvi_element.RVIElement
@@ -23,13 +30,21 @@ API: Visualizers
    :members:
    :show-inheritance: True
 
+.. autoclass:: rvit.core.vis.sprite_renderer.SpriteRenderer
+   :members:
+   :show-inheritance: True
+
+.. autoclass:: rvit.core.vis.scalar_tracker.ScalarTracker
+   :members:
+   :show-inheritance: True
+		      
 		      
       
 API: Components
 ###############
 .. automodsumm:: rvit.core.vis.components
    :skip: BooleanProperty,NumericProperty,ObjectProperty,OptionProperty,RVIElement,StringProperty,DictProperty,ListProperty,Property,ConfigParserProperty,BoundedNumericProperty,VariableListProperty,AliasProperty,ReferenceListProperty,Window
-   :nosignatures:	  
+   :nosignatures:
 
 .. automodule:: rvit.core.vis.components
    :members:
@@ -46,3 +61,11 @@ API: Data Sources
    :members:
 
 
+API: Interactors
+################# 
+.. autosummary:: rvit.core.int.rvi_button.RVIButton
+   :nosignatures:
+
+.. autoclass:: rvit.core.int.rvi_button.RVIButton
+   :members: function 
+      

@@ -40,6 +40,13 @@ if __name__ == '__main__':
         'attribute_defn' : 'attribute float y;',
         'fmt' : (b'y', 1, 'float'),
     })
+    classes += generate_data_source_class({
+        'property_name' : 'rot_data',
+        'variable_name' : 'rots',
+        'docstring' : 'vector containing the way each datum is to be rotated (in radians)',
+        'attribute_defn' : 'attribute float rot;',
+        'fmt' : (b'rot', 1, 'float'),
+    })
 
     
     classes += generate_data_source_class({

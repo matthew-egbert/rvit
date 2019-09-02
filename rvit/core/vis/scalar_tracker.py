@@ -16,9 +16,21 @@ from rvit.core.vis.data_sources import *
 from kivy.graphics import Mesh
     
 class ScalarTracker(xy_bounds,color,gradient):
-    """
-    takes a single scalar value data source and keeps
-    track of its recent history.
+    """takes a single scalar value data source and plots its
+    recent history. Here is an example usage. 
+
+    .. literalinclude :: ./code_examples/scalar_tracker/main.py
+        :language: python
+        :caption: main.py
+
+    .. literalinclude :: ./code_examples/scalar_tracker/rvit.kv
+        :language: python
+        :caption: rvit.kv
+
+    .. figure:: ./code_examples/scalar_tracker/screenshot.png
+        :width: 300px
+
+    minimal example
 
     """
     line_width = NumericProperty(0.02)
@@ -36,6 +48,7 @@ class ScalarTracker(xy_bounds,color,gradient):
         super().__init__(**kwargs)
         self.on_num_samples(self,self.num_samples) # TODO: dispatch
         self._x = 0
+        self.xmin = 0
         
     def registerConfigurableProperties(self):
         super().registerConfigurableProperties()
@@ -94,9 +107,6 @@ class ScalarTracker(xy_bounds,color,gradient):
             r = (self.ymax-self.ymin)*self.line_width/2
             self.data[self._x,1] = self._y - r
             self.data[self._x+self.N,1] = self._y + r
-            # if hasattr(self,'get_c_command'):
-            #     exec(self.get_c_command)
-            #     self.data[self._x,2] = self._c
         else :
             self.data[self._x,1] = self._y
 
@@ -114,7 +124,11 @@ class ScalarTracker(xy_bounds,color,gradient):
     def loadShaders(self):
         ## generate the glsl code
         #self.shader_substitutions.update(args)
+        print('scalar tracker subs')
+        print(self.shader_substitutions)
+    
         self.shaders = glsl_utils.loadShaders('graph_renderer.glsl',self.shader_substitutions)
+        
         # # ## set the meshes shaders to the generated glsl code
         self.render_context.shader.vs = self.shaders['vs']
         self.render_context.shader.fs = self.shaders['fs']
@@ -129,7 +143,7 @@ class ScalarTracker(xy_bounds,color,gradient):
 
         if hasattr(self,'fill_mesh'):
             self.render_context.remove(self.fill_mesh)
-        fmt =[(b'v_pos', 2, 'float')]
+        fmt = [(b'v_pos', 2, 'float')]
             
         self.fill_mesh = Mesh(mode='triangles', fmt=fmt)
         self.render_context.add(self.fill_mesh)

@@ -22,7 +22,6 @@ class ConfigurableProperty(object):
 
         # load values from the previous run
         if self.key in rvit.core.pars.keys():
-            print('-------------')
             print(self.key)
             print(rvit.core.pars[self.key])
             # print('configurableProperty %s being '+

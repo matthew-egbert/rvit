@@ -113,7 +113,7 @@ used.
         self.render_context['color'] = list(value)
 
 class gradient(RVIElement):
-    gradient = OptionProperty('viridis',options=['viridis','plasma','inferno','hsv','coolwarm','viridis','limits','None'])
+    gradient = OptionProperty('viridis',options=['viridis','plasma','inferno','hsv','coolwarm','spring','summer','autumn','tab20c','limits','None'])
     vmin = NumericProperty(0.0)
     vmax = NumericProperty(1.0)
 
@@ -140,6 +140,7 @@ class gradient(RVIElement):
         self.addConfigurableProperty(gradient.vmax,rank=101)
 
     def on_gradient(self,obj,value):
+        print('on_gradient()',value)
         if value != 'None':
             self.depth = 4
             self.colorfmt = ['ZERO_DEPTH_ARRAY?', 'luminance',
@@ -161,9 +162,10 @@ class gradient(RVIElement):
             self.render_context['vmin'] = self.vmin
             self.render_context['vmax'] = self.vmax
 
-            self.shader_substitutions['uses_gradient'] = True
+            self.shader_substitutions['uses_gradient'] = True            
         else:
             self.shader_substitutions['uses_gradient'] = False
+        self.format_has_changed = True
         self.loadShaders()
 
     def on_vmin(self,obj,value):
@@ -175,19 +177,6 @@ class gradient(RVIElement):
         self.render_context['vmax'] = self.vmax
         
         
-        
-# class ColorMap(RVIElement):
-#     colormap = NumericProperty(-1.) #: x-coord of left border 
-
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(**kwargs)
-
-#     def registerConfigurableProperties(self):
-#         super().registerConfigurableProperties()
-#         self.addConfigurableProperty(ColorMap.colormap)
-        
-#     def on_colormap(self, obj, value):
-#         pass
         
 
 

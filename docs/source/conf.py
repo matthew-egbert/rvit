@@ -89,6 +89,7 @@ margin-left: 260px;
 div.body {
     font-family: 'arial';
     padding-top: 1em;
+    font-size: 80%;
 }
 
 dl.class {
@@ -103,6 +104,9 @@ color: #fff;
 text-align: right;
 }
 
+div.body code.descname, div.body tt.descname {
+  font-size: 100%;
+}
 """
 
 html_theme_options = {

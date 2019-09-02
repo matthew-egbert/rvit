@@ -14,12 +14,13 @@ from rvit.core.vis.simple_renderer import SimpleRenderer
 from rvit.core.vis.components import *
 from rvit.core.vis.data_sources import *
 
+import OpenGL.GL as gl
     
 class PointRenderer(SimpleRenderer,xy_bounds,x_data,y_data,color1d_data,size_data):
     """The PointRenderer is used to display a scatter diagram of 2D points. 
     
-    It can use a :class:`.SecondaryDataSource` to determine the color or size 
-    of the displayed points.
+    It can use a :class:`.color1d_data` to determine the color or size 
+    of the displayed points and :class:`.size_data` to determine their size.
 
     .. figure:: vis_examples/point_renderer.png
        :width: 300px
@@ -58,7 +59,8 @@ is provided, the alpha value is still used.
     """
 
     def __init__(self, *args, **kwargs):
-        glEnable(0x8642)  # equivalend to glEnable(GL_PROGRAM_POINT_SIZE)
+        #glEnable(0x8642)  # equivalent to
+        glEnable(gl.GL_PROGRAM_POINT_SIZE)
         
         super().__init__(**kwargs)        
         
@@ -76,7 +78,7 @@ is provided, the alpha value is still used.
         # for a single points size (and to scale diverse point sizes)
         self.loadShaders()
 
-    def on_size(self, inst, value):
+    def on_point_size(self, inst, value):
         ## the point size is dynamically set in loadShaders in a way that
         ## responds to the overall window size. Accordingly this callback
         ## calls loadShaders (to allow response to window resizing).

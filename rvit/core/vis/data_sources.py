@@ -8,7 +8,6 @@ from kivy.app import App
 import numpy as np
 
 
-
 class x_data(RVIElement):
     """vector containing the x-values of data to be plotted.
     """
@@ -27,13 +26,7 @@ class x_data(RVIElement):
         if self.x_data != '':
             s = 'self.xs = self.simulation.%s' % (self.x_data)
             exec(s)
-#             s  = """
-# if not isinstance(self.xs,(float,int)):
-#     self.n_elements = len(self.xs)
-# else: 
-#     self.n_elements = 1
-# """
-            s = 'self.n_elements = len(self.xs)'
+            s = 'self.n_elements = len(np.ravel(self.xs))'
             exec(s)
             self.data_index_xs = self.n_data_sources
             self.n_data_sources += 1
@@ -45,7 +38,9 @@ class x_data(RVIElement):
     def update(self):
         super().update()
         if hasattr(self,'xs'):
-            data = np.array(self.xs, dtype=np.float32)#.reshape(N, 1)
+            data = np.repeat(
+                np.array(self.xs, dtype=np.float32),
+                self.vertices_per_datum)
             if hasattr(self,'preprocess_xs') :
                 data = self.preprocess_xs(data)
             self.data_to_shader[:,self.data_index_xs] = data.ravel()
@@ -53,9 +48,7 @@ class x_data(RVIElement):
     def on_x_data_preprocess(self, obj, value):
         s = 'self.preprocess_xs = %s' % (value)
         exec(s)
-
     
-
 class y_data(RVIElement):
     """vector containing the y-values of data to be plotted.
     """
@@ -74,13 +67,7 @@ class y_data(RVIElement):
         if self.y_data != '':
             s = 'self.ys = self.simulation.%s' % (self.y_data)
             exec(s)
-#             s  = """
-# if not isinstance(self.ys,(float,int)):
-#     self.n_elements = len(self.ys)
-# else: 
-#     self.n_elements = 1
-# """
-            s = 'self.n_elements = len(self.ys)'
+            s = 'self.n_elements = len(np.ravel(self.ys))'
             exec(s)
             self.data_index_ys = self.n_data_sources
             self.n_data_sources += 1
@@ -92,7 +79,9 @@ class y_data(RVIElement):
     def update(self):
         super().update()
         if hasattr(self,'ys'):
-            data = np.array(self.ys, dtype=np.float32)#.reshape(N, 1)
+            data = np.repeat(
+                np.array(self.ys, dtype=np.float32),
+                self.vertices_per_datum)
             if hasattr(self,'preprocess_ys') :
                 data = self.preprocess_ys(data)
             self.data_to_shader[:,self.data_index_ys] = data.ravel()
@@ -100,9 +89,48 @@ class y_data(RVIElement):
     def on_y_data_preprocess(self, obj, value):
         s = 'self.preprocess_ys = %s' % (value)
         exec(s)
-
     
+class rot_data(RVIElement):
+    """vector containing the way each datum is to be rotated (in radians)
+    """
 
+    rot_data = StringProperty('') #: vector containing the way each datum is to be rotated (in radians)
+    rot_data_preprocess = StringProperty('') #: the preprocessor for rot_data
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(**kwargs)
+
+    def on_rot_data(self, obj, value):
+        if not hasattr(self,'simulation'):
+            self.simulation = App.get_running_app().get_simulation()
+        
+        self.rot_data = value
+        if self.rot_data != '':
+            s = 'self.rots = self.simulation.%s' % (self.rot_data)
+            exec(s)
+            s = 'self.n_elements = len(np.ravel(self.rots))'
+            exec(s)
+            self.data_index_rots = self.n_data_sources
+            self.n_data_sources += 1
+        
+        self.shader_substitutions['attributes'].append('attribute float rot;')
+        self.fmt.append( (b'rot', 1, 'float') )
+        self.format_has_changed = True
+
+    def update(self):
+        super().update()
+        if hasattr(self,'rots'):
+            data = np.repeat(
+                np.array(self.rots, dtype=np.float32),
+                self.vertices_per_datum)
+            if hasattr(self,'preprocess_rots') :
+                data = self.preprocess_rots(data)
+            self.data_to_shader[:,self.data_index_rots] = data.ravel()
+
+    def on_rot_data_preprocess(self, obj, value):
+        s = 'self.preprocess_rots = %s' % (value)
+        exec(s)
+    
 class color1d_data(RVIElement):
     """vector containing the colors of each plotted item.
     """
@@ -121,20 +149,14 @@ class color1d_data(RVIElement):
         if self.color1d_data != '':
             s = 'self.colors = self.simulation.%s' % (self.color1d_data)
             exec(s)
-#             s  = """
-# if not isinstance(self.colors,(float,int)):
-#     self.n_elements = len(self.colors)
-# else: 
-#     self.n_elements = 1
-# """
-            s = 'self.n_elements = len(self.colors)'
+            s = 'self.n_elements = len(np.ravel(self.colors))'
             exec(s)
             self.data_index_colors = self.n_data_sources
             self.n_data_sources += 1
         self.shader_substitutions['vertex_shader_functions'].append("""
 // testing
 """)
-        self.color_dim = np.shape(np.shape((self.colors)[1]))
+        self.color_dim = np.shape(np.shape((self.colors))[1])
         self.shader_substitutions['attributes'].append('attribute float color1D;')
         self.fmt.append( (b'color1D', 1, 'float') )
         self.format_has_changed = True
@@ -142,7 +164,9 @@ class color1d_data(RVIElement):
     def update(self):
         super().update()
         if hasattr(self,'colors'):
-            data = np.array(self.colors, dtype=np.float32)#.reshape(N, 1)
+            data = np.repeat(
+                np.array(self.colors, dtype=np.float32),
+                self.vertices_per_datum)
             if hasattr(self,'preprocess_colors') :
                 data = self.preprocess_colors(data)
             self.data_to_shader[:,self.data_index_colors] = data.ravel()
@@ -150,9 +174,7 @@ class color1d_data(RVIElement):
     def on_color1d_data_preprocess(self, obj, value):
         s = 'self.preprocess_colors = %s' % (value)
         exec(s)
-
     
-
 class size_data(RVIElement):
     """vector containing the sizes of each plotted item.
     """
@@ -171,13 +193,7 @@ class size_data(RVIElement):
         if self.size_data != '':
             s = 'self.sizes = self.simulation.%s' % (self.size_data)
             exec(s)
-#             s  = """
-# if not isinstance(self.sizes,(float,int)):
-#     self.n_elements = len(self.sizes)
-# else: 
-#     self.n_elements = 1
-# """
-            s = 'self.n_elements = len(self.sizes)'
+            s = 'self.n_elements = len(np.ravel(self.sizes))'
             exec(s)
             self.data_index_sizes = self.n_data_sources
             self.n_data_sources += 1
@@ -189,7 +205,9 @@ class size_data(RVIElement):
     def update(self):
         super().update()
         if hasattr(self,'sizes'):
-            data = np.array(self.sizes, dtype=np.float32)#.reshape(N, 1)
+            data = np.repeat(
+                np.array(self.sizes, dtype=np.float32),
+                self.vertices_per_datum)
             if hasattr(self,'preprocess_sizes') :
                 data = self.preprocess_sizes(data)
             self.data_to_shader[:,self.data_index_sizes] = data.ravel()
@@ -197,5 +215,4 @@ class size_data(RVIElement):
     def on_size_data_preprocess(self, obj, value):
         s = 'self.preprocess_sizes = %s' % (value)
         exec(s)
-
     

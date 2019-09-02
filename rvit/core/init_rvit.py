@@ -3,6 +3,8 @@ import os
 import pickle
 import shelve
 
+import os
+os.environ['KIVY_GLES_LIMITS'] = '0'
 import rvit
 from kivy.logger import Logger
 from kivy.core.text import LabelBase
@@ -78,7 +80,7 @@ def init_rvit(model_object,rvit_string=None,rvit_file=None,window_size=(900,900)
     
     if platform == 'linux':
         Config.set('graphics', 'width', str(int(window_size[0])))
-        Config.set('graphics', 'height', str(int(window_size[0])))
+        Config.set('graphics', 'height', str(int(window_size[1])))
     
     class RvitApp(App):
         def __init__(self, *args, **kwargs):

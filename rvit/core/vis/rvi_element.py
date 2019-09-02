@@ -27,7 +27,7 @@ from kivy.graphics.stencil_instructions import *
 
         
 class RVIElement(FloatLayout):
-    """All Visualizers (and interactors?) have the following properties. """
+    """All Visualizers have the following properties. """
 
     unique_name = StringProperty('') 
     """Every RVIElement should specify one of these. It is a unique identifier that
@@ -67,6 +67,7 @@ class RVIElement(FloatLayout):
         self.shader_substitutions = defaultdict(list)
         self.fmt = []
         self.n_data_sources = 0
+        self.vertices_per_datum = 1
         self.format_has_changed = True
         
         prop = self.property('fps')
@@ -189,7 +190,7 @@ class RVIElement(FloatLayout):
 
         instructions = ['gnome-terminal', '-e',
                         """ bash -c "cd """ + skivy.inspection_path +
-                        """ ; ipython -i """ + inspection_script_name + """ " """]
+                        """ ; ipython3 -i """ + inspection_script_name + """ " """]
         call(instructions)
 
 

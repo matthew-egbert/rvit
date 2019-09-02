@@ -48,7 +48,6 @@ void main (void){
   {% else %}
   gl_FragColor = vec4(frag_color);
   {% endif %}
-
 }
 
 /* Local Variables: */
