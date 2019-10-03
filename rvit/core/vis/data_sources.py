@@ -156,7 +156,7 @@ class color1d_data(RVIElement):
         self.shader_substitutions['vertex_shader_functions'].append("""
 // testing
 """)
-        self.color_dim = np.shape(np.shape((self.colors))[1])
+        self.color_dim = np.shape(np.shape((self.colors)[1]))
         self.shader_substitutions['attributes'].append('attribute float color1D;')
         self.fmt.append( (b'color1D', 1, 'float') )
         self.format_has_changed = True

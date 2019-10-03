@@ -86,19 +86,6 @@ class ScalarTracker(xy_bounds,color,gradient):
             self.get_y_command = 'self._y = self.simulation.%s' % (value)
             exec(self.get_y_command)
         self.loadShaders()
-
-    # def on_c_scalar(self, obj, value):
-    #     if not hasattr(self,'simulation'):
-    #         self.simulation = App.get_running_app().get_simulation()
-        
-    #     # self.scalar_data = value
-    #     if value != '':
-    #         self.get_c_command = 'self._c = self.simulation.%s' % (value)
-    #         exec(self.get_c_command)
-    #         self.shader_substitutions['uses_c'] = True
-    #     else :
-    #         self.shader_substitutions['uses_c'] = False
-    #     self.loadShaders()
         
     def update(self):
         super().update()

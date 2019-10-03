@@ -26,7 +26,9 @@ class {{property_name}}(RVIElement):
         {% endif -%}
         {{ on_set }}
         self.shader_substitutions['attributes'].append('{{attribute_defn}}')
+        {% if fmt is defined -%}
         self.fmt.append( {{fmt}} )
+        {% endif -%}
         self.format_has_changed = True
 
     def update(self):

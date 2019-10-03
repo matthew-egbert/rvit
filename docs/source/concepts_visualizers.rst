@@ -80,6 +80,11 @@ assume lies between 0 and 1000) to lie between 0 and 1 as required by the
         color_data: 'model.a_data_source_that_ranges_btwn_0_and_1000'
         color_preprocess: 'lambda x: x/1000.'
 
+NOTE: it is important that any preprocessing function does not change the shape
+of the data. For instance `'lambda x: 0.5'` might be thought to change all of the
+data in `x` to 0.5, but actually transforms x into a scalar. One way to write this
+would instead be `'lambda x: 0.0 * x + 0.5'`.
+	
 List of data-sources
 ####################
 

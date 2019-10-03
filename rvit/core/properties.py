@@ -86,7 +86,7 @@ class BoundsProperty(ReferenceListProperty):
         ymax.bind(text=partial(on_text,index = 3, sub_prop_name = 'ymax'))
         layout.add_widget(Label(text='y_min',**label_display_props))
         layout.add_widget(ymin)
-        layout.add_widget(Label(text='y_min',**label_display_props))
+        layout.add_widget(Label(text='y_max',**label_display_props))
         layout.add_widget(ymax)
 
         return layout

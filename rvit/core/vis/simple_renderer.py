@@ -9,7 +9,7 @@ from rvit.core.vis.data_sources import *
 import rvit.core.glsl_utils as glsl_utils
 
 
-class SimpleRenderer(xy_bounds,color,gradient):
+class SimpleRenderer(xy_bounds):
     indices = ListProperty([])
     
     def __init__(self, *args, **kwargs):
@@ -26,7 +26,6 @@ class SimpleRenderer(xy_bounds,color,gradient):
             self.data_to_shader = np.zeros((self.n_elements,
                                             self.n_data_sources), dtype=np.float32)
             if hasattr(self,'mesh_indices') :
-                print(self.mesh_indices)
                 self.mesh.indices = self.mesh_indices
             else:
                 self.mesh.indices = np.arange(self.n_elements)

@@ -69,6 +69,16 @@ if __name__ == '__main__':
         'fmt' : (b'size', 1, 'float'),
     })
 
+    ## This is really a different thing than the other data sources
+    ## as it is a texture/array rather than a vector.
+    # classes += generate_data_source_class({
+    #     'property_name' : 'array_data',
+    #     'variable_name' : 'arr',
+    #     'docstring' : 'ND array containing the data to be plotted',
+    #     #'attribute_defn' : 'attribute float size;',
+    #     #'fmt' : (b'size', 1, 'float'),
+    # })
+    
 
 
     s = Template('''

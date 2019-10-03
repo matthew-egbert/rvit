@@ -65,13 +65,13 @@ varying vec4 frag_color;
 varying vec2 tex_coord0;
 
 /* uniform texture samplers */
-uniform sampler2D texture0;
+uniform sampler2D gradient_texture;
 
 // uniform vec2 player_pos;
 // uniform vec2 window_size; // in pixels
 void main (void){
   {% if uses_gradient == True %}
-  vec4 t = texture2D(texture0, tex_coord0);
+  vec4 t = texture2D(gradient_texture, tex_coord0);
   gl_FragColor = vec4(t.rgb,1.0);
   //gl_FragColor = vec4(tex_coord0.x,tex_coord0.y,1.0,1.0);
   //gl_FragColor = vec4(t.rgb,1.0);

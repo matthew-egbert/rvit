@@ -156,7 +156,7 @@ class gradient(RVIElement):
             self.texture.blit_buffer(t.ravel(),
                                      colorfmt=self.colorfmt,
                                      bufferfmt='float')
-            self.render_context['texture0'] = self.texture.id
+            self.render_context['gradient_texture'] = self.texture.id
             self.render_context.add(BindTexture(texture=self.texture, index=self.texture.id,
                                                 colorfmt='rgba', mipmap=True))
             self.render_context['vmin'] = self.vmin
