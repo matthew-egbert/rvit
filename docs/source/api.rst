@@ -1,6 +1,6 @@
-===============
-API Reference
-===============
+=============
+API REFERENCE
+=============
 
 API: Core
 ##########
@@ -11,9 +11,13 @@ API: Core
 API: Visualizers
 ################
 
+
 .. autosummary:: rvit.core.vis.rvi_element.RVIElement
    :nosignatures:
             
+.. autosummary:: rvit.core.vis.array_renderer.ArrayRenderer
+   :nosignatures:
+
 .. autosummary:: rvit.core.vis.point_renderer.PointRenderer
    :nosignatures:
 
@@ -22,14 +26,23 @@ API: Visualizers
       
 .. autosummary:: rvit.core.vis.scalar_tracker.ScalarTracker
    :nosignatures:
-      
+
+.. autosummary:: rvit.core.vis.vector_tracker.VectorTracker
+   :nosignatures:
+
+
+   
 .. autoclass:: rvit.core.vis.rvi_element.RVIElement
    :members: unique_name, show_controls, self_update, fps
    	  
-.. autoclass:: rvit.core.vis.point_renderer.PointRenderer
+.. autoclass:: rvit.core.vis.array_renderer.ArrayRenderer
    :members:
    :show-inheritance: True
 
+.. autoclass:: rvit.core.vis.point_renderer.PointRenderer
+   :members:
+   :show-inheritance: True
+		      
 .. autoclass:: rvit.core.vis.sprite_renderer.SpriteRenderer
    :members:
    :show-inheritance: True
@@ -37,15 +50,28 @@ API: Visualizers
 .. autoclass:: rvit.core.vis.scalar_tracker.ScalarTracker
    :members:
    :show-inheritance: True
-		      
+
+.. autoclass:: rvit.core.vis.vector_tracker.VectorTracker
+   :members:
+   :show-inheritance: True
+      
 		      
       
 API: Components
 ###############
-.. automodsumm:: rvit.core.vis.components
-   :skip: BooleanProperty,NumericProperty,ObjectProperty,OptionProperty,RVIElement,StringProperty,DictProperty,ListProperty,Property,ConfigParserProperty,BoundedNumericProperty,VariableListProperty,AliasProperty,ReferenceListProperty,Window
-   :nosignatures:
 
+
+.. autosummary:: rvit.core.vis.components.color
+   :nosignatures:      
+
+.. autosummary:: rvit.core.vis.components.gradient
+   :nosignatures:      
+      
+.. autosummary:: rvit.core.vis.components.xy_bounds
+   :nosignatures:      
+	 
+
+      
 .. automodule:: rvit.core.vis.components
    :members:
 
@@ -54,7 +80,7 @@ API: Data Sources
       
 .. automodsumm:: rvit.core.vis.data_sources
    :skip:
-      BooleanProperty,NumericProperty,ObjectProperty,OptionProperty,RVIElement,StringProperty,DictProperty,ListProperty,Property,ConfigParserProperty,BoundedNumericProperty,VariableListProperty,AliasProperty,ReferenceListProperty
+      BooleanProperty,NumericProperty,ObjectProperty,OptionProperty,RVIElement,StringProperty,DictProperty,ListProperty,Property,ConfigParserProperty,BoundedNumericProperty,VariableListProperty,AliasProperty,ReferenceListProperty,App
    :nosignatures:
 
 .. automodule:: rvit.core.vis.data_sources

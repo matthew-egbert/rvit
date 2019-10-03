@@ -16,7 +16,7 @@ from rvit.core.vis.data_sources import *
 
 import OpenGL.GL as gl
     
-class PointRenderer(SimpleRenderer,xy_bounds,x_data,y_data,color1d_data,size_data):
+class PointRenderer(SimpleRenderer,xy_bounds,color,x_data,y_data,color1d_data,size_data):
     """The PointRenderer is used to display a scatter diagram of 2D points. 
     
     It can use a :class:`.color1d_data` to determine the color or size 

@@ -1,0 +1,17 @@
+#:kivy 1.0
+#:import VectorTracker rvit.core.vis.vector_tracker
+
+FloatLayout: 
+    VectorTracker:
+        pos_hint: {'x':0.0, 'y':0.0}
+        size_hint:  (1.0,1.0)
+        y_vector: 'track_me' ## variable to track and plot
+        gradient: 'plasma'
+        vmin: -1.0
+        vmax: 1.0
+        fill: 'columns'
+        column_gap: 0.5
+        show_controls: True
+        unique_name: 'scalar_tracker'
+
+    

@@ -58,7 +58,7 @@ if __name__ == '__main__':
         'vertex_shader_functions' : '''"""
 // testing
 """''',
-        'on_set' : 'self.color_dim = np.shape(np.shape((self.colors)[1]))'
+        'on_set' : 'self.color_dim = np.shape(self.colors)[1]'
     })
     
     classes += generate_data_source_class({

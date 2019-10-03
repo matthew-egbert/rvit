@@ -56,6 +56,40 @@ class array_data(RVIElement):
 
 
 class ArrayRenderer(xy_bounds,color,gradient,array_data):
+    """Displays a numpy array. The array must be 2 or 3 dimensional. 
+
+    If the target `array_data` is 3D, then the 3rd axis can be of size
+    1, 3 or 4. The way the data is plotted depends upon this size of
+    the 3rd axis in the following way: 
+
+    If the 3rd Axis is of length..
+
+        1: the gradient component determines the color to be plotted.  
+
+        3: the values in the array are the red, green and blue values
+        to be plotted.
+
+        4: the values in the array are the red, green, blue and alpha
+        values to be plotted.
+
+
+    Here is an example usage.
+
+    .. literalinclude :: ./code_examples/array_renderer/main.py
+        :language: python
+        :caption: main.py
+
+    .. literalinclude :: ./code_examples/array_renderer/rvit.kv
+        :language: python
+        :caption: rvit.kv
+
+    .. figure:: ./code_examples/array_renderer/screenshot.png
+        :width: 300px
+
+    minimal example
+
+    """
+
     mag_filter = OptionProperty('nearest', options=['nearest', 'linear'])
     # coloring = OptionProperty('greys', options=['greys', 'red/black', 'rgb'])
 
@@ -100,6 +134,8 @@ class ArrayRenderer(xy_bounds,color,gradient,array_data):
             self.loadShaders()
             self.format_has_changed = False
 
+            if len(np.shape(self.arr)) == 2 :
+                self.arr = np.expand_dims(self.arr,axis=2)
             if isinstance(self.arr, np.ndarray) and len(np.shape(self.arr)) == 3:
                 self.array_width, self.array_height, self.depth = np.shape(self.arr)[:]
                 self.colorfmt = ['NONSENSICAL', 'luminance','luminance_alpha',
@@ -117,7 +153,7 @@ class ArrayRenderer(xy_bounds,color,gradient,array_data):
                 self.render_context.add(BindTexture(texture=self.texture, index=self.texture.id,
                                                     colorfmt='rgba', mipmap=True))
             else:
-                print(np.shape(self.arr), self.target_object, self.target_varname)
+                print(np.shape(self.arr))#, self.target_object, self.target_varname)
                 raise TypeError('Target of Array Renderer must be a 3D numpy.ndarray.')
 
             

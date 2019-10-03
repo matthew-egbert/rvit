@@ -1,6 +1,6 @@
-=================
-Getting Started
-=================
+===============
+GETTING STARTED
+===============
 
 Installation
 ============
@@ -18,10 +18,12 @@ Requirements
   
 Basic Instructions
 ==================
-To augment your simulation with RVIT you must do the following two things.
+To augment your simulation with RVIT you must do the following things.
 
 1. Tell your program to start RVIT
-----------------------------------
+2. Write a RVIT GUI-specification file
+
+.. rubric:: STEP 1: Tell your program to start RVIT
 
 The script below defines a simple model of particles moving around in a random
 walk. The highlighted line with the call to :meth:`~rvit.core.init_rvit.init_rvit()`  
@@ -40,8 +42,7 @@ example above. The second argument tells RVIT where it can find the
 GUI-specification file. This is a file that you will write to specify which
 visualization and interactive elements are to be displayed--see Step 2!
 
-2. Write a RVIT GUI-specification file
---------------------------------------
+.. rubric:: STEP 2: Write a RVIT GUI-specification file
 
 The GUI-specification file tells RVIT what to display. Its contents 
 might look something like this:
@@ -49,7 +50,8 @@ might look something like this:
 .. literalinclude :: ./code_examples/minimal_example/rvit.kv
     :language: python
 
-This is a minimal example and so it includes only a single `visualizer'---a
+
+This is a minimal example and so it includes only a single :ref:`visualizer` -- a
 PointRenderer, called `positions' which draws a point indicating the position of
 all of the simulated particles. When the script from Step 1 is run, RVIT reads
 this GUI-specification file and creates a realtime visualization of the
@@ -98,8 +100,8 @@ each line.
   changes made by the visualizatio end user, so that the changes are remembered
   inbetween executions of the model (sessions).
 
-3. Run the program, and (optionally) modify GUI-component parameters
---------------------------------------------------------------------
+.. rubric:: STEP 3. (optional) Modify GUI-component parameters from within the
+	    running program
 
 << TODO: Write some documentation on this. >> 
 

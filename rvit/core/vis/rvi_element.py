@@ -22,7 +22,6 @@ from kivy.uix.stencilview import StencilView
 from kivy.graphics import Color, Rectangle
 
 from rvit.core import glsl_utils
-from kivy.graphics import Mesh
 from kivy.graphics.stencil_instructions import *
 
         

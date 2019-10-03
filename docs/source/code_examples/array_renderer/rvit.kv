@@ -5,7 +5,7 @@
 FloatLayout: 
     ArrayRenderer: # A Visualizer 
         array_data: 'y[:,:,:]'         # a DataSource
-        #array_data_preprocess: 'lambda x: 0.0*x + 0.5'
+        array_data_preprocess: 'lambda x: np.log(x)'
         xmin: 0.0
         xmax: 1.0
         ymin: 0.0

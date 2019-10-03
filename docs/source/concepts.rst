@@ -1,17 +1,23 @@
-===========
+
+========
+CONCEPTS
+========
+
 Visualizers
 ===========
 
-Visualizers are user-interface elemets that are used to display data.
+Visualizers are user-interface elemets that are used to display data. An example
+of a visualizer is the :class:`~rvit.core.vis.point_renderer.PointRenderer`,
+which displays one-to-many points.
 
-List of visualizers
-###################
+Each visualizer has
 
-.. autosummary:: rvit.core.vis.rvi_element.RVIElement
-   :nosignatures:
 
-.. autosummary:: rvit.core.vis.point_renderer.PointRenderer
-   :nosignatures:
+* zero or more `Components` that are configurable properties of the
+  visualization (e.g. the size or color that the dots should be)
+
+* one or more `Data Source` that specify the data that is to be plotted by the visualizer (e.g. the x and y position of the points to be plotted)
+
       
 Components
 ==========
@@ -35,11 +41,6 @@ Too see which components a given visualization uses, look at the :ref:`relevant
 visualizer's documentation<List of visualizers>` and the classes it inherits
 from (listed as "Bases") at the top of the visualizer's API documentation.
 
-List of components
-##################
-.. automodsumm:: rvit.core.vis.components
-   :skip: BooleanProperty,NumericProperty,ObjectProperty,OptionProperty,RvitWidget,StringProperty,DictProperty,ListProperty,Property,ConfigParserProperty,BoundedNumericProperty,VariableListProperty,AliasProperty,ReferenceListProperty,Window
-   :nosignatures:
 
 Data Sources
 ============
@@ -85,11 +86,11 @@ of the data. For instance `'lambda x: 0.5'` might be thought to change all of th
 data in `x` to 0.5, but actually transforms x into a scalar. One way to write this
 would instead be `'lambda x: 0.0 * x + 0.5'`.
 	
-List of data-sources
-####################
-
-.. automodsumm:: rvit.core.vis.data_sources
-   :skip:
-      BooleanProperty,NumericProperty,ObjectProperty,OptionProperty,RvitWidget,StringProperty,DictProperty,ListProperty,Property,ConfigParserProperty,BoundedNumericProperty,VariableListProperty,AliasProperty,ReferenceListProperty
-   :nosignatures:
      
+
+Interactors
+===========
+
+Interactors are user-interface elemets that are used to modify parameters or
+data during a program's execution.
+
