@@ -55,7 +55,7 @@ exclude_patterns = []
 #html_theme = 'alabaster'
 #html_theme = 'bootstrap-astropy'
 #html_theme = 'sphinxdoc'
-html_theme = 'pyramid'
+#html_theme = 'pyramid'
 
 html_theme = "sphinx_py3doc_enhanced_theme"
 html_theme_path = [sphinx_py3doc_enhanced_theme.get_html_theme_path()]

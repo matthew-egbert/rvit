@@ -107,7 +107,7 @@ each line.
 
   
    
-Download and run a minimal working example
+A minimal example
 ==========================================
 If you want a base project to build from, you can install a quickstart project
 plus all the dependencies using cookiecutter.
