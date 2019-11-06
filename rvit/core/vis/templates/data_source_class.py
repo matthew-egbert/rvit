@@ -1,9 +1,9 @@
 
-class {{property_name}}(RVIElement):
+class {{property_name}}(RVIVisualizer):
     """{{docstring}}
     """
 
-    {{property_name}} = StringProperty('') #: {{docstring}}
+    {{property_name}} = DataTargettingProperty('') #: {{docstring}}
     {{property_name}}_preprocess = StringProperty('') #: the preprocessor for {{property_name}}
 
     def __init__(self, *args, **kwargs):

@@ -11,6 +11,8 @@ from kivy.core.text import LabelBase
 from kivy.app import App
 from kivy.lang import Builder
 
+from .rvi_widget import RVIWidget
+
 def loadFonts():
     font_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                              'fonts/')
@@ -81,6 +83,8 @@ def init_rvit(model_object,rvit_string=None,rvit_file=None,window_size=(900,900)
     if platform == 'linux':
         Config.set('graphics', 'width', str(int(window_size[0])))
         Config.set('graphics', 'height', str(int(window_size[1])))
+        Config.write()
+
     
     class RvitApp(App):
         def __init__(self, *args, **kwargs):
@@ -104,3 +108,11 @@ def init_rvit(model_object,rvit_string=None,rvit_file=None,window_size=(900,900)
 
     activate()
     app = RvitApp().run()
+
+def rvit_reconnect():
+    ## TODO: document rvit_reconnect, which tells all rvit widgets to reload their targets
+    app = App.get_running_app()
+    if app != None :
+        for widget in app.root.walk(restrict=True): ## restrict means only children
+            if issubclass(type(widget),RVIWidget):
+                widget.reconnect()

@@ -9,7 +9,6 @@ from kivy.graphics.opengl import *
 from rvit.core.configurable_property import ConfigurableProperty
 import rvit.core.glsl_utils as glsl_utils
 
-from rvit.core.vis.rvi_element import RVIElement
 from rvit.core.vis.simple_renderer import SimpleRenderer
 from rvit.core.vis.components import *
 from rvit.core.vis.data_sources import *

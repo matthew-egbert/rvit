@@ -2,7 +2,6 @@ from kivy.graphics import Mesh
 from kivy.properties import ObjectProperty, StringProperty, NumericProperty,\
     OptionProperty, ListProperty
 
-from rvit.core.vis.rvi_element import RVIElement
 from rvit.core.configurable_property import ConfigurableProperty
 from rvit.core.vis.components import *
 from rvit.core.vis.data_sources import *

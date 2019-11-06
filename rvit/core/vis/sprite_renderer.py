@@ -2,13 +2,11 @@ from kivy.graphics import Mesh
 from kivy.properties import ObjectProperty, StringProperty, NumericProperty,\
     OptionProperty, ListProperty
 from kivy.core.window import Window
-from rvit.core.vis.rvi_element import RVIElement
 from rvit.core.configurable_property import ConfigurableProperty
 from rvit.core.vis.components import *
 from rvit.core.vis.data_sources import *
 import rvit.core.glsl_utils as glsl_utils
 import kivy.core.image as kci
-
 
 class SpriteRenderer(xy_bounds,x_data,y_data,rot_data,color1d_data,size_data):
     """The SpriteRenderer is used to display an image one or more

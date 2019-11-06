@@ -7,18 +7,20 @@ from kivy.resources import resource_find, resource_add_path
 
 import rvit.core.glsl_utils as glsl_utils
 
-from rvit.core.vis.rvi_element import RVIElement
+from rvit.core.vis.rvi_visualizer import RVIVisualizer,DataTargettingProperty
 from rvit.core.configurable_property import ConfigurableProperty
 from rvit.core.vis.components import *
 from rvit.core.vis.data_sources import *
 
-class array_data(RVIElement):
+class array_data(RVIVisualizer):
     """ND array containing the data to be plotted
     """
 
-    array_data = StringProperty('') #: ND array containing the data to be plotted
-    array_data_preprocess = StringProperty('') #: the preprocessor for array_data
+    array_data = DataTargettingProperty('') #: ND array containing the data to be plotted
+    array_data_preprocess = DataTargettingProperty('') #: the preprocessor for array_data
 
+    click_fn = DataTargettingProperty('') # string specifying function (from simulation) to call when clicked the function must take an x and y argument
+    
     def __init__(self, *args, **kwargs):
         super().__init__(**kwargs)
 
@@ -38,6 +40,18 @@ class array_data(RVIElement):
         self.shader_substitutions['attributes'].append('')
         self.format_has_changed = True
 
+    def on_array_data_preprocess(self, obj, value):
+        s = 'self.preprocess_arr = %s' % (value)
+        exec(s)
+
+    def on_click_fn(self,obj,value):
+        if not hasattr(self,'simulation'):
+            self.simulation = App.get_running_app().get_simulation()
+        
+        if value != '':
+            s = 'self.click_callback = self.simulation.%s' % (value)
+            exec(s)                
+        
     def update(self):
         super().update()
         if hasattr(self,'arr'):
@@ -48,10 +62,6 @@ class array_data(RVIElement):
                                      colorfmt=self.colorfmt,
                                      bufferfmt='float')
 
-
-    def on_array_data_preprocess(self, obj, value):
-        s = 'self.preprocess_arr = %s' % (value)
-        exec(s)
     
 
 
@@ -115,7 +125,7 @@ class ArrayRenderer(xy_bounds,color,gradient,array_data):
         #self.mesh = Mesh(mode='triangles', fmt=self.fmt)
         ## other data sources currently disabled as I try to get the basic
         ## array renderer working
-        self.mesh.indices = [0, 1, 2, 0, 3, 2]
+        self.mesh.indices = [0, 1, 2, 0, 2, 3]
         self.mesh.vertices = [0.0, 0.0, 0.0, 0.0,
                               0.0, 1.0, 0.0, 1.0,
                               1.0, 1.0, 1.0, 1.0,
@@ -184,6 +194,36 @@ class ArrayRenderer(xy_bounds,color,gradient,array_data):
         np.save(open(inspection_dump_file, 'wb'), self.a)
         self.launchInspector(inspection_dump_file)
 
+    def on_motion(self, etype, motionevent):
+        print('hi')
+
+    def on_touch_down(self,touch):
+        self.on_touch_move(touch)
+
+    def on_touch_move(self, touch):
+        super().on_touch_down(touch)
+        if hasattr(self,'click_callback'):
+            # print( touch.apply_transform_2d(self.to_local) )
+
+            tx,ty = touch.pos
+            px,py = self.pos
+            w,h = self.size
+
+            ## position relative to whole drawn area
+            rx = (tx-px)/w
+            ry = (ty-py)/h
+
+            ## y = row = cj
+            ## x = column = ci
+            cj = int(np.floor(rx * self.array_width))
+            ci = int(np.floor(ry * self.array_height))
+            # print(f'{rx},{ry} is the cell {ci,cj}')
+            ci = max(0.0,min(self.array_height-1,ci))
+            cj = max(0.0,min(self.array_width-1 ,cj))
+            self.click_callback(ci,cj,rx,ry,touch)
+            ## TODO: make the call back pass other arguments, such as rx,ry
+            ## and also the cell coordinates but not rounded
+        
     # def on_coloring(self, inst, value):
     #     if value == 'greys':
     #         self.render_context.shader.source = resource_find('array_renderer_greys.glsl')

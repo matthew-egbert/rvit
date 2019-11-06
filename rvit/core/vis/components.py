@@ -1,4 +1,4 @@
-from rvit.core.vis.rvi_element import RVIElement
+from rvit.core.vis.rvi_visualizer import RVIVisualizer
 from kivy.properties import *
 import kivy.graphics.transformation 
 from kivy.core.window import Window
@@ -17,7 +17,7 @@ import numpy as np
 
 # from data_sources import color1d_data
 
-class xy_bounds(RVIElement):
+class xy_bounds(RVIVisualizer):
     """Provides four configurable parameters that determine the limits of a 2D display.
     """
     
@@ -25,19 +25,20 @@ class xy_bounds(RVIElement):
     xmax = NumericProperty(1.)  #: x-coord of right border 
     ymin = NumericProperty(-1.) #: x-coord of bottom border 
     ymax = NumericProperty(1.)  #: x-coord of top border
+    # autoymin = OptionProperty([False,True])
+    # autoymax = OptionProperty([False,True])
+    autoymin = OptionProperty(False,options=[False,True])
+    autoymax = OptionProperty(False,options=[False,True])
 
-    bounds = BoundsProperty(xmin,xmax,ymin,ymax)
+    bounds = BoundsProperty(xmin,xmax,ymin,ymax,autoymin,autoymax)
 
     def __init__(self, *args, **kwargs):
         super().__init__(**kwargs)
         self.updateModelViewMatrix()
+        self.data_minimum = self.data_maximum = 0.0
         
     def registerConfigurableProperties(self):
         super().registerConfigurableProperties()
-        # self.addConfigurableProperty(xy_bounds.xmin)
-        # self.addConfigurableProperty(xy_bounds.xmax)
-        # self.addConfigurableProperty(xy_bounds.ymin)
-        # self.addConfigurableProperty(xy_bounds.ymax)
         self.addConfigurableProperty(xy_bounds.bounds)
 
     def updateProjectionMatrices(self):
@@ -48,8 +49,6 @@ class xy_bounds(RVIElement):
         m.scale(2.0 * self.width / w,
                 2.0 * (self.height - p) / h, 1.0)
 
-        # self.stencil.size = (2.0 * self.width / w,
-        #                      2.0 * (self.height - p) / h)
         self.stencil.size = self.size
         self.stencil.pos = self.pos
         m.translate(-1.0 + (self.pos[0]) * 2.0 / w,
@@ -59,13 +58,22 @@ class xy_bounds(RVIElement):
 
     def updateModelViewMatrix(self):
         m = kivy.graphics.transformation.Matrix().identity()
+        
+        ymin = self.ymin
+        ymax = self.ymax
+        if hasattr(self,'data_minimum'):
+            #print(self.xmin,self.xmax,self.ymin,self.ymax,self.autoymin,self.autoymax)
+            if self.autoymin:
+                ymin = self.data_minimum
+            if self.autoymax:
+                ymax = self.data_maximum
         hr = max(0.00001, (self.xmax - self.xmin))
-        vr = max(0.00001, (self.ymax - self.ymin))
+        vr = max(0.00001, (ymax - ymin))
         m.scale(1.0 / hr,
                 1.0 / vr,
                 1.0)
         m.translate(-self.xmin / hr,
-                    -self.ymin / vr,
+                    -ymin / vr,
                     0.0)
         self.render_context['modelview_mat'] = m
 
@@ -86,8 +94,15 @@ class xy_bounds(RVIElement):
 
     def on_ymax(self, obj, value):
         self.updateModelViewMatrix()
-            
-class color(RVIElement):
+
+    # def on_autoymin(self, obj, value):
+    #     self.autoymin = value
+    #     print('----------------------',self.autoymin)
+
+    # def on_autoymax(self, obj, value):
+    #     self.autoymax = value
+        
+class color(RVIVisualizer):
     """Provides a single 4-tuple parameter [R,G,B,A] that can be used to
     specify the the primary color of the visualizer. May be
     (partially) overridden by the color data sources...but in some
@@ -112,7 +127,7 @@ used.
         # for single color setting
         self.render_context['color'] = list(value)
 
-class gradient(RVIElement):
+class gradient(RVIVisualizer):
     gradient = OptionProperty('viridis',options=['viridis','plasma','inferno','hsv','coolwarm','spring','summer','autumn','tab20c','limits','None'])
     vmin = NumericProperty(0.0)
     vmax = NumericProperty(1.0)

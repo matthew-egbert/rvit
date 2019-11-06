@@ -9,7 +9,6 @@ from kivy.graphics.opengl import *
 from rvit.core.configurable_property import ConfigurableProperty
 import rvit.core.glsl_utils as glsl_utils
 
-from rvit.core.vis.rvi_element import RVIElement
 from rvit.core.vis.simple_renderer import SimpleRenderer
 from rvit.core.vis.components import *
 from rvit.core.vis.data_sources import *
@@ -116,7 +115,9 @@ class VectorTracker(xy_bounds,color,gradient):
             self.data[self.N*2::2,1] = self._y - bar_thiccness
             self.data[1+self.N*2::2,1] = self._y - bar_thiccness
             
-
+        self.data_minimum = self.data[:,1].min()
+        self.data_maximum = self.data[:,1].max()
+        self.updateModelViewMatrix()
 
         if self.enabled:
             super().update()

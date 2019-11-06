@@ -26,6 +26,8 @@ GREEN = get_color_from_hex('73d216ff')
 YELLOW = get_color_from_hex('edd400ff')
 ORANGE = get_color_from_hex('f57900ff')
 
+CONFIG_BUTTON_COLOR = BLUE
+
 BUTTON_BORDER_HEIGHT = 20
 
 # Instead of 'globals', we make these module attributes
@@ -35,3 +37,4 @@ path, pfile_path, pars, inspection_path = (None, None, None, None,)
 
 
 from .init_rvit import init_rvit
+from .init_rvit import rvit_reconnect

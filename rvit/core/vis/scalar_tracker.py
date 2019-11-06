@@ -9,7 +9,6 @@ from kivy.graphics.opengl import *
 from rvit.core.configurable_property import ConfigurableProperty
 import rvit.core.glsl_utils as glsl_utils
 
-from rvit.core.vis.rvi_element import RVIElement
 from rvit.core.vis.simple_renderer import SimpleRenderer
 from rvit.core.vis.components import *
 from rvit.core.vis.data_sources import *
@@ -96,6 +95,9 @@ class ScalarTracker(xy_bounds,color,gradient):
             self.data[self._x+self.N,1] = self._y + r
         else :
             self.data[self._x,1] = self._y
+            
+        self.data_minimum = self.data[:,1].min()
+        self.data_maximum = self.data[:,1].max()
 
         self._x = (self._x + 1) % self.N
         self.updateModelViewMatrix()

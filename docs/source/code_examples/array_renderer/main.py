@@ -6,7 +6,7 @@ import numpy as np
 class Model(object):
     def __init__(self, *args, **kwargs):
         l,h = -0.5,0.5
-        r = 201
+        r = 21
         depth = 1
         self.y = np.random.rand(r,r,depth) # the array to display
 

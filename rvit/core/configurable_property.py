@@ -24,9 +24,9 @@ class ConfigurableProperty(object):
         if self.key in rvit.core.pars.keys():
             print(self.key)
             print(rvit.core.pars[self.key])
-            # print('configurableProperty %s being '+
-            #       'loaded from a previous run to be %s' % (self.key,
-            #                                                rvit.core.pars[self.key]))
+            print('========================================')
+            print(f'configurableProperty {self.key}  ')
+            print(f'to be loaded from a previous run to be {rvit.core.pars[self.key]}')
             self.prop.set(self.owner, rvit.core.pars[self.key])
             self.prop.dispatch(self.owner)
 
@@ -70,7 +70,9 @@ class ConfigurableProperty(object):
                            multiline=False,height=40)
             subpanel.add_widget(ti)
             ti.bind(text=on_text)
-            
+
+        # elif isinstance(self.prop, BooleanProperty):
+        #     pass
         elif isinstance(self.prop, NumericProperty):
             subpanel = BoxLayout(size_hint=(None,None),
                                  #orientation='rl-tb',
