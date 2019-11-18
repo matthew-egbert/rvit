@@ -22,3 +22,9 @@ help:
 
 livehtml:
 	sphinx-autobuild -b html $(ALLSPHINXOPTS) source $(BUILDDIR)/html
+
+
+github:
+	@make html
+	@cp -a build/html/. ../docs
+

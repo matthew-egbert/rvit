@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>GETTING STARTED &#8212; rvit  documentation</title>
+    <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CONCEPTS" href="concepts.html" />
+    <link rel="prev" title="Overview" href="overview.html" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <link rel="shortcut icon" type="image/png" href="_static/favicon.png" />
+    <meta name="viewport" content="width=device-width,initial-scale=0.8">
+    
+    
+
+  </head><body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="responsive-menu"><a href="#sidebar-anchor" title="Navigation">&#9776;</a></li>
+        <li><a href="index.html">rvit  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="getting-started">
+<h1>GETTING STARTED<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>&lt;&lt;Insert instructions from github.&gt;&gt;</p>
+<p>Requirements</p>
+<ul>
+<li><p>Python 3.5 or later</p></li>
+<li><p>On linux you need to install the apt packages <cite>xsel</cite> and <cite>xclip</cite></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install xsel xclip
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="basic-instructions">
+<h2>Basic Instructions<a class="headerlink" href="#basic-instructions" title="Permalink to this headline">¶</a></h2>
+<p>To augment your simulation with RVIT you must do the following things.</p>
+<ol class="arabic simple">
+<li><p>Tell your program to start RVIT</p></li>
+<li><p>Write a RVIT GUI-specification file</p></li>
+</ol>
+<p class="rubric">STEP 1: Tell your program to start RVIT</p>
+<p>The script below defines a simple model of particles moving around in a random
+walk. The highlighted line with the call to <a class="reference internal" href="api.html#rvit.core.init_rvit.init_rvit" title="rvit.core.init_rvit.init_rvit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">init_rvit()</span></code></a>
+shows how rvit is started.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rvit.core</span> <span class="kn">import</span> <span class="n">init_rvit</span>
+<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">DiffusionModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">4</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+        <span class="c1">## iteratively update the positions of the particles</span>
+        <span class="k">def</span> <span class="nf">iterate</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">[:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mf">0.01</span>
+        <span class="c1">## start a thread to call the iterate fn as</span>
+        <span class="c1">## frequently as possible</span>
+        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="n">iterate</span><span class="p">,</span><span class="mf">0.0</span><span class="p">)</span>
+
+<span class="hll">        <span class="n">init_rvit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">rvit_file</span><span class="o">=</span><span class="s1">&#39;rvit.kv&#39;</span><span class="p">)</span> <span class="c1">## &lt;-- Starts RVIT</span>
+</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">DiffusionModel</span><span class="p">()</span>
+    <span class="c1">## An alternative, equivalent way to start rvit...</span>
+    <span class="c1"># init_rvit(model ,rvit_file=&#39;rvit.kv&#39;) </span>
+
+</pre></div>
+</div>
+<p><a class="reference internal" href="api.html#rvit.core.init_rvit.init_rvit" title="rvit.core.init_rvit.init_rvit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">init_rvit()</span></code></a> takes two arguments. The first tells
+RVIT where it can find all of the data that it will visualize and modify. In
+this example all of the data to be visualized is in the DiffusionModel object,
+so we pass <cite>self</cite>. An equally good solution would be to create the model and
+start rvit afterwards, as suggested by the final, commented-out line in the
+example above. The second argument tells RVIT where it can find the
+GUI-specification file. This is a file that you will write to specify which
+visualization and interactive elements are to be displayed–see Step 2!</p>
+<p class="rubric">STEP 2: Write a RVIT GUI-specification file</p>
+<p>The GUI-specification file tells RVIT what to display. Its contents
+might look something like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#:kivy 1.0</span>
+<span class="c1">#:import PointRenderer rvit.core.vis.point_renderer </span>
+
+<span class="n">FloatLayout</span><span class="p">:</span> 
+    <span class="n">PointRenderer</span><span class="p">:</span> <span class="c1"># A Visualizer </span>
+        <span class="n">x_data</span><span class="p">:</span> <span class="s1">&#39;pos[:,0]&#39;</span>         <span class="c1"># a DataSource</span>
+        <span class="n">y_data</span><span class="p">:</span> <span class="s1">&#39;pos[:,1]&#39;</span>         <span class="c1"># a DataSource</span>
+        <span class="n">pos_hint</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="mf">0.</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="mf">0.</span><span class="p">}</span> <span class="c1"># parameter (from Kivy Widget) </span>
+        <span class="n">size_hint</span><span class="p">:</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span>       <span class="c1"># parameter (from Kivy Widget) </span>
+        <span class="n">point_size</span><span class="p">:</span> <span class="mf">1.0</span>            <span class="c1"># parameter (from PointRenderer)</span>
+        <span class="n">color</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.25</span><span class="p">]</span>  <span class="c1"># parameter (from PointRenderer&#39;s</span>
+                                   <span class="c1">#            component `color`)</span>
+        <span class="n">unique_name</span><span class="p">:</span> <span class="s1">&#39;positions&#39;</span>   <span class="c1"># a unique identifier for this visualizer</span>
+
+</pre></div>
+</div>
+<p>This is a minimal example and so it includes only a single <span class="xref std std-ref">visualizer</span> – a
+PointRenderer, called <a href="#id1"><span class="problematic" id="id2">`</span></a>positions’ which draws a point indicating the position of
+all of the simulated particles. When the script from Step 1 is run, RVIT reads
+this GUI-specification file and creates a realtime visualization of the
+simulation that looks like this.</p>
+<div class="figure align-default" id="id3">
+<a class="reference internal image-reference" href="_images/screenshot3.png"><img alt="_images/screenshot3.png" src="_images/screenshot3.png" style="width: 300px;" /></a>
+<p class="caption"><span class="caption-text">minimal example</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>The particles that all started at the origin have each followed a random walk,
+and now they are all distributed in the expected Gaussian distribution.</p>
+<p>The GUI-specification file is hopefully pretty self-explanatory. Let’s look at
+each line.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">FloatLayout:</span></code> This is an essential line that allows the subsequent
+visualization and interaction units to be easily placed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PointRenderer:</span></code> This is a <cite>visualizer</cite> i.e. a visualization component. Use
+the menu at the left to see what visualizers are available.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x_data:</span> <span class="pre">'pos[:,0]'</span></code> this tells the visualizer where it can find the
+x-coordinates of the points that are to be plotted</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y_data:</span> <span class="pre">'pos[:,1]'</span></code> this tells the visualizer where it can find the
+y-coordinates of the points that are to be plotted</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pos_hint:</span> <span class="pre">{'x':0.,</span> <span class="pre">'y':0.}</span></code> this specifies where the lower-left corner of the
+visualizer should be within the window, where 0,0 is the lower-left corner of
+the window and 1,1 is the upper-right corner.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">size_hint:</span> <span class="pre">(1.0,1.0)</span></code> this specifies the size of the visualizer in terms of
+the entire window’s size—here saying that the PointRenderer should take up
+the entire window</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">point_size:</span> <span class="pre">1.0</span></code> this specifies the size of the points to be plotted. Larger
+numbers would make larger points.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color:</span> <span class="pre">[1.0,0.0,1.0,0.25]</span></code> this specifies the red, green, blue and alpha
+(transparency) of the points to be plotted. More complicated coloring schemes,
+where each point is given a different color are also available.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unique_name:</span></code> this specifies a unique identifier for this
+visualizer. Giving each visualizer a unique name allows RVIT to track
+changes made by the visualizatio end user, so that the changes are remembered
+inbetween executions of the model (sessions).</p></li>
+</ul>
+<p class="rubric">STEP 3. (optional) Modify GUI-component parameters from within the
+running program</p>
+<p>&lt;&lt; TODO: Write some documentation on this. &gt;&gt;</p>
+</div>
+<div class="section" id="a-minimal-example">
+<h2>A minimal example<a class="headerlink" href="#a-minimal-example" title="Permalink to this headline">¶</a></h2>
+<p>If you want a base project to build from, you can install a quickstart project
+plus all the dependencies using cookiecutter.</p>
+<p>You will need Python 3.5 or later first. If you do not already have this on your
+system, you can get it from [python.org](<a class="reference external" href="https://python.org">https://python.org</a>), or by using your
+system’s package manager.</p>
+<p>Next, install pip and virtualenv - you can do this through a package manager
+such as apt, emerge, or brew, if you have one. For example, with emerge:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash sudo emerge --ask dev-python/pip virtualenv
+</pre></div>
+</div>
+<p>Alternatively, there are complete instructions for installing virtualenv and pip
+here:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://virtualenv.pypa.io/en/stable/installation/">https://virtualenv.pypa.io/en/stable/installation/</a></p></li>
+</ul>
+<p>Create a virtualenv and install dependencies:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>virtualenv env <span class="o">&amp;&amp;</span> <span class="nb">source</span> ./env/bin/activate <span class="o">&amp;&amp;</span> pip install cookiecutter
+</pre></div>
+</div>
+<p>If you have already activated a virtualenv, and you need to reinstall a fresh
+virtualenv and example code, you can run this command instead:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash deactivate <span class="o">&amp;&amp;</span> rm -rf rvit_example env <span class="o">&amp;&amp;</span> virtualenv env <span class="o">&amp;&amp;</span> <span class="se">\</span>
+    <span class="nb">source</span> ./env/bin/activate <span class="o">&amp;&amp;</span> pip install cookiecutter
+</pre></div>
+</div>
+<p>Create, install, and run an example application:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash cookiecutter -f --no-input gh:flaviusb/rvit-template <span class="o">&amp;&amp;</span> pip <span class="se">\</span>
+    install -U --upgrade-strategy eager -e rvit_example <span class="o">&amp;&amp;</span> rvit_example
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+    <a id="sidebar-anchor"></a>
+    
+
+  <h3><a href="index.html">Navigation</a></h3>
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">GETTING STARTED</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-instructions">Basic Instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-minimal-example">A minimal example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">CONCEPTS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#visualizers">Visualizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#components">Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#data-sources">Data Sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concepts.html#preprocessing">Preprocessing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#interactors">Interactors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API REFERENCE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#api-core">API: Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#api-visualizers">API: Visualizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#api-components">API: Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#api-data-sources">API: Data Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#api-interactors">API: Interactors</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="overview.html"
+                        title="previous chapter">Overview</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="concepts.html"
+                        title="next chapter">CONCEPTS</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/getting_started.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="concepts.html" title="CONCEPTS"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="Overview"
+             accesskey="P">previous</a> |</li>
+      </ul>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Matthew Egbert.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.1.
+    </div>
+  </body>
+</html>

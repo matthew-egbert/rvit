@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>API REFERENCE &#8212; rvit  documentation</title>
+    <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="CONCEPTS" href="concepts.html" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <link rel="shortcut icon" type="image/png" href="_static/favicon.png" />
+    <meta name="viewport" content="width=device-width,initial-scale=0.8">
+    
+    
+
+  </head><body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="responsive-menu"><a href="#sidebar-anchor" title="Navigation">&#9776;</a></li>
+        <li><a href="index.html">rvit  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="api-reference">
+<h1>API REFERENCE<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="api-core">
+<h2>API: Core<a class="headerlink" href="#api-core" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="rvit.core.init_rvit.init_rvit">
+<code class="sig-prename descclassname">rvit.core.init_rvit.</code><code class="sig-name descname">init_rvit</code><span class="sig-paren">(</span><em class="sig-param">model_object</em>, <em class="sig-param">rvit_string=None</em>, <em class="sig-param">rvit_file=None</em>, <em class="sig-param">window_size=(900</em>, <em class="sig-param">900)</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.init_rvit.init_rvit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes rvit. This must be run for RVIT to do
+anything. Generally run immediately after the simulation/artifact
+has been instantiated. See <a class="reference internal" href="getting_started.html#getting-started"><span class="std std-ref">GETTING STARTED</span></a>!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rvit_file</strong> – a string containing the filename of an rvit GUI specification file</p></li>
+<li><p><strong>rvit_string</strong> – a string containing the rvit GUI specification</p></li>
+<li><p><strong>window_size</strong> – the (width,height) of the RVIT window</p></li>
+</ul>
+</dd>
+</dl>
+<p>Either <cite>rvit_file</cite> or <cite>rvit_string</cite> must be provided. The former overrides the latter.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="api-visualizers">
+<h2>API: Visualizers<a class="headerlink" href="#api-visualizers" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">rvit.core.vis.rvi_element.RVIElement</span></code></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rvit.core.vis.array_renderer.ArrayRenderer" title="rvit.core.vis.array_renderer.ArrayRenderer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rvit.core.vis.array_renderer.ArrayRenderer</span></code></a></p></td>
+<td><p>Displays a numpy array.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rvit.core.vis.point_renderer.PointRenderer" title="rvit.core.vis.point_renderer.PointRenderer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rvit.core.vis.point_renderer.PointRenderer</span></code></a></p></td>
+<td><p>The PointRenderer is used to display a scatter diagram of 2D points.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rvit.core.vis.sprite_renderer.SpriteRenderer" title="rvit.core.vis.sprite_renderer.SpriteRenderer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rvit.core.vis.sprite_renderer.SpriteRenderer</span></code></a></p></td>
+<td><p>The SpriteRenderer is used to display an image one or more times.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rvit.core.vis.scalar_tracker.ScalarTracker" title="rvit.core.vis.scalar_tracker.ScalarTracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rvit.core.vis.scalar_tracker.ScalarTracker</span></code></a></p></td>
+<td><p>takes a single scalar value data source and plots its recent history.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rvit.core.vis.vector_tracker.VectorTracker" title="rvit.core.vis.vector_tracker.VectorTracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rvit.core.vis.vector_tracker.VectorTracker</span></code></a></p></td>
+<td><p>takes a vector data source and plots its current state.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="rvit.core.vis.array_renderer.ArrayRenderer">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.vis.array_renderer.</code><code class="sig-name descname">ArrayRenderer</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.array_renderer.ArrayRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rvit.core.vis.components.xy_bounds" title="rvit.core.vis.components.xy_bounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.components.xy_bounds</span></code></a>, <a class="reference internal" href="#rvit.core.vis.components.color" title="rvit.core.vis.components.color"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.components.color</span></code></a>, <a class="reference internal" href="#rvit.core.vis.components.gradient" title="rvit.core.vis.components.gradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.components.gradient</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.array_renderer.array_data</span></code></p>
+<p>Displays a numpy array. The array must be 2 or 3 dimensional.</p>
+<p>If the target <cite>array_data</cite> is 3D, then the 3rd axis can be of size
+1, 3 or 4. The way the data is plotted depends upon this size of
+the 3rd axis in the following way:</p>
+<p>If the 3rd Axis is of length..</p>
+<blockquote>
+<div><p>1: the gradient component determines the color to be plotted.</p>
+<p>3: the values in the array are the red, green and blue values
+to be plotted.</p>
+<p>4: the values in the array are the red, green, blue and alpha
+values to be plotted.</p>
+</div></blockquote>
+<p>Here is an example usage.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">main.py</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rvit.core</span> <span class="kn">import</span> <span class="n">init_rvit</span>
+<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">l</span><span class="p">,</span><span class="n">h</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="mi">21</span>
+        <span class="n">depth</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">depth</span><span class="p">)</span> <span class="c1"># the array to display</span>
+
+        <span class="c1">## iteratively update the array</span>
+        <span class="k">def</span> <span class="nf">iterate</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">depth</span><span class="p">)</span>
+        <span class="c1">## start a thread to call the iterate fn as</span>
+        <span class="c1">## frequently as possible</span>
+        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="n">iterate</span><span class="p">,</span><span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="n">init_rvit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">rvit_file</span><span class="o">=</span><span class="s1">&#39;rvit.kv&#39;</span><span class="p">,</span><span class="n">window_size</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">))</span> <span class="c1">## &lt;-- Starts RVIT</span>
+        
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">rvit.kv</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#:kivy 1.0</span>
+<span class="c1">#:import ArrayRenderer rvit.core.vis.array_renderer</span>
+
+
+<span class="n">FloatLayout</span><span class="p">:</span> 
+    <span class="n">ArrayRenderer</span><span class="p">:</span> <span class="c1"># A Visualizer </span>
+        <span class="n">array_data</span><span class="p">:</span> <span class="s1">&#39;y[:,:,:]&#39;</span>         <span class="c1"># a DataSource</span>
+        <span class="n">array_data_preprocess</span><span class="p">:</span> <span class="s1">&#39;lambda x: np.log(x)&#39;</span>
+        <span class="n">xmin</span><span class="p">:</span> <span class="mf">0.0</span>
+        <span class="n">xmax</span><span class="p">:</span> <span class="mf">1.0</span>
+        <span class="n">ymin</span><span class="p">:</span> <span class="mf">0.0</span>
+        <span class="n">ymax</span><span class="p">:</span> <span class="mf">1.0</span>
+        <span class="n">pos_hint</span><span class="p">:</span>  <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="mf">0.</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="mf">0.</span><span class="p">}</span> <span class="c1"># parameter (from Kivy Widget) </span>
+        <span class="n">size_hint</span><span class="p">:</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span>       <span class="c1"># parameter (from Kivy Widget) </span>
+        <span class="n">unique_name</span><span class="p">:</span> <span class="s1">&#39;drawme&#39;</span>   <span class="c1"># a unique identifier for this visualizer</span>
+
+    
+</pre></div>
+</div>
+</div>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="_images/screenshot.png"><img alt="_images/screenshot.png" src="_images/screenshot.png" style="width: 300px;" /></a>
+</div>
+<p>minimal example</p>
+<dl class="method">
+<dt id="rvit.core.vis.array_renderer.ArrayRenderer.on_touch_down">
+<code class="sig-name descname">on_touch_down</code><span class="sig-paren">(</span><em class="sig-param">touch</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.array_renderer.ArrayRenderer.on_touch_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receive a touch down event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>touch</cite>: <code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code> class</dt><dd><p>Touch received. The touch is in parent coordinates. See
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">relativelayout</span></code> for a discussion on
+coordinate systems.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>bool
+If True, the dispatching of the touch event will stop.
+If False, the event will continue to be dispatched to the rest
+of the widget tree.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="rvit.core.vis.array_renderer.ArrayRenderer.on_touch_move">
+<code class="sig-name descname">on_touch_move</code><span class="sig-paren">(</span><em class="sig-param">touch</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.array_renderer.ArrayRenderer.on_touch_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receive a touch move event. The touch is in parent coordinates.</p>
+<p>See <a class="reference internal" href="#rvit.core.vis.array_renderer.ArrayRenderer.on_touch_down" title="rvit.core.vis.array_renderer.ArrayRenderer.on_touch_down"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_touch_down()</span></code></a> for more information.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="rvit.core.vis.point_renderer.PointRenderer">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.vis.point_renderer.</code><code class="sig-name descname">PointRenderer</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.point_renderer.PointRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.simple_renderer.SimpleRenderer</span></code>, <a class="reference internal" href="#rvit.core.vis.components.xy_bounds" title="rvit.core.vis.components.xy_bounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.components.xy_bounds</span></code></a>, <a class="reference internal" href="#rvit.core.vis.components.color" title="rvit.core.vis.components.color"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.components.color</span></code></a>, <a class="reference internal" href="#rvit.core.vis.data_sources.x_data" title="rvit.core.vis.data_sources.x_data"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.data_sources.x_data</span></code></a>, <a class="reference internal" href="#rvit.core.vis.data_sources.y_data" title="rvit.core.vis.data_sources.y_data"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.data_sources.y_data</span></code></a>, <a class="reference internal" href="#rvit.core.vis.data_sources.color1d_data" title="rvit.core.vis.data_sources.color1d_data"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.data_sources.color1d_data</span></code></a>, <a class="reference internal" href="#rvit.core.vis.data_sources.size_data" title="rvit.core.vis.data_sources.size_data"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.data_sources.size_data</span></code></a></p>
+<p>The PointRenderer is used to display a scatter diagram of 2D points.</p>
+<p>It can use a <a class="reference internal" href="#rvit.core.vis.data_sources.color1d_data" title="rvit.core.vis.data_sources.color1d_data"><code class="xref py py-class docutils literal notranslate"><span class="pre">color1d_data</span></code></a> to determine the color or size 
+of the displayed points and <a class="reference internal" href="#rvit.core.vis.data_sources.size_data" title="rvit.core.vis.data_sources.size_data"><code class="xref py py-class docutils literal notranslate"><span class="pre">size_data</span></code></a> to determine their size.</p>
+<div class="figure align-default" id="id3">
+<a class="reference internal image-reference" href="_images/point_renderer.png"><img alt="_images/point_renderer.png" src="_images/point_renderer.png" style="width: 300px;" /></a>
+<p class="caption"><span class="caption-text">A PointRenderer showing 50,000 points. A SecondaryDataSource is being 
+used to color the points by their position within a grid.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>The rvit configuration file used to make the figure image is the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">PointRenderer</span><span class="p">:</span>
+     <span class="n">pos_hint</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">}</span>
+     <span class="n">size_hint</span><span class="p">:</span>  <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span>
+     <span class="n">target_object</span><span class="p">:</span> <span class="n">model</span>
+     <span class="n">x_data</span><span class="p">:</span> <span class="s1">&#39;chemistry.pos[:,0]&#39;</span>
+     <span class="n">y_data</span><span class="p">:</span> <span class="s1">&#39;chemistry.pos[:,1]&#39;</span>
+     <span class="n">color_data</span><span class="p">:</span> <span class="s1">&#39;chemistry.zone&#39;</span>
+     <span class="n">size_data</span><span class="p">:</span> <span class="s1">&#39;chemistry.pos[:,0]&#39;</span>
+     <span class="n">show_controls</span><span class="p">:</span> <span class="bp">True</span>
+     <span class="n">point_size</span><span class="p">:</span> <span class="mf">0.5</span>
+     <span class="n">xmin</span><span class="p">:</span> <span class="mi">0</span>
+     <span class="n">ymin</span><span class="p">:</span> <span class="mi">0</span>
+     <span class="n">xmax</span><span class="p">:</span> <span class="mi">1</span>
+     <span class="n">ymax</span><span class="p">:</span> <span class="mi">1</span>
+     <span class="n">color</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">0.8</span><span class="p">]</span>
+     <span class="n">unique_name</span><span class="p">:</span> <span class="s1">&#39;pos&#39;</span> 
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="rvit.core.vis.point_renderer.PointRenderer.point_size">
+<code class="sig-name descname">point_size</code><a class="headerlink" href="#rvit.core.vis.point_renderer.PointRenderer.point_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>a float :: when the <strong>size_data</strong> parameter is not provided, this
+property specifies the color for all plotted points. When color_data
+is provided, the alpha value is still used.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="rvit.core.vis.sprite_renderer.SpriteRenderer">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.vis.sprite_renderer.</code><code class="sig-name descname">SpriteRenderer</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.sprite_renderer.SpriteRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rvit.core.vis.components.xy_bounds" title="rvit.core.vis.components.xy_bounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.components.xy_bounds</span></code></a>, <a class="reference internal" href="#rvit.core.vis.data_sources.x_data" title="rvit.core.vis.data_sources.x_data"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.data_sources.x_data</span></code></a>, <a class="reference internal" href="#rvit.core.vis.data_sources.y_data" title="rvit.core.vis.data_sources.y_data"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.data_sources.y_data</span></code></a>, <a class="reference internal" href="#rvit.core.vis.data_sources.rot_data" title="rvit.core.vis.data_sources.rot_data"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.data_sources.rot_data</span></code></a>, <a class="reference internal" href="#rvit.core.vis.data_sources.color1d_data" title="rvit.core.vis.data_sources.color1d_data"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.data_sources.color1d_data</span></code></a>, <a class="reference internal" href="#rvit.core.vis.data_sources.size_data" title="rvit.core.vis.data_sources.size_data"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.data_sources.size_data</span></code></a></p>
+<p>The SpriteRenderer is used to display an image one or more
+times. It takes x,y and (optionally) rotation coordinates that
+specify the position of the image(s).</p>
+<dl class="attribute">
+<dt id="rvit.core.vis.sprite_renderer.SpriteRenderer.image">
+<code class="sig-name descname">image</code><a class="headerlink" href="#rvit.core.vis.sprite_renderer.SpriteRenderer.image" title="Permalink to this definition">¶</a></dt>
+<dd><p>a string that specifies the path to the image file, e.g., ‘img/robot.png’</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rvit.core.vis.sprite_renderer.SpriteRenderer.sprite_size">
+<code class="sig-name descname">sprite_size</code><a class="headerlink" href="#rvit.core.vis.sprite_renderer.SpriteRenderer.sprite_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the size of the sprites.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="rvit.core.vis.scalar_tracker.ScalarTracker">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.vis.scalar_tracker.</code><code class="sig-name descname">ScalarTracker</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.scalar_tracker.ScalarTracker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rvit.core.vis.components.xy_bounds" title="rvit.core.vis.components.xy_bounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.components.xy_bounds</span></code></a>, <a class="reference internal" href="#rvit.core.vis.components.color" title="rvit.core.vis.components.color"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.components.color</span></code></a>, <a class="reference internal" href="#rvit.core.vis.components.gradient" title="rvit.core.vis.components.gradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.components.gradient</span></code></a></p>
+<p>takes a single scalar value data source and plots its
+recent history. Here is an example usage.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">main.py</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rvit.core</span> <span class="kn">import</span> <span class="n">init_rvit</span>
+<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">track_me</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="c1">## iteratively update the positions of the particles</span>
+        <span class="k">def</span> <span class="nf">iterate</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">track_me</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">()</span> <span class="o">*</span> <span class="mf">0.025</span>
+        <span class="c1">## start a thread to call the iterate fn as</span>
+        <span class="c1">## frequently as possible</span>
+        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="n">iterate</span><span class="p">,</span><span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="n">init_rvit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">rvit_file</span><span class="o">=</span><span class="s1">&#39;rvit.kv&#39;</span><span class="p">,</span><span class="n">window_size</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">))</span> <span class="c1">## &lt;-- Starts RVIT</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+
+    
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">rvit.kv</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#:kivy 1.0</span>
+<span class="c1">#:import ScalarTracker rvit.core.vis.scalar_tracker</span>
+
+<span class="n">FloatLayout</span><span class="p">:</span> 
+    <span class="n">ScalarTracker</span><span class="p">:</span>
+        <span class="n">pos_hint</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">}</span>
+        <span class="n">size_hint</span><span class="p">:</span>  <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">y_scalar</span><span class="p">:</span> <span class="s1">&#39;track_me&#39;</span> <span class="c1">## variable to track and plot</span>
+        <span class="n">gradient</span><span class="p">:</span> <span class="s1">&#39;plasma&#39;</span>
+        <span class="n">show_controls</span><span class="p">:</span> <span class="bp">True</span>
+        <span class="c1"># fps: 100</span>
+        <span class="n">unique_name</span><span class="p">:</span> <span class="s1">&#39;scalar_tracker&#39;</span>
+
+    
+</pre></div>
+</div>
+</div>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="_images/screenshot1.png"><img alt="_images/screenshot1.png" src="_images/screenshot1.png" style="width: 300px;" /></a>
+</div>
+<p>minimal example</p>
+<dl class="attribute">
+<dt id="rvit.core.vis.scalar_tracker.ScalarTracker.line_width">
+<code class="sig-name descname">line_width</code><a class="headerlink" href="#rvit.core.vis.scalar_tracker.ScalarTracker.line_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>when fill is <cite>none</cite> this specifies the width of the drawn curve as
+a fraction of the visualizer’s height</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rvit.core.vis.scalar_tracker.ScalarTracker.num_samples">
+<code class="sig-name descname">num_samples</code><a class="headerlink" href="#rvit.core.vis.scalar_tracker.ScalarTracker.num_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>history length in samples</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rvit.core.vis.scalar_tracker.ScalarTracker.y_scalar">
+<code class="sig-name descname">y_scalar</code><a class="headerlink" href="#rvit.core.vis.scalar_tracker.ScalarTracker.y_scalar" title="Permalink to this definition">¶</a></dt>
+<dd><p>variable which is to be tracked</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="rvit.core.vis.vector_tracker.VectorTracker">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.vis.vector_tracker.</code><code class="sig-name descname">VectorTracker</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.vector_tracker.VectorTracker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rvit.core.vis.components.xy_bounds" title="rvit.core.vis.components.xy_bounds"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.components.xy_bounds</span></code></a>, <a class="reference internal" href="#rvit.core.vis.components.color" title="rvit.core.vis.components.color"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.components.color</span></code></a>, <a class="reference internal" href="#rvit.core.vis.components.gradient" title="rvit.core.vis.components.gradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">rvit.core.vis.components.gradient</span></code></a></p>
+<p>takes a vector data source and plots its current state. Here is an
+example usage.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">main.py</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rvit.core</span> <span class="kn">import</span> <span class="n">init_rvit</span>
+<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">51</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">track_me</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+        <span class="c1">## iteratively update the positions of the particles</span>
+        <span class="k">def</span> <span class="nf">iterate</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">track_me</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">)]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="o">+=</span><span class="mf">0.05</span>
+        <span class="c1">## start a thread to call the iterate fn as</span>
+        <span class="c1">## frequently as possible</span>
+        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="n">iterate</span><span class="p">,</span><span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="n">init_rvit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">rvit_file</span><span class="o">=</span><span class="s1">&#39;rvit.kv&#39;</span><span class="p">,</span><span class="n">window_size</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">))</span> <span class="c1">## &lt;-- Starts RVIT</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+
+    
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">rvit.kv</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#:kivy 1.0</span>
+<span class="c1">#:import VectorTracker rvit.core.vis.vector_tracker</span>
+
+<span class="n">FloatLayout</span><span class="p">:</span> 
+    <span class="n">VectorTracker</span><span class="p">:</span>
+        <span class="n">pos_hint</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">}</span>
+        <span class="n">size_hint</span><span class="p">:</span>  <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">y_vector</span><span class="p">:</span> <span class="s1">&#39;track_me&#39;</span> <span class="c1">## variable to track and plot</span>
+        <span class="n">gradient</span><span class="p">:</span> <span class="s1">&#39;plasma&#39;</span>
+        <span class="n">vmin</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.0</span>
+        <span class="n">vmax</span><span class="p">:</span> <span class="mf">1.0</span>
+        <span class="n">fill</span><span class="p">:</span> <span class="s1">&#39;columns&#39;</span>
+        <span class="n">column_gap</span><span class="p">:</span> <span class="mf">0.5</span>
+        <span class="n">show_controls</span><span class="p">:</span> <span class="bp">True</span>
+        <span class="n">unique_name</span><span class="p">:</span> <span class="s1">&#39;scalar_tracker&#39;</span>
+
+    
+</pre></div>
+</div>
+</div>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="_images/screenshot2.png"><img alt="_images/screenshot2.png" src="_images/screenshot2.png" style="width: 300px;" /></a>
+</div>
+<p>minimal example</p>
+<dl class="attribute">
+<dt id="rvit.core.vis.vector_tracker.VectorTracker.bar_thickness">
+<code class="sig-name descname">bar_thickness</code><a class="headerlink" href="#rvit.core.vis.vector_tracker.VectorTracker.bar_thickness" title="Permalink to this definition">¶</a></dt>
+<dd><p>when fill is <cite>bars</cite> this specifies the (vertical) thickness of the
+bars. Given as a percentage of the height of the visualizer</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rvit.core.vis.vector_tracker.VectorTracker.column_gap">
+<code class="sig-name descname">column_gap</code><a class="headerlink" href="#rvit.core.vis.vector_tracker.VectorTracker.column_gap" title="Permalink to this definition">¶</a></dt>
+<dd><p>when fill is <cite>columns</cite> or bars this specifies the gap between those
+drawn things. This is as a percentage of each column.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rvit.core.vis.vector_tracker.VectorTracker.y_vector">
+<code class="sig-name descname">y_vector</code><a class="headerlink" href="#rvit.core.vis.vector_tracker.VectorTracker.y_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>variable which is to be tracked</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="api-components">
+<h2>API: Components<a class="headerlink" href="#api-components" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rvit.core.vis.components.color" title="rvit.core.vis.components.color"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rvit.core.vis.components.color</span></code></a></p></td>
+<td><p>Provides a single 4-tuple parameter [R,G,B,A] that can be used to specify the the primary color of the visualizer.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rvit.core.vis.components.gradient" title="rvit.core.vis.components.gradient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rvit.core.vis.components.gradient</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rvit.core.vis.components.xy_bounds" title="rvit.core.vis.components.xy_bounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rvit.core.vis.components.xy_bounds</span></code></a></p></td>
+<td><p>Provides four configurable parameters that determine the limits of a 2D display.</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-rvit.core.vis.components"></span><dl class="class">
+<dt id="rvit.core.vis.components.color">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.vis.components.</code><code class="sig-name descname">color</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.components.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a single 4-tuple parameter [R,G,B,A] that can be used to
+specify the the primary color of the visualizer. May be
+(partially) overridden by the color data sources…but in some
+cases (e.g. the color_1d data source) the alpha component still is used.</p>
+<dl class="attribute">
+<dt id="rvit.core.vis.components.color.color">
+<code class="sig-name descname">color</code><a class="headerlink" href="#rvit.core.vis.components.color.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>a 4-tuple ‘[red,green,blue,alpha]’ :: when the <strong>color_data</strong>
+parameter is not provided, this property specifies the color for all
+plotted points. When color_data is provided, the alpha value is still
+used.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="rvit.core.vis.components.gradient">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.vis.components.</code><code class="sig-name descname">gradient</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.components.gradient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="rvit.core.vis.components.xy_bounds">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.vis.components.</code><code class="sig-name descname">xy_bounds</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.components.xy_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides four configurable parameters that determine the limits of a 2D display.</p>
+<dl class="attribute">
+<dt id="rvit.core.vis.components.xy_bounds.xmax">
+<code class="sig-name descname">xmax</code><a class="headerlink" href="#rvit.core.vis.components.xy_bounds.xmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>x-coord of right border</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rvit.core.vis.components.xy_bounds.xmin">
+<code class="sig-name descname">xmin</code><a class="headerlink" href="#rvit.core.vis.components.xy_bounds.xmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>x-coord of left border</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rvit.core.vis.components.xy_bounds.ymax">
+<code class="sig-name descname">ymax</code><a class="headerlink" href="#rvit.core.vis.components.xy_bounds.ymax" title="Permalink to this definition">¶</a></dt>
+<dd><p>x-coord of top border</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rvit.core.vis.components.xy_bounds.ymin">
+<code class="sig-name descname">ymin</code><a class="headerlink" href="#rvit.core.vis.components.xy_bounds.ymin" title="Permalink to this definition">¶</a></dt>
+<dd><p>x-coord of bottom border</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="api-data-sources">
+<h2>API: Data Sources<a class="headerlink" href="#api-data-sources" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataTargettingProperty</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">RVIVisualizer</span></code></p></td>
+<td><p>All Visualizers have the following properties.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rvit.core.vis.data_sources.color1d_data" title="rvit.core.vis.data_sources.color1d_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">color1d_data</span></code></a></p></td>
+<td><p>vector containing the colors of each plotted item.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#rvit.core.vis.data_sources.rot_data" title="rvit.core.vis.data_sources.rot_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rot_data</span></code></a></p></td>
+<td><p>vector containing the way each datum is to be rotated (in radians)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rvit.core.vis.data_sources.size_data" title="rvit.core.vis.data_sources.size_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">size_data</span></code></a></p></td>
+<td><p>vector containing the sizes of each plotted item.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#rvit.core.vis.data_sources.x_data" title="rvit.core.vis.data_sources.x_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">x_data</span></code></a></p></td>
+<td><p>vector containing the x-values of data to be plotted.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rvit.core.vis.data_sources.y_data" title="rvit.core.vis.data_sources.y_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">y_data</span></code></a></p></td>
+<td><p>vector containing the y-values of data to be plotted.</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-rvit.core.vis.data_sources"></span><dl class="class">
+<dt id="rvit.core.vis.data_sources.color1d_data">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.vis.data_sources.</code><code class="sig-name descname">color1d_data</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.data_sources.color1d_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>vector containing the colors of each plotted item.</p>
+<dl class="attribute">
+<dt id="rvit.core.vis.data_sources.color1d_data.color1d_data">
+<code class="sig-name descname">color1d_data</code><a class="headerlink" href="#rvit.core.vis.data_sources.color1d_data.color1d_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>vector containing the colors of each plotted item.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rvit.core.vis.data_sources.color1d_data.color1d_data_preprocess">
+<code class="sig-name descname">color1d_data_preprocess</code><a class="headerlink" href="#rvit.core.vis.data_sources.color1d_data.color1d_data_preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>the preprocessor for color1d_data</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="rvit.core.vis.data_sources.rot_data">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.vis.data_sources.</code><code class="sig-name descname">rot_data</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.data_sources.rot_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>vector containing the way each datum is to be rotated (in radians)</p>
+<dl class="attribute">
+<dt id="rvit.core.vis.data_sources.rot_data.rot_data">
+<code class="sig-name descname">rot_data</code><a class="headerlink" href="#rvit.core.vis.data_sources.rot_data.rot_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>vector containing the way each datum is to be rotated (in radians)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rvit.core.vis.data_sources.rot_data.rot_data_preprocess">
+<code class="sig-name descname">rot_data_preprocess</code><a class="headerlink" href="#rvit.core.vis.data_sources.rot_data.rot_data_preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>the preprocessor for rot_data</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="rvit.core.vis.data_sources.size_data">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.vis.data_sources.</code><code class="sig-name descname">size_data</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.data_sources.size_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>vector containing the sizes of each plotted item.</p>
+<dl class="attribute">
+<dt id="rvit.core.vis.data_sources.size_data.size_data">
+<code class="sig-name descname">size_data</code><a class="headerlink" href="#rvit.core.vis.data_sources.size_data.size_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>vector containing the sizes of each plotted item.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rvit.core.vis.data_sources.size_data.size_data_preprocess">
+<code class="sig-name descname">size_data_preprocess</code><a class="headerlink" href="#rvit.core.vis.data_sources.size_data.size_data_preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>the preprocessor for size_data</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="rvit.core.vis.data_sources.x_data">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.vis.data_sources.</code><code class="sig-name descname">x_data</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.data_sources.x_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>vector containing the x-values of data to be plotted.</p>
+<dl class="attribute">
+<dt id="rvit.core.vis.data_sources.x_data.x_data">
+<code class="sig-name descname">x_data</code><a class="headerlink" href="#rvit.core.vis.data_sources.x_data.x_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>vector containing the x-values of data to be plotted.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rvit.core.vis.data_sources.x_data.x_data_preprocess">
+<code class="sig-name descname">x_data_preprocess</code><a class="headerlink" href="#rvit.core.vis.data_sources.x_data.x_data_preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>the preprocessor for x_data</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="rvit.core.vis.data_sources.y_data">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.vis.data_sources.</code><code class="sig-name descname">y_data</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.vis.data_sources.y_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>vector containing the y-values of data to be plotted.</p>
+<dl class="attribute">
+<dt id="rvit.core.vis.data_sources.y_data.y_data">
+<code class="sig-name descname">y_data</code><a class="headerlink" href="#rvit.core.vis.data_sources.y_data.y_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>vector containing the y-values of data to be plotted.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rvit.core.vis.data_sources.y_data.y_data_preprocess">
+<code class="sig-name descname">y_data_preprocess</code><a class="headerlink" href="#rvit.core.vis.data_sources.y_data.y_data_preprocess" title="Permalink to this definition">¶</a></dt>
+<dd><p>the preprocessor for y_data</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="api-interactors">
+<h2>API: Interactors<a class="headerlink" href="#api-interactors" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#rvit.core.int.rvi_button.RVIButton" title="rvit.core.int.rvi_button.RVIButton"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rvit.core.int.rvi_button.RVIButton</span></code></a></p></td>
+<td><p>Specifies a button that when clicked calls a method of the simulation object.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="rvit.core.int.rvi_button.RVIButton">
+<em class="property">class </em><code class="sig-prename descclassname">rvit.core.int.rvi_button.</code><code class="sig-name descname">RVIButton</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#rvit.core.int.rvi_button.RVIButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies a button that when clicked calls a method of the simulation object.</p>
+<dl class="attribute">
+<dt id="rvit.core.int.rvi_button.RVIButton.function">
+<code class="sig-name descname">function</code><a class="headerlink" href="#rvit.core.int.rvi_button.RVIButton.function" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string that specifies a function (or method) that is called when
+this button is pressed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+    <a id="sidebar-anchor"></a>
+    
+
+  <h3><a href="index.html">Navigation</a></h3>
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">GETTING STARTED</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#basic-instructions">Basic Instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html#a-minimal-example">A minimal example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">CONCEPTS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#visualizers">Visualizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#components">Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#data-sources">Data Sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="concepts.html#preprocessing">Preprocessing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concepts.html#interactors">Interactors</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API REFERENCE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#api-core">API: Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-visualizers">API: Visualizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-components">API: Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-data-sources">API: Data Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-interactors">API: Interactors</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="concepts.html"
+                        title="previous chapter">CONCEPTS</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="concepts.html" title="CONCEPTS"
+             accesskey="P">previous</a> |</li>
+      </ul>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Matthew Egbert.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.1.
+    </div>
+  </body>
+</html>
