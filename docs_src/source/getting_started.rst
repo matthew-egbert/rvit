@@ -15,6 +15,37 @@ Requirements
 
     sudo apt-get install xsel xclip
 
+
+This is a standard python package, so you can use it through the normal
+dependancy toolchain, by adding `'rvit @
+git+https://github.com/matthew-egbert/rvit.git',` as a dependancy to your
+`install_requires` in `setup.py`. The sample `setup.py` used by the quickstart
+project has:
+```python
+  setup(
+    #...
+    install_requires=[
+        'rvit @ git+https://github.com/matthew-egbert/rvit.git',
+        'kivy @ git+https://github.com/kivy/kivy.git',
+        'cython',
+        'jinja2',
+        'numpy',
+        'pygame',
+    ],
+    #...
+  )
+```
+
+Then import it as needed.
+
+The core functionality is provided through the package `rvit.core`, with widgets
+in `rvit.core.widgets`. Rvit builds upon kivy, but does not needlessly wrap this
+functionality - you can access it through kivy packages as if you were building
+a kivy project. The quickstart project demonstrates how to set up an application
+and use a `.kv` file to arrange a gui. Further documentation about the Kv file
+format can be found in the kivy documentation:
+[https://kivy.org/doc/stable/guide/lang.html](https://kivy.org/doc/stable/guide/lang.html)
+    
   
 Basic Instructions
 ==================
@@ -105,7 +136,9 @@ each line.
 
 << TODO: Write some documentation on this. >> 
 
-  
+
+
+
    
 A minimal example
 ==========================================
