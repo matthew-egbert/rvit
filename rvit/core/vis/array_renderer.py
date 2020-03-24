@@ -163,7 +163,7 @@ class ArrayRenderer(xy_bounds,color,gradient,array_data):
                 self.render_context.add(BindTexture(texture=self.texture, index=self.texture.id,
                                                     colorfmt='rgba', mipmap=True))
             else:
-                print(np.shape(self.arr))#, self.target_object, self.target_varname)
+                #print(np.shape(self.arr))#, self.target_object, self.target_varname)
                 raise TypeError('Target of Array Renderer must be a 3D numpy.ndarray.')
 
             

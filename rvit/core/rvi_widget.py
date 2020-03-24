@@ -56,7 +56,7 @@ class RVIWidget(FloatLayout):
 
                     cps = list(self.configurable_properties.values())
                     for cp in sorted(cps,key=lambda x: x.rank) :
-                        print(cp.rank)
+                        #print(cp.rank)
                         content.add_widget(cp.getConfigurationSubpanel())
                     # for k in self.configurable_properties.keys():
                     #     content.add_widget(

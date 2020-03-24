@@ -155,7 +155,7 @@ class gradient(RVIVisualizer):
         self.addConfigurableProperty(gradient.vmax,rank=101)
 
     def on_gradient(self,obj,value):
-        print('on_gradient()',value)
+        # print('on_gradient()',value)
         if value != 'None':
             self.depth = 4
             self.colorfmt = ['ZERO_DEPTH_ARRAY?', 'luminance',

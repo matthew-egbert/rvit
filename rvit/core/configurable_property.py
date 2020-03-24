@@ -22,11 +22,11 @@ class ConfigurableProperty(object):
 
         # load values from the previous run
         if self.key in rvit.core.pars.keys():
-            print(self.key)
-            print(rvit.core.pars[self.key])
-            print('========================================')
-            print(f'configurableProperty {self.key}  ')
-            print(f'to be loaded from a previous run to be {rvit.core.pars[self.key]}')
+            # print(self.key)
+            # print(rvit.core.pars[self.key])
+            # print('========================================')
+            # print(f'configurableProperty {self.key}  ')
+            # print(f'to be loaded from a previous run to be {rvit.core.pars[self.key]}')
             self.prop.set(self.owner, rvit.core.pars[self.key])
             self.prop.dispatch(self.owner)
 

@@ -113,8 +113,8 @@ class ScalarTracker(xy_bounds,color,gradient):
     def loadShaders(self):
         ## generate the glsl code
         #self.shader_substitutions.update(args)
-        print('scalar tracker subs')
-        print(self.shader_substitutions)
+        # print('scalar tracker subs')
+        # print(self.shader_substitutions)
     
         self.shaders = glsl_utils.loadShaders('graph_renderer.glsl',self.shader_substitutions)
         

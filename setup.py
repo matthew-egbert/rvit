@@ -28,6 +28,7 @@ setup(
         'jinja2',
         'numpy',
         'pygame',
+        'PyOpenGL'
     ],
     include_package_data=True,
     zip_safe=False,

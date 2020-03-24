@@ -43,6 +43,21 @@ Low-priority
 Bugs
 ====
 
+
+====
+Fixed
+====
+
+- When people install rvit _without_ OpenGL, PointRenderer doesn't load (an
+unhelpful error saying it (point_renderer) doesn't exist is given). This needs
+to be fixed.
+
+
+
+
+
+
+
 PointRenderer renders as squares on some versions of openGL
 ===========================================================
 

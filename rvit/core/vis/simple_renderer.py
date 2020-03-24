@@ -55,7 +55,7 @@ class SimpleRenderer(xy_bounds):
         if value != '':
             v = ''.join(value)
             s = 'self.mesh_indices = self.simulation.%s' %(v)
-            print(s)
+            # print(s)
             exec(s)
 
             # self.mesh_indices = s
