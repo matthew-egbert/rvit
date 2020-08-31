@@ -8,10 +8,24 @@ from rvit.core.vis.data_sources import *
 import rvit.core.glsl_utils as glsl_utils
 import kivy.core.image as kci
 
-class SpriteRenderer(xy_bounds,x_data,y_data,rot_data,color1d_data,size_data):
+class SpriteRenderer(xy_bounds,x_data,y_data,rot_data,color1d_data,size_data,gradient):
     """The SpriteRenderer is used to display an image one or more
     times. It takes x,y and (optionally) rotation coordinates that
     specify the position of the image(s).
+
+    .. literalinclude :: ./code_examples/sprite_renderer/main.py
+        :language: python
+        :caption: main.py
+
+    .. literalinclude :: ./code_examples/sprite_renderer/rvit.kv
+        :language: python
+        :caption: rvit.kv
+
+    .. figure:: ./code_examples/sprite_renderer/screenshot.png
+        :width: 300px
+
+    minimal example
+
 
     """
 
@@ -20,7 +34,7 @@ class SpriteRenderer(xy_bounds,x_data,y_data,rot_data,color1d_data,size_data):
     """
     
     sprite_size = NumericProperty(1.0)
-    """ Specifies the size of the sprites. """
+    """ Specifies the width of the sprite(s). """
 
     def __init__(self, *args, **kwargs):
         super().__init__(**kwargs)        
@@ -80,3 +94,4 @@ class SpriteRenderer(xy_bounds,x_data,y_data,rot_data,color1d_data,size_data):
     def on_sprite_size(self, obj, value):
         # scales sprite sizes
         self.loadShaders()
+

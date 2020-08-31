@@ -8,7 +8,7 @@ from kivy.graphics.opengl import *
 import OpenGL.GL as gl
 # from OpenGL.GLU import *
 
-class LineRenderer(SimpleRenderer,xy_bounds,x_data,y_data,color1d_data,size_data):
+class LineRenderer(SimpleRenderer,xy_bounds,x_data,y_data,color1d_data,size_data,gradient):
     """The LineRenderer is ..."""
 
     def __init__(self,**kwargs):

@@ -38,7 +38,7 @@ class ScalarTracker(xy_bounds,color,gradient):
     """
 
     y_scalar = StringProperty('') #: variable which is to be tracked
-    #c_scalar = StringProperty('') #: variable which is to be tracked
+    y_scalar_preprocess = StringProperty('') #: the preprocessor 
     
     num_samples = NumericProperty(255) #: history length in samples
     fill = OptionProperty('none', options=['none', 'to bottom', 'to top'])
@@ -84,11 +84,22 @@ class ScalarTracker(xy_bounds,color,gradient):
         if value != '':
             self.get_y_command = 'self._y = self.simulation.%s' % (value)
             exec(self.get_y_command)
+        if hasattr(self,'preprocess') :
+            self._y = self.preprocess(self._y)
+
         self.loadShaders()
+
+    def on_y_scalar_preprocess(self, obj, value):
+        s = 'self.preprocess = %s' % (value)
+        exec(s)
+
         
     def update(self):
         super().update()
-        exec(self.get_y_command)
+        if hasattr(self,'get_y_command'):            
+            exec(self.get_y_command)
+        else:
+            raise Exception('No y_scalar has been specified or there was an error in loading it.')
         if self.fill == 'none':
             r = (self.ymax-self.ymin)*self.line_width/2
             self.data[self._x,1] = self._y - r

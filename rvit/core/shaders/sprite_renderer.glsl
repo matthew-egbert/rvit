@@ -42,7 +42,7 @@ void main() {
   {% endif %}
 
   {% if 'attribute float rot;' in attributes %}
-  float theta = rot;
+  float theta = -rot;
   {% else %}
   float theta = 0.0;
   {% endif %}

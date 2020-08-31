@@ -132,34 +132,42 @@ class RVISlider(RVIModifier):
             self.simulation = App.get_running_app().get_simulation()
         
         # # self.scalar_data = value
+        if value != '':
+            self.get_y_command = 'self._y = self.simulation.%s' % (value)
+            exec(self.get_y_command)
+        #self.loadShaders()
+
+        # self.target_varname = value
+        if self.simulation is not None and self.scalar != '':
+            self.get_value_command = 'self._v = self.simulation.%s' % (self.scalar)
+            exec(self.get_value_command)
+            # print(self.get_value_command)
+            # print(self._v)
+            # quit()
+
+            self.set_value_command = 'self.simulation.%s = self._v' % (self.scalar)
+            # exec(self.set_value_command)
+            # if v > self.slider.max :
+            #     self.slider.max = v + abs(v)*0.5
+            # if v < self.slider.min :
+            #     self.slider.min = v - abs(v)*0.5
+            self.slider.value = float(self._v)
+            self.value_label.text = '%0.2f' % (self.slider.value)
+
+        # # # self.scalar_data = value
         # if value != '':
         #     self.get_y_command = 'self._y = self.simulation.%s' % (value)
         #     exec(self.get_y_command)
         # #self.loadShaders()
 
-        # self.target_varname = value
-        if self.simulation is not None and self.scalar != '':
-            get_value_command = 'self._v = self.simulation.%s' % (self.scalar)
-            exec(get_value_command)
-            # if v > self.slider.max :
-            #     self.slider.max = v + abs(v)*0.5
-            # if v < self.slider.min :
-            #     self.slider.min = v - abs(v)*0.5
-            self.slider.value = self._v
-            self.value_label.text = '%0.2f' % (self.slider.value)
-
+            
         self.slider.bind(value=self.on_value)
 
-
-
-    def on_value(self, a, b):
-        if self.simulation is not None and self.scalar != '':
-            s = 'self.simulation.%s = a.value' % (self.scalar)
-            exec(s)
+    def on_value(self, a, value):
+        self._v = value
+        if self.simulation is not None and self.scalar != '':            
+            exec(self.set_value_command)
         self.value_label.text = '%0.2f' % (self.slider.value)
-        # #print(a,b)
-        # print(a.value_normalized)
-        # #a.value_normalized = 0.5
 
     def on_slider_min(self, a, b):        
         self.min_label.text = str(b)

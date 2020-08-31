@@ -13,26 +13,12 @@ class {{property_name}}(RVIVisualizer):
         if not hasattr(self,'simulation'):
             self.simulation = App.get_running_app().get_simulation()
         
-        {{property_name}} = value
-        if {{property_name}} != '':
-            ## old 'pointer' solution
-            # s = 'self.{{variable_name}} = self.simulation.%s' % ({{property_name}})
-            # exec(s)
-            # s = 'self.n_elements = len(np.ravel(self.{{variable_name}}))'
-            # exec(s)
-
-            ## new get-data-function solution
-            if not hasattr(self,'simulation'):
-                self.simulation = App.get_running_app().get_simulation()        
-            self.get_{{variable_name}}_command = f'self.{{variable_name}} = self.simulation.{value}; self.n_elements = len(np.ravel(self.{{variable_name}}))'
-
-            ## the following line should be run every time the data should be
-            ## fetched from its source; each time it is called, it populates the variables
-            ##    self.{{variable_name}}
-            ##    self.n_elements
-            exec(self.get_{{variable_name}}_command)
-            
-
+        self.{{property_name}} = value
+        if self.{{property_name}} != '':
+            s = 'self.{{variable_name}} = self.simulation.%s' % (self.{{property_name}})
+            exec(s)
+            s = 'self.n_elements = len(np.ravel(self.{{variable_name}}))'
+            exec(s)
             self.data_index_{{variable_name}} = self.n_data_sources
             self.n_data_sources += 1
         {% if vertex_shader_functions is defined -%}
@@ -48,8 +34,6 @@ class {{property_name}}(RVIVisualizer):
     def update(self):
         super().update()
         if hasattr(self,'{{variable_name}}'):
-            ## gets data from source and puts it in self.{{variable_name}}
-            exec(self.get_{{variable_name}}_command)
             data = np.repeat(
                 np.array(self.{{variable_name}}, dtype=np.float32),
                 self.vertices_per_datum)

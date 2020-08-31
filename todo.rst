@@ -7,33 +7,14 @@ unique_name
 -----------
 Why did I say that this has to be specified last. Make that not the case!
 
+Have considered improvement in terms of how data is read (probably in all cases
+this should be a call.. "get_values!" not the name of the variable. 
 
 ===============
 Medium-priority
 ===============
 
-
-Make color_data take different formats (RGBA vs. color index).
----------------------------------------------------------------
-The shader needs to depend upon which properties are set.
-
-on_color_data should be replaced with
-
-  on_color_data_1D (although! this could be automatically determined by the
-  shape of the data stream?)
-  on_color_data_3D
-  on_color_data_4D
-
-and new properties should be added
-
-  color_1D_scheme: viridis
-  color_3D_scheme: RGB
-  color_4D_scheme: HSVA
-
-and these should dynamically modify the shader code accordingly  
-
-Make sprite-shader capable of drawing square textures when the xy-bounds are not
-square. A tick box or something.
+The point-renderer should have color configuration widgets in the ctl panel.
 
 ============
 Low-priority
@@ -43,6 +24,11 @@ Low-priority
 Bugs
 ====
 
+xy_bounds component does not seem to listen to .rvit configurations (has to be
+set using GUI)
+
+
+putting point size before x_data causes crash
 
 ====
 Fixed

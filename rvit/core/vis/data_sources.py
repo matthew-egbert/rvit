@@ -22,12 +22,26 @@ class x_data(RVIVisualizer):
         if not hasattr(self,'simulation'):
             self.simulation = App.get_running_app().get_simulation()
         
-        self.x_data = value
-        if self.x_data != '':
-            s = 'self.xs = self.simulation.%s' % (self.x_data)
-            exec(s)
-            s = 'self.n_elements = len(np.ravel(self.xs))'
-            exec(s)
+        x_data = value
+        if x_data != '':
+            ## old 'pointer' solution
+            # s = 'self.xs = self.simulation.%s' % (x_data)
+            # exec(s)
+            # s = 'self.n_elements = len(np.ravel(self.xs))'
+            # exec(s)
+
+            ## new get-data-function solution
+            if not hasattr(self,'simulation'):
+                self.simulation = App.get_running_app().get_simulation()        
+            self.get_xs_command = f'self.xs = self.simulation.{value}; self.n_elements = len(np.ravel(self.xs))'
+
+            ## the following line should be run every time the data should be
+            ## fetched from its source; each time it is called, it populates the variables
+            ##    self.xs
+            ##    self.n_elements
+            exec(self.get_xs_command)
+            
+
             self.data_index_xs = self.n_data_sources
             self.n_data_sources += 1
         
@@ -38,6 +52,8 @@ class x_data(RVIVisualizer):
     def update(self):
         super().update()
         if hasattr(self,'xs'):
+            ## gets data from source and puts it in self.xs
+            exec(self.get_xs_command)
             data = np.repeat(
                 np.array(self.xs, dtype=np.float32),
                 self.vertices_per_datum)
@@ -63,12 +79,26 @@ class y_data(RVIVisualizer):
         if not hasattr(self,'simulation'):
             self.simulation = App.get_running_app().get_simulation()
         
-        self.y_data = value
-        if self.y_data != '':
-            s = 'self.ys = self.simulation.%s' % (self.y_data)
-            exec(s)
-            s = 'self.n_elements = len(np.ravel(self.ys))'
-            exec(s)
+        y_data = value
+        if y_data != '':
+            ## old 'pointer' solution
+            # s = 'self.ys = self.simulation.%s' % (y_data)
+            # exec(s)
+            # s = 'self.n_elements = len(np.ravel(self.ys))'
+            # exec(s)
+
+            ## new get-data-function solution
+            if not hasattr(self,'simulation'):
+                self.simulation = App.get_running_app().get_simulation()        
+            self.get_ys_command = f'self.ys = self.simulation.{value}; self.n_elements = len(np.ravel(self.ys))'
+
+            ## the following line should be run every time the data should be
+            ## fetched from its source; each time it is called, it populates the variables
+            ##    self.ys
+            ##    self.n_elements
+            exec(self.get_ys_command)
+            
+
             self.data_index_ys = self.n_data_sources
             self.n_data_sources += 1
         
@@ -79,6 +109,8 @@ class y_data(RVIVisualizer):
     def update(self):
         super().update()
         if hasattr(self,'ys'):
+            ## gets data from source and puts it in self.ys
+            exec(self.get_ys_command)
             data = np.repeat(
                 np.array(self.ys, dtype=np.float32),
                 self.vertices_per_datum)
@@ -104,12 +136,26 @@ class rot_data(RVIVisualizer):
         if not hasattr(self,'simulation'):
             self.simulation = App.get_running_app().get_simulation()
         
-        self.rot_data = value
-        if self.rot_data != '':
-            s = 'self.rots = self.simulation.%s' % (self.rot_data)
-            exec(s)
-            s = 'self.n_elements = len(np.ravel(self.rots))'
-            exec(s)
+        rot_data = value
+        if rot_data != '':
+            ## old 'pointer' solution
+            # s = 'self.rots = self.simulation.%s' % (rot_data)
+            # exec(s)
+            # s = 'self.n_elements = len(np.ravel(self.rots))'
+            # exec(s)
+
+            ## new get-data-function solution
+            if not hasattr(self,'simulation'):
+                self.simulation = App.get_running_app().get_simulation()        
+            self.get_rots_command = f'self.rots = self.simulation.{value}; self.n_elements = len(np.ravel(self.rots))'
+
+            ## the following line should be run every time the data should be
+            ## fetched from its source; each time it is called, it populates the variables
+            ##    self.rots
+            ##    self.n_elements
+            exec(self.get_rots_command)
+            
+
             self.data_index_rots = self.n_data_sources
             self.n_data_sources += 1
         
@@ -120,6 +166,8 @@ class rot_data(RVIVisualizer):
     def update(self):
         super().update()
         if hasattr(self,'rots'):
+            ## gets data from source and puts it in self.rots
+            exec(self.get_rots_command)
             data = np.repeat(
                 np.array(self.rots, dtype=np.float32),
                 self.vertices_per_datum)
@@ -145,18 +193,32 @@ class color1d_data(RVIVisualizer):
         if not hasattr(self,'simulation'):
             self.simulation = App.get_running_app().get_simulation()
         
-        self.color1d_data = value
-        if self.color1d_data != '':
-            s = 'self.colors = self.simulation.%s' % (self.color1d_data)
-            exec(s)
-            s = 'self.n_elements = len(np.ravel(self.colors))'
-            exec(s)
+        color1d_data = value
+        if color1d_data != '':
+            ## old 'pointer' solution
+            # s = 'self.colors = self.simulation.%s' % (color1d_data)
+            # exec(s)
+            # s = 'self.n_elements = len(np.ravel(self.colors))'
+            # exec(s)
+
+            ## new get-data-function solution
+            if not hasattr(self,'simulation'):
+                self.simulation = App.get_running_app().get_simulation()        
+            self.get_colors_command = f'self.colors = self.simulation.{value}; self.n_elements = len(np.ravel(self.colors))'
+
+            ## the following line should be run every time the data should be
+            ## fetched from its source; each time it is called, it populates the variables
+            ##    self.colors
+            ##    self.n_elements
+            exec(self.get_colors_command)
+            
+
             self.data_index_colors = self.n_data_sources
             self.n_data_sources += 1
         self.shader_substitutions['vertex_shader_functions'].append("""
 // testing
 """)
-        self.color_dim = np.shape(self.colors)[1]
+        self.color_dim = 1
         self.shader_substitutions['attributes'].append('attribute float color1D;')
         self.fmt.append( (b'color1D', 1, 'float') )
         self.format_has_changed = True
@@ -164,6 +226,8 @@ class color1d_data(RVIVisualizer):
     def update(self):
         super().update()
         if hasattr(self,'colors'):
+            ## gets data from source and puts it in self.colors
+            exec(self.get_colors_command)
             data = np.repeat(
                 np.array(self.colors, dtype=np.float32),
                 self.vertices_per_datum)
@@ -189,12 +253,26 @@ class size_data(RVIVisualizer):
         if not hasattr(self,'simulation'):
             self.simulation = App.get_running_app().get_simulation()
         
-        self.size_data = value
-        if self.size_data != '':
-            s = 'self.sizes = self.simulation.%s' % (self.size_data)
-            exec(s)
-            s = 'self.n_elements = len(np.ravel(self.sizes))'
-            exec(s)
+        size_data = value
+        if size_data != '':
+            ## old 'pointer' solution
+            # s = 'self.sizes = self.simulation.%s' % (size_data)
+            # exec(s)
+            # s = 'self.n_elements = len(np.ravel(self.sizes))'
+            # exec(s)
+
+            ## new get-data-function solution
+            if not hasattr(self,'simulation'):
+                self.simulation = App.get_running_app().get_simulation()        
+            self.get_sizes_command = f'self.sizes = self.simulation.{value}; self.n_elements = len(np.ravel(self.sizes))'
+
+            ## the following line should be run every time the data should be
+            ## fetched from its source; each time it is called, it populates the variables
+            ##    self.sizes
+            ##    self.n_elements
+            exec(self.get_sizes_command)
+            
+
             self.data_index_sizes = self.n_data_sources
             self.n_data_sources += 1
         
@@ -205,6 +283,8 @@ class size_data(RVIVisualizer):
     def update(self):
         super().update()
         if hasattr(self,'sizes'):
+            ## gets data from source and puts it in self.sizes
+            exec(self.get_sizes_command)
             data = np.repeat(
                 np.array(self.sizes, dtype=np.float32),
                 self.vertices_per_datum)

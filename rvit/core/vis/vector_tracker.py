@@ -34,6 +34,8 @@ class VectorTracker(xy_bounds,color,gradient):
     """
 
     y_vector = StringProperty('') #: variable which is to be tracked
+    y_vector_preprocess = StringProperty('') #: the preprocessor 
+
         
     fill = OptionProperty('none', options=['none', 'columns', 'bars'])
 
@@ -100,6 +102,9 @@ class VectorTracker(xy_bounds,color,gradient):
             self.loadShaders()
                 
         exec(self.get_y_command)
+        if hasattr(self,'preprocess') :
+            self._y = self.preprocess(self._y)
+
         if self.fill == 'none':
             self.data[:len(self._y),1] = self._y
             self.data[len(self._y):,1] = self._y-0.01
@@ -162,6 +167,11 @@ class VectorTracker(xy_bounds,color,gradient):
             exec(self.get_y_command)
         self.loadShaders()
 
+    def on_y_vector_preprocess(self, obj, value):
+        s = 'self.preprocess = %s' % (value)
+        exec(s)
+
+        
     def on_column_gap(self, obj, value) :
         self.column_gap = value
         self.format_has_changed = True
