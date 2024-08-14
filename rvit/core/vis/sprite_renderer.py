@@ -60,12 +60,14 @@ class SpriteRenderer(xy_bounds,x_data,y_data,rot_data,color1d_data,size_data,gra
             super().update()
             if self.n_elements > 0:
                 tri_indices = np.array([(n, n+1, n+2, n, n+2, n+3)
-                                        for n in range(0,self.n_elements,4)])
+                                        for n in range(0,self.n_elements*self.vertices_per_datum,4)])
                 self.tri_indices = tri_indices.ravel()
                 self.mesh.indices = self.tri_indices
                 self.mesh.vertices = self.data_to_shader.ravel()
                 self.render_context.ask_update()
 
+
+                
     def loadShaders(self, subs = {}):
         subs.update(
             {'sprite_size': 1.0 * self.sprite_size }#/ min(Window.width, Window.height),
@@ -82,7 +84,6 @@ class SpriteRenderer(xy_bounds,x_data,y_data,rot_data,color1d_data,size_data,gra
         if hasattr(self,'mesh'):
             self.render_context.remove(self.mesh)            
         self.mesh = Mesh(mode='triangles', fmt=self.fmt)
-        # print(self.fmt)
         self.render_context.add(self.mesh)
         if hasattr(self,'texture'):
             self.mesh.texture = self.texture

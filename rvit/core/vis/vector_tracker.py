@@ -64,6 +64,7 @@ class VectorTracker(xy_bounds,color,gradient):
         self.addConfigurableProperty(color.color, rank = 50)
         
     def on_fill(self, obj, value):
+        self.format_has_changed = True
         self.fill = value
         if self.fill == 'to top':            
             self.data[self.N:,1] = 1.0
@@ -111,8 +112,8 @@ class VectorTracker(xy_bounds,color,gradient):
         elif self.fill == 'columns' :
             self.data[:self.N*2:2,1] = self._y
             self.data[1:self.N*2:2,1] = self._y
-            self.data[self.N*2::2,1] = 0.0
-            self.data[1+self.N*2::2,1] = 0.0
+            self.data[self.N*2::2,1] = self.ymin
+            self.data[1+self.N*2::2,1] = self.ymin
         elif self.fill == 'bars':
             bar_thiccness = self.bar_thickness
             self.data[:self.N*2:2,1] = self._y + bar_thiccness
@@ -121,7 +122,7 @@ class VectorTracker(xy_bounds,color,gradient):
             self.data[1+self.N*2::2,1] = self._y - bar_thiccness
             
         self.data_minimum = self.data[:,1].min()
-        self.data_maximum = self.data[:,1].max()
+        self.data_maximum = self.data[:,1].max()        
         self.updateModelViewMatrix()
 
         if self.enabled:
@@ -147,7 +148,7 @@ class VectorTracker(xy_bounds,color,gradient):
             self.render_context.remove(self.curve_mesh)
         fmt =[(b'v_pos', 2, 'float')]
         self.curve_mesh = Mesh(mode='line_strip', fmt=fmt)
-        self.render_context['color'] = [1.0,0.1,0.0,1.0]
+        #self.render_context['color'] = [1.0,0.1,0.0,1.0]
         self.render_context.add(self.curve_mesh)
 
         if hasattr(self,'fill_mesh'):

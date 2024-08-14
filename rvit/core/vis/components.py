@@ -9,7 +9,7 @@ import numpy as np
 from kivy.graphics.texture import Texture
 from kivy.graphics import *
 from kivy.properties import ObjectProperty, StringProperty, NumericProperty, OptionProperty, BooleanProperty, ReferenceListProperty
-
+from kivy.clock import Clock
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib import cm
@@ -25,8 +25,6 @@ class xy_bounds(RVIVisualizer):
     xmax = NumericProperty(1.)  #: x-coord of right border 
     ymin = NumericProperty(-1.) #: x-coord of bottom border 
     ymax = NumericProperty(1.)  #: x-coord of top border
-    # autoymin = OptionProperty([False,True])
-    # autoymax = OptionProperty([False,True])
     autoymin = OptionProperty(False,options=[False,True])
     autoymax = OptionProperty(False,options=[False,True])
 
@@ -45,6 +43,8 @@ class xy_bounds(RVIVisualizer):
         w = float(Window.width)
         h = float(Window.height)
         m = kivy.graphics.transformation.Matrix().identity()
+        #double eyex, double eyey, double eyez, double centerx, double
+        #centery, double centerz, double upx, double upy, double upz)¶
         p = rvit.core.BUTTON_BORDER_HEIGHT
         m.scale(2.0 * self.width / w,
                 2.0 * (self.height - p) / h, 1.0)
@@ -95,12 +95,80 @@ class xy_bounds(RVIVisualizer):
     def on_ymax(self, obj, value):
         self.updateModelViewMatrix()
 
-    # def on_autoymin(self, obj, value):
-    #     self.autoymin = value
-    #     print('----------------------',self.autoymin)
 
-    # def on_autoymax(self, obj, value):
-    #     self.autoymax = value
+class xyz_bounds(xy_bounds) :
+    zmin = NumericProperty(-1.) #: z-coord of left border 
+    zmax = NumericProperty(1.)  #: z-coord of right border 
+    timer_for_wiggle = 0.0
+    
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(**kwargs)
+    
+    def on_zmin(self, obj, value):
+        self.updateModelViewMatrix()
+
+    def on_zmax(self, obj, value):
+        self.updateModelViewMatrix()
+    
+    def updateProjectionMatrices(self):
+        w = float(Window.width)
+        h = float(Window.height)
+        m = kivy.graphics.transformation.Matrix().identity()
+        # m = kivy.graphics.transformation.Matrix().look_at(0,0,1.9,
+        #                                                   0,0,0,
+        #                                                   0,1,0)
+        # perspective(double fovy, double aspect, double zNear, double zFar)
+        m.perspective(80,1,0,20)
+        t = kivy.graphics.transformation.Matrix().identity()
+        p = rvit.core.BUTTON_BORDER_HEIGHT
+        k = self.width / w# * self.width / w
+        dx = (self.pos[0]-w/2+(self.width/2))/(w/2)
+        dy = (self.pos[1]-h/2+(self.height/2))/(h/2)
+        t.scale(k,k,k)
+        t.translate(dx,dy,0)
+        self.stencil.size = self.size
+        self.stencil.pos = self.pos
+        # self.stencil.size = w,h
+        # self.stencil.pos = 0,0
+        self.render_context['projection_mat'] = m
+        self.render_context['relocation_mat'] = t
+        
+    def updateModelViewMatrix(self):
+        m = kivy.graphics.transformation.Matrix().identity()
+        
+        ymin = self.ymin
+        ymax = self.ymax
+        if hasattr(self,'data_minimum'):
+            #print(self.xmin,self.xmax,self.ymin,self.ymax,self.autoymin,self.autoymax)
+            if self.autoymin:
+                ymin = self.data_minimum
+            if self.autoymax:
+                ymax = self.data_maximum
+        hr = max(0.00001, (self.xmax - self.xmin))
+        vr = max(0.00001, (ymax - ymin))
+
+        ## rotates the target a bit to make 3D aspects easier to see
+
+        ## iteratively update the positions of the particles
+        def iterate(arg):
+            wiggle_matrix = kivy.graphics.transformation.Matrix().identity()
+            wiggle_matrix.rotate(0.05*np.sin(xyz_bounds.timer_for_wiggle),
+                                 -1,0,0)
+            wiggle_matrix.rotate(0.1*np.cos(xyz_bounds.timer_for_wiggle),
+                                 0,1,0)
+            xyz_bounds.timer_for_wiggle+=0.01
+            self.render_context['modelview_mat'] = m.multiply(wiggle_matrix)
+        ## start a thread to call the iterate fn as
+        ## frequently as possible
+        Clock.schedule_interval(iterate,1.0/30)
+
+        m.scale(1.0 / hr,
+                1.0 / vr,
+                1.0 / vr)
+        m.translate(-0*self.xmin / hr,
+                    -0*ymin / vr,
+                    -1.50)
+        self.render_context['modelview_mat'] = m
         
 class color(RVIVisualizer):
     """Provides a single 4-tuple parameter [R,G,B,A] that can be used to
@@ -124,11 +192,15 @@ used.
     """
     
     def on_color(self, obj, value):
+        print(self,obj,value)
         # for single color setting
         self.render_context['color'] = list(value)
+        self.format_has_changed = True
+        #self.loadShaders()
+        
 
 class gradient(RVIVisualizer):
-    gradient = OptionProperty('viridis',options=['viridis','plasma','inferno','hsv','coolwarm','spring','summer','autumn','tab20c','limits','None'])
+    gradient = OptionProperty('',options=['viridis','plasma','inferno','hsv','coolwarm','spring','summer','autumn','tab20c','limits','None','binary','gray','gist_heat','hot','Greys', 'Purples', 'Blues', 'Greens', 'Oranges', 'Reds', 'YlOrBr', 'YlOrRd', 'OrRd', 'PuRd', 'RdPu', 'BuPu', 'GnBu', 'PuBu', 'YlGnBu', 'PuBuGn', 'BuGn', 'YlGn','Greys_r', 'Purples_r', 'Blues_r', 'Greens_r', 'Oranges_r', 'Reds_r', 'YlOrBr_r', 'YlOrRd_r', 'OrRd_r', 'PuRd_r', 'RdPu_r', 'BuPu_r', 'GnBu_r', 'PuBu_r', 'YlGnBu_r', 'PuBuGn_r', 'BuGn_r', 'YlGn_r'])
     vmin = NumericProperty(0.0)
     vmax = NumericProperty(1.0)
 
@@ -155,7 +227,6 @@ class gradient(RVIVisualizer):
         self.addConfigurableProperty(gradient.vmax,rank=101)
 
     def on_gradient(self,obj,value):
-        # print('on_gradient()',value)
         if value != 'None':
             self.depth = 4
             self.colorfmt = ['ZERO_DEPTH_ARRAY?', 'luminance',
@@ -177,7 +248,7 @@ class gradient(RVIVisualizer):
             self.render_context['vmin'] = self.vmin
             self.render_context['vmax'] = self.vmax
 
-            self.shader_substitutions['uses_gradient'] = True            
+            self.shader_substitutions['uses_gradient'] = True
         else:
             self.shader_substitutions['uses_gradient'] = False
         self.format_has_changed = True

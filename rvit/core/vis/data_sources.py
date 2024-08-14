@@ -121,7 +121,65 @@ class y_data(RVIVisualizer):
     def on_y_data_preprocess(self, obj, value):
         s = 'self.preprocess_ys = %s' % (value)
         exec(s)
-    
+
+
+class z_data(RVIVisualizer):
+    """vector containing the z-values of data to be plotted.
+    """
+
+    z_data = DataTargettingProperty('') #: vector containing the z-values of data to be plotted.
+    z_data_preprocess = StringProperty('') #: the preprocessor for z_data
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(**kwargs)
+
+    def on_z_data(self, obj, value):
+        if not hasattr(self,'simulation'):
+            self.simulation = App.get_running_app().get_simulation()
+        
+        z_data = value
+        if z_data != '':
+            ## old 'pointer' solution
+            # s = 'self.zs = self.simulation.%s' % (z_data)
+            # exec(s)
+            # s = 'self.n_elements = len(np.ravel(self.zs))'
+            # exec(s)
+
+            ## new get-data-function solution
+            if not hasattr(self,'simulation'):
+                self.simulation = App.get_running_app().get_simulation()        
+            self.get_zs_command = f'self.zs = self.simulation.{value}; self.n_elements = len(np.ravel(self.zs))'
+
+            ## the following line should be run every time the data should be
+            ## fetched from its source; each time it is called, it populates the variables
+            ##    self.zs
+            ##    self.n_elements
+            exec(self.get_zs_command)
+            
+
+            self.data_index_zs = self.n_data_sources
+            self.n_data_sources += 1
+        
+        self.shader_substitutions['attributes'].append('attribute float z;')
+        self.fmt.append( (b'z', 1, 'float') )
+        self.format_has_changed = True
+
+    def update(self):
+        super().update()
+        if hasattr(self,'zs'):
+            ## gets data from source and puts it in self.zs
+            exec(self.get_zs_command)
+            data = np.repeat(
+                np.array(self.zs, dtype=np.float32),
+                self.vertices_per_datum)
+            if hasattr(self,'preprocess_zs') :
+                data = self.preprocess_zs(data)
+            self.data_to_shader[:,self.data_index_zs] = data.ravel()
+
+    def on_z_data_preprocess(self, obj, value):
+        s = 'self.preprocess_zs = %s' % (value)
+        exec(s)
+        
 class rot_data(RVIVisualizer):
     """vector containing the way each datum is to be rotated (in radians)
     """
@@ -201,6 +259,7 @@ class color1d_data(RVIVisualizer):
             # s = 'self.n_elements = len(np.ravel(self.colors))'
             # exec(s)
 
+            # hohee
             ## new get-data-function solution
             if not hasattr(self,'simulation'):
                 self.simulation = App.get_running_app().get_simulation()        

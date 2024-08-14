@@ -147,7 +147,7 @@ class ArrayRenderer(xy_bounds,color,gradient,array_data):
             if len(np.shape(self.arr)) == 2 :
                 self.arr = np.expand_dims(self.arr,axis=2)
             if isinstance(self.arr, np.ndarray) and len(np.shape(self.arr)) == 3:
-                self.array_width, self.array_height, self.depth = np.shape(self.arr)[:]
+                self.array_height, self.array_width, self.depth = np.shape(self.arr)[:]
                 self.colorfmt = ['NONSENSICAL', 'luminance','luminance_alpha',
                                  'rgb', 'rgba'][self.depth]
                 self.texture = Texture.create(
