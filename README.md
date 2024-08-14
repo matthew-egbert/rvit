@@ -1,5 +1,7 @@
 # rvit
 
+Aug 14, 2024
+
 RVIT stands for Realtime Visualization and Interaction Toolkit. It is an
 extension of kivy (http://kivy.org), designed for augmenting scientific models,
 simulations and other computational artifacts such as teaching tools.
