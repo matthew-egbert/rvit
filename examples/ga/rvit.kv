@@ -1,0 +1,177 @@
+#:kivy 1.0
+#:import ArrayRenderer rvit.core.vis.array_renderer
+#:import LineRenderer rvit.core.vis.line_renderer
+#:import PointRenderer rvit.core.vis.point_renderer
+#:import VectorTracker rvit.core.vis.vector_tracker
+#:import VectorTracker rvit.core.vis.scalar_tracker
+#:import RVIButton rvit.core.int.rvi_button
+#:import RVISlider rvit.core.int.rvi_slider
+
+FloatLayout:
+    ArrayRenderer: # A Visualizer 
+        array_data: 'fitness_landscape[:,:,:]'         # a DataSource
+        #array_data_preprocess: 'lambda x: np.log(x)'
+        xmin: 0.0
+        xmax: 1.0
+        ymin: 0.0
+        ymax: 1.0
+        pos_hint:  {'x':0., 'y':0.} # parameter (from Kivy Widget) 
+        size_hint: (0.5,1.0)       # parameter (from Kivy Widget) 
+        unique_name: 'fitness_landscape'   # a unique identifier for this visualizer
+    
+    PointRenderer:
+        x_data: 'genomes[:,0]'         # a DataSource
+        y_data: 'genomes[:,1]'         # a DataSource
+        pos_hint: {'x':0.0, 'y':0.0}
+        size_hint:  (0.5,1.0)
+        point_size: 0.5
+        xmin: 0
+        ymin: 0
+        # secondary_varname: 'fitnesses'
+        show_controls: False
+        color: [1.0,0.1,1.0,0.9]  # parameter (from PointRenderer's
+        unique_name: 'genomes' ## oddity: this has to come after everything else
+    
+    RVIButton:
+        pos_hint: {'x':0.95 ,'y':0.9}
+        size_hint: (0.05,0.1)
+        background_color: (0,1,0,1)
+        text: 'go'
+        function: 'setAnimate(True)'
+
+    RVIButton:
+        pos_hint: {'x':0.95 ,'y':0.8}
+        size_hint: (0.05,0.1)
+        background_color: (1,0,0,1)
+        text: 'stop'
+        function: 'setAnimate(False)'
+    RVIButton:
+        pos_hint: {'x':0.95 ,'y':0.7}
+        size_hint: (0.05,0.1)
+        background_color: (0,0,1,1)
+        text: 'step'
+        function: 'ga_iterate()'
+        
+    RVISlider:
+        pos_hint: {'x':0.5 ,'y':0.75}
+        size_hint: (0.1,0.25)
+        orientation: 'vertical'
+        slider_min: 0.0
+        slider_max: 2.0
+        slider_index: 0
+        show_controls: False
+        scalar: 'gradient_scale'
+        unique_name: 'steepness'
+
+    RVISlider:
+        pos_hint: {'x':0.6 ,'y':0.75}
+        size_hint: (0.1,0.25)
+        orientation: 'vertical'
+        slider_min: 0.0
+        slider_max: 2.0
+        slider_index: 0
+        show_controls: False
+        scalar: 'lump_scale'
+        unique_name: 'bumpiness'
+        
+    RVISlider:
+        pos_hint: {'x':0.7 ,'y':0.75}
+        size_hint: (0.1,0.25)
+        orientation: 'vertical'
+        slider_min: 0.0
+        slider_max: 5.0
+        slider_index: 0
+        show_controls: False
+        scalar: 'noise_scale'
+        unique_name: 'fitness_noise'
+
+    RVISlider:
+        pos_hint: {'x':0.8 ,'y':0.75}
+        size_hint: (0.1,0.25)
+        orientation: 'vertical'
+        slider_min: 0.0
+        slider_max: 0.5
+        slider_index: 0
+        show_controls: False
+        scalar: 'mutation_rate'
+        unique_name: 'mutation_rate'
+
+    RVISlider:
+        pos_hint: {'x':0.5 ,'y':0.5}
+        size_hint: (0.1,0.25)
+        orientation: 'vertical'
+        slider_min: 1.0
+        slider_max: 512.0
+        slider_index: 0
+        show_controls: False
+        scalar: 'n_steps'
+        unique_name: 'n_steps'
+
+    RVISlider:
+        pos_hint: {'x':0.6 ,'y':0.5}
+        size_hint: (0.1,0.25)
+        orientation: 'vertical'
+        slider_min: 1
+        slider_max: 25
+        slider_index: 0
+        show_controls: False
+        scalar: 'deme_size'
+        unique_name: 'deme_size'
+        
+    RVIButton:
+        pos_hint: {'x':0.9 ,'y':0.9}
+        size_hint: (0.05,0.1)
+        background_color: (0.5,0.5,0.5,1)
+        text: 'slow'
+        function: 'setItsPerFrame(1)'
+    RVIButton:
+        pos_hint: {'x':0.9 ,'y':0.8}
+        size_hint: (0.05,0.1)
+        background_color: (0.75,0.75,0.75,1)
+        text: 'medium'
+        function: 'setItsPerFrame(5)'
+    RVIButton:
+        pos_hint: {'x':0.9 ,'y':0.7}
+        size_hint: (0.05,0.1)
+        background_color: (1,1,1,1)
+        text: 'fast'
+        function: 'setItsPerFrame(50)'
+
+    RVIButton:
+        pos_hint: {'x':0.9 ,'y':0.6}
+        size_hint: (0.1,0.1)
+        background_color: (0.5,0.5,0.5,1)
+        text: 'reset'
+        function: 'reset()'
+
+    RVIButton:
+        pos_hint: {'x':0.9 ,'y':0.4}
+        size_hint: (0.1,0.1)
+        background_color: (0.5,0.5,0.5,1)
+        text: 'genotype to\nphenotype map'
+        function: 'toggleRandomizeLandscape()'
+        
+    ScalarTracker:
+        pos_hint: {'x':0.5, 'y':0.}
+        size_hint:  (0.5,0.25)
+        minimum_value: -0.1
+        maximum_value: 1.1
+        num_samples: 255
+        y_scalar: 'mean_fitness'
+        unique_name: 'mean_fitness' 
+
+    ScalarTracker:
+        pos_hint: {'x':0.5, 'y':0.25}
+        size_hint:  (0.5,0.25)
+        minimum_value: -0.1
+        maximum_value: 1.1
+        num_samples: 255
+        y_scalar: 'peak_fitness'
+        unique_name: 'peak_fitness' 
+        
+        
+        
+# ### Local Variables: ###
+# ### mode: python ###
+# ### python-main-file: "main.py" ###
+# ### End: ###

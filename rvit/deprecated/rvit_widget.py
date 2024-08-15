@@ -36,21 +36,29 @@ class RvitWidget(FloatLayout):
     def __init__(self, *args, **kwargs):
         self.render_context = RenderContext()
         super(RvitWidget, self).__init__(**kwargs)
-        self.top_buttons = BoxLayout(orientation='horizontal',
-                                     size_hint=(1.0, None),
-                                     size=(0, 20),
-                                     pos_hint={'right': 1.0,
-                                               'top': 1.0},)
+        # self.top_buttons = BoxLayout(orientation='horizontal',
+        #                              size_hint=(1.0, None),
+        #                              size=(0, 20),
+        #                              pos_hint={'right': 1.0,
+        #                                        'top': 1.0},)
+        self.top_buttons = FloatLayout(size_hint=(1.0, None),
+                                       size=(0, rvit.core.BUTTON_BORDER_HEIGHT),
+                                       pos_hint={'right': 1.0,
+                                                 'top': 1.0},)
         self.title_label = Label()
-        self.top_buttons.add_widget(self.title_label)
-
+        self.title_label.size_hint = (0.8, None)
+        self.title_label.pos_hint = {'left': 0.0,'top': 1.0}
+        self.add_widget(self.title_label)
+        print('hi')
+        quit()
         self.configurable_properties = {}
 
         if 'inspect' in dir(self):
             self.inspect_button = Button(text='inspect',
                                          on_press=lambda x: self.inspect(),
                                          background_color=rvit.core.WHITE,
-                                         pos_hint={'x': 0.0, 'top': 1.0})
+                                         pos_hint={'x': 0.0, 'top': 1.0},
+                                         size_hint=(0.2, None),)
 
             self.top_buttons.add_widget(self.inspect_button)
 

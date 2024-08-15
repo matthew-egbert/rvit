@@ -1,0 +1,89 @@
+#:kivy 1.0
+#:import LineRenderer rvit.core.vis.line_renderer
+#:import ArrayRenderer rvit.core.vis.array_renderer
+#:import PointRenderer rvit.core.vis.point_renderer
+#:import VectorTracker rvit.core.vis.vector_tracker
+#:import VectorTracker rvit.core.vis.scalar_tracker
+#:import RVIButton rvit.core.int.rvi_button
+#:import RVISlider rvit.core.int.rvi_slider
+
+FloatLayout:
+    PointRenderer:
+        pos_hint: {'x':0.0, 'y':0.0}
+        size_hint:  (0.5,1.0)
+        x_data: 'node_positions[:,0]'
+        y_data: 'node_positions[:,1]'
+        color1d_data: 'node_phases'
+        point_size: 2.0
+        #color: [1.0,1.0,1.0,0.8]
+        unique_name: 'node_positions' 
+    LineRenderer:
+        pos_hint: {'x':0.0, 'y':0.0}
+        color: [1.0,1.0,1.0,0.4]
+        size_hint:  (0.5,1.0)
+        x_data: 'node_edges[:,0]'
+        y_data: 'node_edges[:,1]'
+        show_controls: False
+        unique_name: 'node_edges' 
+
+    PointRenderer:
+        pos_hint: {'x':0.5, 'y':0.5}
+        size_hint:  (0.25,0.5)
+        x_data: 'phase_plot_positions[:,0]'
+        y_data: 'phase_plot_positions[:,1]'
+        color1d_data: 'node_phases'
+        point_size: 0.5
+        unique_name: 'node_phases' 
+    LineRenderer:
+        pos_hint: {'x':0.5, 'y':0.5}
+        size_hint:  (0.25,0.5)
+        x_data: 'synchrony_vector[:,0]'
+        y_data: 'synchrony_vector[:,1]'
+        show_controls: False
+        unique_name: 'synchrony_vector' 
+
+    RVISlider:
+        pos_hint: {'x':0.75 ,'y':0.5}
+        size_hint: (0.05,0.5)
+        orientation: 'vertical'
+        slider_min: 0.0
+        slider_max: 20.0
+        slider_index: 0
+        scalar: 'weight_scale'
+        unique_name: 'weight_scale' 
+
+    RVISlider:
+        pos_hint: {'x':0.8 ,'y':0.5}
+        size_hint: (0.05,0.5)
+        orientation: 'vertical'
+        slider_min: 0.0
+        slider_max: 5.0
+        slider_index: 1
+        scalar: 'omega_variation_scale'
+        unique_name: 'sigma' 
+
+    RVISlider:
+        pos_hint: {'x':0.85 ,'y':0.5}
+        size_hint: (0.05,0.5)
+        orientation: 'vertical'
+        slider_min: 0.9
+        slider_max: 10
+        slider_index: 2
+        scalar: 'draw_frequency'
+        unique_name: 'draw_frequency' 
+    
+    ScalarTracker:
+        pos_hint: {'x':0.5, 'y':0.0}
+        size_hint:  (0.5,0.5)
+        minimum_value: 0
+        maximum_value: 1
+        num_samples: 255
+        y_scalar: 'synchrony'
+        unique_name: 'synchrony_time_series' 
+        
+            
+        
+# ### Local Variables: ###
+# ### mode: python ###
+# ### python-main-file: "main.py" ###
+# ### End: ###

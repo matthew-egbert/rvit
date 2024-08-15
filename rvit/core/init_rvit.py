@@ -16,15 +16,22 @@ from .rvi_widget import RVIWidget
 def loadFonts():
     font_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                              'fonts/')
-
     KIVY_FONTS = [
         {
             "name": "uasquare",
-            "fn_regular": os.path.join(font_path, "uasquare.ttf"),
-            "fn_bold": os.path.join(font_path, "uasquare.ttf"),
-            "fn_italic": os.path.join(font_path, "uasquare.ttf"),
-            "fn_bolditalic": os.path.join(font_path, "uasquare.ttf"),
-        }]
+            "fn_regular": os.path.join(font_path, 'uasquare.ttf'),
+            "fn_bold": os.path.join(font_path, 'uasquare.ttf'),
+            "fn_italic": os.path.join(font_path, 'uasquare.ttf'),
+            "fn_bolditalic": os.path.join(font_path, 'uasquare.ttf'),
+        },
+        {
+            "name": "helvetica",
+            "fn_regular": os.path.join(font_path, 'Helvetica.ttf'),
+            "fn_bold": os.path.join(font_path, 'Helvetica-Bold.ttf'),
+            "fn_italic": os.path.join(font_path, 'Helvetica-Oblique.ttf'),
+            "fn_bolditalic": os.path.join(font_path, 'Helvetica-BoldOblique.ttf'),
+        },
+        ]
 
     for font in KIVY_FONTS:
         LabelBase.register(**font)
@@ -55,7 +62,7 @@ def activate(rvit_path=None):
     rvit.core.pars = shelve.open(pfile_path)
     Logger.info('Parameter file: %s' % (pfile_path))
 
-    #loadFonts()
+    loadFonts()
     kv_file_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                 'rvit.kv')
     Builder.load_file(kv_file_path)

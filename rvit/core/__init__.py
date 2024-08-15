@@ -18,15 +18,20 @@ from .configurable_property import ConfigurableProperty
 # colors
 from kivy.utils import get_color_from_hex
 WHITE = get_color_from_hex('ffffffff')
+BLACK = get_color_from_hex('000000ff')
 GREY = get_color_from_hex('888a85ff')
-RED = get_color_from_hex('cc0000ff')
-BLUE = get_color_from_hex('3465a4ff')
-PURPLE = get_color_from_hex('75507bff')
-GREEN = get_color_from_hex('73d216ff')
-YELLOW = get_color_from_hex('edd400ff')
-ORANGE = get_color_from_hex('f57900ff')
+RED = get_color_from_hex('ff1900ff')
+BLUE = get_color_from_hex('057dffff')
+LIGHTBLUE = get_color_from_hex('00ddffff')
+PURPLE = get_color_from_hex('9800ff')
+GREEN = get_color_from_hex('00ff2eff')
+YELLOW = get_color_from_hex('fffa00ff')
+ORANGE = get_color_from_hex('ffcc00ff')
+PINK = get_color_from_hex('ff008cff')
+CYAN = get_color_from_hex('00ffe1ff')
+LIME = get_color_from_hex('d8ff00ff')
 
-CONFIG_BUTTON_COLOR = BLUE
+CONFIG_BUTTON_COLOR = LIME
 
 BUTTON_BORDER_HEIGHT = 20
 

@@ -4,6 +4,7 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
+from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.stacklayout import StackLayout
@@ -46,13 +47,20 @@ class RVIWidget(FloatLayout):
     
     def on_unique_name(self, obj, unique_name):
         if unique_name != '':
-            self.title_label.text = unique_name
+
+            self.title_label.text = unique_name.replace('_', ' ').upper()+' '
+            # self.title_label.size = (self.title_label.texture_size[0], 20)
+            # self.title_label.size = (200, 20)
+            # self.title_label.do_layout()
+            # self.top_buttons.do_layout()
+            
             self.registerConfigurableProperties()
             if len(self.configurable_properties) > 0:
                 def open_configuration_panel(value):
                     content = StackLayout(orientation='tb-lr')
-                    content.spacing=(40,20)
-                    content.padding=5
+                    
+                    #content.spacing=(40,20)
+                    #content.padding=5
 
                     cps = list(self.configurable_properties.values())
                     for cp in sorted(cps,key=lambda x: x.rank) :
@@ -64,10 +72,16 @@ class RVIWidget(FloatLayout):
                     popup = Popup(title='Configure', content=content)
                     popup.open()
 
-                self.configure_button = Button(text='configure',
+                self.configure_button = Button(text='[Cfg.]',
+                                               bold=True,
+                                               background_normal ='',
+                                               background_down='',
+                                               color=rvit.core.BLUE,
                                                on_press=open_configuration_panel,
-                                               background_color=rvit.core.CONFIG_BUTTON_COLOR,
-                                               pos_hint={'x': 0.0, 'top': 1.0})
+                                               background_color=rvit.core.BLACK,
+                                               size_hint=(None, None),
+                                               size=(50, 20),
+                                               pos_hint={'right': 0.8, 'top': 1.0})
 
                 self.top_buttons.add_widget(self.configure_button, index=2)
 

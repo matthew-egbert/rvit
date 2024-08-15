@@ -26,26 +26,39 @@ from rvit.core import glsl_utils
 from rvit.core.rvi_widget import RVIWidget, DataTargettingProperty
 from kivy.graphics.stencil_instructions import *
 
+class CustomLabel(Label):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        with self.canvas.before:
+            # Create a Color instruction to set the background color
+            self.bg_color = Color(0, 1, 0, 1)  # RGBA for green background
+            # Create a Rectangle instruction to draw the background
+            self.bg_rect = Rectangle(size=self.size, pos=self.pos)
+        self.bind(size=self._update_bg, pos=self._update_bg)
+
+    def _update_bg(self, instance, value):
+        # Update the background rectangle size and position
+        self.bg_rect.size = self.size
+        self.bg_rect.pos = self.pos
 
 class RVIVisualizer(RVIWidget):
     """All Visualizers have the following properties. """
 
-    
     self_update = BooleanProperty(True)
     """Boolean flag indicating whether this widget should be responsible
     for autonomously updating its own data (i.e. pulling the data from
     the simulation at a regular interval). Defaults to True.
-    """ 
+    """
 
-    fps = NumericProperty(30.0)
+    fps = NumericProperty(60.0)
     """Frames per second. A numeric value indicating how many times this
     RVI element should update its data per second. Only relevant when
-    self_update is True. Defaults to 30.
+    self_update is True. Defaults to 60.
 
     """
-    
+
     background_color = ListProperty([0.0] * 4)
-    
+
     def __init__(self, *args, **kwargs):
         self.render_context = RenderContext()
         super().__init__(**kwargs)
@@ -63,12 +76,12 @@ class RVIVisualizer(RVIWidget):
         self.n_data_sources = 0
         self.vertices_per_datum = 1
         self.format_has_changed = True
-        
+
         prop = self.property('fps')
         prop.dispatch(self)
         with self.canvas:
             StencilPush()
-            Color(0,1,1,mode='hsv')
+            #Color(0,1,1,mode='hsv')
             self.stencil = Rectangle(pos=(10,10),size=(self.size))
             StencilUse()
             self.stencil_color = Color(*self.background_color)
@@ -83,39 +96,53 @@ class RVIVisualizer(RVIWidget):
         self.top_buttons = BoxLayout(orientation='horizontal',
                                      size_hint=(1.0, None),
                                      size=(0, 20),
-                                     pos_hint={'right': 1.0,
+                                     pos_hint={'x': 0.0,
                                                'top': 1.0},)
 
-        ## create title label
-        self.title_label = Label()
-        self.top_buttons.add_widget(self.title_label)
+        # self.top_buttons = FloatLayout(size_hint=(1.0, None),
+        #                                size=(0, 20),
+        #                                pos_hint={'right': 1.0,
+        #                                          'top': 1.0},)
 
+        ## create title label
+        self.title_label = Label(bold=True, size_hint=(None, None),padding=(0,0,10,0))
+        self.title_label.bind(texture_size=lambda instance, 
+                              value: instance.setter('size')(instance, (value[0], 20)))
+        self.top_buttons.add_widget(self.title_label)
 
         ## create inspection button
         if 'inspect' in dir(self):
-            self.inspect_button = Button(text='inspect',
+            self.inspect_button = Button(bold=True,
+                                         text='[Insp.]',
                                          on_press=lambda x: self.inspect(),
-                                         background_color=rvit.core.WHITE,
-                                         pos_hint={'x': 0.0, 'top': 1.0})
+                                         background_color=rvit.core.BLACK,
+                                         color=rvit.core.LIGHTBLUE,
+                                         pos_hint={'right': 1.0, 'top': 1.0},
+                                         size_hint=(None,None),
+                                         size=(50, 20))
 
             self.top_buttons.add_widget(self.inspect_button)
 
-        ## create disable button 
+        ## create disable button
         self.disable_button = ToggleButton(size_hint=(None, None),
                                            background_color=rvit.core.RED,
                                            size=(20, 20),
+                                           pos_hint={'right': 1.0, 'top': 1.0},
                                            state='down',
                                            )
+        
+        self.filler = Widget(size_hint=(1.0, 1.0))
+        self.top_buttons.add_widget(self.filler)
 
         def enabled_state_changed(inst, value):
             self.enabled = value == 'down'
         self.enabled = True
         self.disable_button.bind(state=enabled_state_changed)
-        self.top_buttons.add_widget(self.disable_button)
+        #self.top_buttons.add_widget(self.disable_button)
 
         ## add all created buttons to layout (i.e. display them all)
         self.add_widget(self.top_buttons)
-        
+
     def update(self):
         pass
 
@@ -130,4 +157,4 @@ class RVIVisualizer(RVIWidget):
             def iterate(a):
                 self.update()
             self.update_event = Clock.schedule_interval(iterate, 1.0/self.fps)
-        
+
