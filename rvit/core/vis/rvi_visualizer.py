@@ -50,7 +50,7 @@ class RVIVisualizer(RVIWidget):
     the simulation at a regular interval). Defaults to True.
     """
 
-    fps = NumericProperty(60.0)
+    fps = NumericProperty(30.0)
     """Frames per second. A numeric value indicating how many times this
     RVI element should update its data per second. Only relevant when
     self_update is True. Defaults to 60.

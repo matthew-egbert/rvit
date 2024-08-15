@@ -91,7 +91,6 @@ def init_rvit(model_object,rvit_string=None,rvit_file=None,window_size=(900,900)
         Config.set('graphics', 'width', str(int(window_size[0])))
         Config.set('graphics', 'height', str(int(window_size[1])))
         Config.write()
-
     
     class RvitApp(App):
         def __init__(self, *args, **kwargs):

@@ -5,7 +5,7 @@ Config.set('kivy', 'log_level', 'debug')  # Set the log level to 'debug'
 if platform == 'linux':    
     ratio = 2.0
     # w = 1920/2
-    w = 1200
+    w = 1500
     Config.set('graphics', 'width', str(int(w)))
     Config.set('graphics', 'height', str(int(w / 2)))
     #Config.set('graphics', 'fullscreen', 'auto')

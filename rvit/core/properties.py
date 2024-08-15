@@ -13,8 +13,6 @@ from kivy.uix.label import Label
 from functools import partial
 from rvit.core import draw_constants as dc
 
-
-
 class ColorProperty(ReferenceListProperty):
     def get_configuration_subpanel(self,prop,owner,key):
         layout = StackLayout(orientation='lr-tb',
