@@ -27,5 +27,5 @@ class RVIToggleButton(ToggleButton):
 
     def on_press(self):
         s = 'self.simulation.%s = not(self.simulation.%s)' % (self.boolean,self.boolean)
-        print(s)
+        #print(s)
         exec(s)
