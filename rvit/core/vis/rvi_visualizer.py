@@ -50,7 +50,7 @@ class RVIVisualizer(RVIWidget):
     the simulation at a regular interval). Defaults to True.
     """
 
-    fps = NumericProperty(30.0)
+    fps = NumericProperty(60.0)
     """Frames per second. A numeric value indicating how many times this
     RVI element should update its data per second. Only relevant when
     self_update is True. Defaults to 60.
@@ -60,13 +60,15 @@ class RVIVisualizer(RVIWidget):
     background_color = ListProperty([0.0] * 4)
 
     def __init__(self, *args, **kwargs):
-        self.render_context = RenderContext()
+        self.render_context = RenderContext(use_parent_projection=True,
+                                            use_parent_modelview=True,
+                                            use_parent_frag_modelview=True)
         super().__init__(**kwargs)
         self.configurable_properties = {}
 
-        self.render_context['modelview_mat'] = Matrix().identity()
-        self.render_context['projection_mat'] = Matrix().identity()
-        self.render_context['window_size'] = [float(Window.width), float(Window.height)]
+        #self.render_context['modelview_mat'] = Matrix().identity()
+        #self.render_context['projection_mat'] = Matrix().identity()
+        #self.render_context['window_size'] = [float(Window.width), float(Window.height)]
         self.canvas.before.add(self.render_context)
 
         self.update_event = None
@@ -81,7 +83,6 @@ class RVIVisualizer(RVIWidget):
         prop.dispatch(self)
         with self.canvas:
             StencilPush()
-            #Color(0,1,1,mode='hsv')
             self.stencil = Rectangle(pos=(10,10),size=(self.size))
             StencilUse()
             self.stencil_color = Color(*self.background_color)
@@ -115,8 +116,8 @@ class RVIVisualizer(RVIWidget):
             self.inspect_button = Button(bold=True,
                                          text='[Insp.]',
                                          on_press=lambda x: self.inspect(),
-                                         background_color=rvit.core.BLACK,
-                                         color=rvit.core.LIGHTBLUE,
+                                         background_color=rvit.core.colors.BLACK,
+                                         color=rvit.core.colors.LIGHTBLUE,
                                          pos_hint={'right': 1.0, 'top': 1.0},
                                          size_hint=(None,None),
                                          size=(50, 20))
@@ -125,7 +126,7 @@ class RVIVisualizer(RVIWidget):
 
         ## create disable button
         self.disable_button = ToggleButton(size_hint=(None, None),
-                                           background_color=rvit.core.RED,
+                                           background_color=rvit.core.colors.RED,
                                            size=(20, 20),
                                            pos_hint={'right': 1.0, 'top': 1.0},
                                            state='down',

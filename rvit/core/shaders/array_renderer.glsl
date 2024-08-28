@@ -56,6 +56,7 @@ void main (){
   // gl_FragColor = vec4(t);//vec4(-t.r,t.r,0.0,1.0);
 
   vec4 value = texture2D(array_texture, tex_coord0);
+  //value.r = (value.r-vmin)/(vmax-vmin);
 
   {% if uses_gradient == True %}
   vec4 t = texture2D(gradient_texture, vec2(0.0,value.r));

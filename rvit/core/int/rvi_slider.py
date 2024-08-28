@@ -153,8 +153,8 @@ class RVISlider(RVIModifier):
                 self.configure_button = Button(text='[Cfg.]',
                                                bold=True,
                                                on_press=test,
-                                               background_color=rvit.core.BLACK,
-                                               color=rvit.core.BLUE,
+                                               background_color=rvit.core.colors.BLACK,
+                                               color=rvit.core.colors.BLUE,
                                                pos_hint={'x': 0.0, 'top': 1.0})
 
                 self.top_buttons.add_widget(self.configure_button, index=2)

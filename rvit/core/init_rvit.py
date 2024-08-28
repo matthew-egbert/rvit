@@ -54,7 +54,7 @@ def activate(rvit_path=None):
         pass
 
     path = rvit_path
-    inspection_path = os.path.join(path, 'inspections')
+    rvit.inspection_path = os.path.join(path, 'inspections')
 
     # if no parameter file exists, create it
     pfile_path = os.path.join(rvit_path, 'parameters.p')
@@ -109,6 +109,8 @@ def init_rvit(model_object,rvit_string=None,rvit_file=None,window_size=(900,900)
                 raise Error('Either rvit_file or rvit_string must be passed to init_rvit')
 
 
+
+            
         def on_stop(self):
             disactivate()
 

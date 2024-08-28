@@ -70,7 +70,12 @@ class VectorTracker(xy_bounds,color,gradient):
             self.data[self.N:,1] = 1.0
         if self.fill == 'to bottom':
             self.data[self.N:,1] = 0.0
-        
+    
+    def inspect(self):
+        inspection_dump_file = self.createInspectionDumpFile()
+        np.save(open(inspection_dump_file, 'wb'), self._y)        
+        self.launchInspector(inspection_dump_file)
+
     def update(self):
         if self.format_has_changed :
             self.loadShaders()

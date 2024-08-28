@@ -76,9 +76,9 @@ class RVIWidget(FloatLayout):
                                                bold=True,
                                                background_normal ='',
                                                background_down='',
-                                               color=rvit.core.BLUE,
+                                               color=rvit.core.colors.BLUE,
                                                on_press=open_configuration_panel,
-                                               background_color=rvit.core.BLACK,
+                                               background_color=rvit.core.colors.BLACK,
                                                size_hint=(None, None),
                                                size=(50, 20),
                                                pos_hint={'right': 0.8, 'top': 1.0})
@@ -124,28 +124,30 @@ class RVIWidget(FloatLayout):
     def registerConfigurableProperties(self):
         pass
 
-        
+    def get_dump_filename(self):
+        return ''.join(list(filter(str.isalnum, self.unique_name)))        
+
     def createInspectionDumpFile(self):
         try:
             os.makedirs(rvit.inspection_path)
         except os.error:
             pass
 
-        datafile_name = filter(str.isalnum, self.unique_name)
-        return os.path.join(skivy.inspection_path, datafile_name)
+        datafile_name = self.get_dump_filename()
+        return os.path.join(rvit.inspection_path, datafile_name)
 
     def launchInspector(self, datafile_name):
         from subprocess import call
 
-        inspection_script_name = 'inspect_%s.py' % (filter(str.isalnum, self.unique_name))
-        inspection_script_path = os.path.join(skivy.inspection_path, inspection_script_name)
+        inspection_script_name = 'inspect_%s.py' % (self.get_dump_filename())
+        inspection_script_path = os.path.join(rvit.inspection_path, inspection_script_name)
         with open(inspection_script_path, "w") as text_file:
             text_file.write('from pylab import *\n')
             text_file.write('a = np.load("%s")\n' % (datafile_name))
             text_file.write("print('%s is loaded in the variable called `a`')\n" % (datafile_name))
 
         instructions = ['gnome-terminal', '-e',
-                        """ bash -c "cd """ + skivy.inspection_path +
+                        """ bash -c "cd """ + rvit.inspection_path +
                         """ ; ipython3 -i """ + inspection_script_name + """ " """]
         call(instructions)
 

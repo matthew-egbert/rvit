@@ -68,13 +68,15 @@ class xy_bounds(RVIVisualizer):
             if self.autoymax:
                 ymax = self.data_maximum
         hr = max(0.00001, (self.xmax - self.xmin))
-        vr = max(0.00001, (ymax - ymin))
+        vr = max(0.00001, (ymax - ymin))        
         m.scale(1.0 / hr,
                 1.0 / vr,
                 1.0)
+        #m.rotate(np.pi/4,0,0,1.0)
         m.translate(-self.xmin / hr,
                     -ymin / vr,
                     0.0)
+
         self.render_context['modelview_mat'] = m
 
     def on_size(self, inst, value):

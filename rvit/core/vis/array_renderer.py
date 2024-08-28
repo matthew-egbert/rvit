@@ -115,6 +115,9 @@ class ArrayRenderer(xy_bounds,color,gradient,array_data):
         self.render_context.shader.vs = self.shaders['vs']
         self.render_context.shader.fs = self.shaders['fs']
 
+        self.render_context['vmin'] = 0.0
+        self.render_context['vmax'] = 5.0
+
         ## replace any previous mesh with the new mesh
         if hasattr(self,'mesh'):
             self.render_context.remove(self.mesh)
@@ -191,7 +194,7 @@ class ArrayRenderer(xy_bounds,color,gradient,array_data):
 
     def inspect(self):
         inspection_dump_file = self.createInspectionDumpFile()
-        np.save(open(inspection_dump_file, 'wb'), self.a)
+        np.save(open(inspection_dump_file, 'wb'), self.arr)        
         self.launchInspector(inspection_dump_file)
 
     def on_motion(self, etype, motionevent):

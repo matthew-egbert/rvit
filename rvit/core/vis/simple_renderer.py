@@ -7,8 +7,7 @@ from rvit.core.vis.components import *
 from rvit.core.vis.data_sources import *
 import rvit.core.glsl_utils as glsl_utils
 
-
-class SimpleRenderer(xy_bounds):
+class SimpleRenderer(xy_bounds,color):
     indices = ListProperty([])
     
     def __init__(self, *args, **kwargs):
