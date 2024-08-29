@@ -116,7 +116,7 @@ class ArrayRenderer(xy_bounds,color,gradient,array_data):
         self.render_context.shader.fs = self.shaders['fs']
 
         self.render_context['vmin'] = 0.0
-        self.render_context['vmax'] = 5.0
+        self.render_context['vmax'] = 1.0
 
         ## replace any previous mesh with the new mesh
         if hasattr(self,'mesh'):
