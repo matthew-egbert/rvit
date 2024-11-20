@@ -110,13 +110,21 @@ class ArrayRenderer(xy_bounds,color,gradient,array_data):
     def loadShaders(self, subs = {}):
         ## generate the glsl code
         self.shaders = glsl_utils.loadShaders(self.shader_fn,
-                                              {**subs,**self.shader_substitutions})
+                                              {**subs,**self.shader_substitutions})        
+
         ## set the meshes shaders to the generated glsl code
         self.render_context.shader.vs = self.shaders['vs']
         self.render_context.shader.fs = self.shaders['fs']
 
-        self.render_context['vmin'] = 0.0
-        self.render_context['vmax'] = 1.0
+        #print(self.render_context.shader.fs)
+        if self.render_context.shader.success == False:
+            print('Shader compilation failed')
+            print(self.shaders['vs'])
+            print(self.shaders['fs'])
+            quit()
+
+        self.render_context['vmin'] = self.vmin
+        self.render_context['vmax'] = self.vmax
 
         ## replace any previous mesh with the new mesh
         if hasattr(self,'mesh'):

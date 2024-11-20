@@ -3,7 +3,7 @@
 #ifdef GL_ES
     precision highp float;
 #endif
- 
+
 /* Outputs to the fragment shader */
 varying vec4 frag_color;
 varying vec2 tex_coord0;
@@ -22,9 +22,7 @@ uniform float      opacity;
 uniform float      vmin; // scales gradient
 uniform float      vmax; // scales gradient
 {% endif %}
-
 {{ vertex_shader_functions | join('\n') }}
-
 
 void main() {
   frag_color = color * vec4(0.0, 1.0, 1.0, opacity);
@@ -43,11 +41,13 @@ varying vec2 tex_coord0;
 
 /* uniform texture samplers */
 uniform sampler2D array_texture;
-
 {% if uses_gradient == True -%}
 uniform sampler2D gradient_texture;
 {% endif -%}
-
+{% if uses_gradient == True %}
+uniform float vmin; // scales gradient
+uniform float vmax; // scales gradient
+{% endif %}
 
 void main (){
   // vec4 t = texture2D(texture0, tex_coord0);
@@ -56,7 +56,9 @@ void main (){
   // gl_FragColor = vec4(t);//vec4(-t.r,t.r,0.0,1.0);
 
   vec4 value = texture2D(array_texture, tex_coord0);
-  //value.r = (value.r-vmin)/(vmax-vmin);
+  //vmax = 2.0;
+  value.r = (value.r-vmin)/(vmax-vmin);
+  //value.r = vmax/10.0;
 
   {% if uses_gradient == True %}
   vec4 t = texture2D(gradient_texture, vec2(0.0,value.r));

@@ -161,7 +161,7 @@ class z_data(RVIVisualizer):
             self.n_data_sources += 1
         
         self.shader_substitutions['attributes'].append('attribute float z;')
-        self.fmt.append( (b'z', 1, 'float') )
+        self.fmt.append( (b'z', 1, 'float') )        
         self.format_has_changed = True
 
     def update(self):

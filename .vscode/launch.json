@@ -8,7 +8,8 @@
             "name": "Python Debugger: Current File",
             "type": "debugpy",
             "request": "launch",
-            "program": "examples/kuramoto/main.py",
+            "program": "docs_src/source/code_examples/line_renderer_3d/main.py",
+            //"program": "examples/kuramoto/main.py",
             "console": "integratedTerminal"
         }
     ]

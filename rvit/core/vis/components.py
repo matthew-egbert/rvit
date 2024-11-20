@@ -120,12 +120,12 @@ class xyz_bounds(xy_bounds) :
         #                                                   0,0,0,
         #                                                   0,1,0)
         # perspective(double fovy, double aspect, double zNear, double zFar)
-        m.perspective(80,1,0,20)
+        m.perspective(60,1,0,20)
         t = kivy.graphics.transformation.Matrix().identity()
         p = rvit.core.BUTTON_BORDER_HEIGHT
         k = self.width / w# * self.width / w
         dx = (self.pos[0]-w/2+(self.width/2))/(w/2)
-        dy = (self.pos[1]-h/2+(self.height/2))/(h/2)
+        dy = (self.pos[1]-h/2+(self.height/2))/(h/2)        
         t.scale(k,k,k)
         t.translate(dx,dy,0)
         self.stencil.size = self.size
@@ -154,11 +154,12 @@ class xyz_bounds(xy_bounds) :
         ## iteratively update the positions of the particles
         def iterate(arg):
             wiggle_matrix = kivy.graphics.transformation.Matrix().identity()
-            wiggle_matrix.rotate(0.05*np.sin(xyz_bounds.timer_for_wiggle),
+            k = 0.25
+            wiggle_matrix.rotate(k*0.05*np.sin(xyz_bounds.timer_for_wiggle),
                                  -1,0,0)
-            wiggle_matrix.rotate(0.1*np.cos(xyz_bounds.timer_for_wiggle),
+            wiggle_matrix.rotate(k*0.1*np.cos(xyz_bounds.timer_for_wiggle),
                                  0,1,0)
-            xyz_bounds.timer_for_wiggle+=0.01
+            xyz_bounds.timer_for_wiggle+=0.1
             self.render_context['modelview_mat'] = m.multiply(wiggle_matrix)
         ## start a thread to call the iterate fn as
         ## frequently as possible
