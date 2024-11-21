@@ -1,0 +1,30 @@
+# print(rx)
+
+        # print('--------------')
+        # k = kivy.graphics.transformation.Matrix()                
+        # #k.perspective(40,sy/sx,0.1,2) 
+        # k.set(array=np.array(range(16)).reshape(4,4))
+        # #k.translate(0,0,-2)               
+        # vals = np.array(k.get()).reshape(4,4)
+        # k.translate(0,0,-2)
+        # print(k)
+        
+        # g = glm.mat4(vals)
+        # tmat = glm.translate(glm.mat4(),glm.vec3(0,0,-2))
+        # g = tmat*g
+        # print(g)    
+        
+        # k.set(array=glm.transpose(g).to_list())
+        # print(k)
+        # quit()  
+        
+        #quit()
+        
+        # #t = glm.translate(glm.mat4(1.0),glm.vec3(0,0,-2))
+        # #p = glm.translate(p,glm.vec3(0,0,2))
+        # proj_matrix = p.to_list()
+        # print(p)
+            
+        #proj_matrix.rotate(rx,0,1,0)
+        #proj_matrix.rotate(ry,1,0,0)        
+        #proj_matrix.scale(sx,sy,1.0)

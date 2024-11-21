@@ -21,6 +21,11 @@ from rvit.core.configurable_property import ConfigurableProperty
 from kivy.uix.stencilview import StencilView
 from kivy.uix.widget import Widget
 from kivy.graphics import Color, Rectangle
+from kivy.graphics import Fbo
+
+from kivy.graphics.opengl import glViewport
+import OpenGL.GL as gl
+from kivy.graphics.opengl import *
 
 from rvit.core import glsl_utils
 from rvit.core.rvi_widget import RVIWidget, DataTargettingProperty
@@ -60,19 +65,9 @@ class RVIVisualizer(RVIWidget):
     background_color = ListProperty([0.0] * 4)
 
     def __init__(self, *args, **kwargs):
-        self.render_context = RenderContext(use_parent_projection=True,
-                                            use_parent_modelview=True,
-                                            use_parent_frag_modelview=True)
         super().__init__(**kwargs)
         self.configurable_properties = {}
-
-        #self.render_context['modelview_mat'] = Matrix().identity()
-        #self.render_context['projection_mat'] = Matrix().identity()
-        #self.render_context['window_size'] = [float(Window.width), float(Window.height)]
-        self.canvas.before.add(self.render_context)
-
         self.update_event = None
-
         self.shader_substitutions = defaultdict(list)
         self.fmt = []
         self.n_data_sources = 0
@@ -81,16 +76,37 @@ class RVIVisualizer(RVIWidget):
 
         prop = self.property('fps')
         prop.dispatch(self)
-        with self.canvas:
-            StencilPush()
-            self.stencil = Rectangle(pos=(10,10),size=(self.size))
-            StencilUse()
-            self.stencil_color = Color(*self.background_color)
-            Rectangle(pos=(-100,-100),size=(10000,1000000))
-            self.render_context = RenderContext()
-            StencilPop()
+
+        self.render_context = RenderContext()
+
+        with self.canvas.before:
+            glEnable(gl.GL_PROGRAM_POINT_SIZE)
+            glEnable(gl.GL_POINT_SMOOTH)
+            glHint(gl.GL_POINT_SMOOTH_HINT, gl.GL_NICEST)
+            #glEnable(GL_BLEND)
+            #glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+            #Color(1,1,1,1)
+
+        self.setup_fbo()
+        self.canvas.add(self.fbo_rect)
+
         self.addControlBar()
 
+        self.bind(size=self.update_fbo_size, pos=self.update_fbo_rect)
+
+    def setup_fbo(self) :
+        if hasattr(self,'fbo'):
+            self.canvas.remove(self.fbo)
+            self.canvas.remove(self.fbo_rect)
+
+        self.fbo = Fbo(size=(self.size))
+        print(self.size)
+        self.fbo.add(self.render_context)
+
+        self.fbo_rect = Rectangle(size=(100,100), texture=self.fbo.texture)
+        self.canvas.add(self.fbo)
+        self.canvas.add(self.fbo_rect)#.texture=self.fbo.texture
+        
 
     def addControlBar(self):
         """ Adds bar to top of widget with various controls for that widget. """
@@ -107,7 +123,7 @@ class RVIVisualizer(RVIWidget):
 
         ## create title label
         self.title_label = Label(bold=True, size_hint=(None, None),padding=(0,0,10,0))
-        self.title_label.bind(texture_size=lambda instance, 
+        self.title_label.bind(texture_size=lambda instance,
                               value: instance.setter('size')(instance, (value[0], 20)))
         self.top_buttons.add_widget(self.title_label)
 
@@ -131,7 +147,7 @@ class RVIVisualizer(RVIWidget):
                                            pos_hint={'right': 1.0, 'top': 1.0},
                                            state='down',
                                            )
-        
+
         self.filler = Widget(size_hint=(1.0, 1.0))
         self.top_buttons.add_widget(self.filler)
 
@@ -150,6 +166,11 @@ class RVIVisualizer(RVIWidget):
     def on_background_color(self,obj,value):
         self.stencil_color.rgba = value
 
+    def on_size(self, obj, value):
+        self.fbo.size = value
+        # self.render_context['window_size'] = [float(value[0]), float(value[1])]
+        # self.stencil.size = value
+
     def on_fps(self, obj, value):
         if self.update_event is not None:
             self.update_event.cancel()
@@ -159,3 +180,17 @@ class RVIVisualizer(RVIWidget):
                 self.update()
             self.update_event = Clock.schedule_interval(iterate, 1.0/self.fps)
 
+    def update_fbo_size(self, *args):
+        # Update FBO size
+        #self.fbo.size = (512,512)#[int(x) for x in self.size]
+        self.setup_fbo()
+        self.update_fbo_rect()
+
+    def update_fbo_rect(self, *args):
+        # Update the rectangle's size and position
+        self.fbo_rect.size = self.size
+        self.fbo_rect.pos = self.pos
+        # self.erase_rect.size = self.size
+        # self.erase_rect.pos = self.pos
+
+        print(self.fbo_rect.size, self.fbo_rect.pos)

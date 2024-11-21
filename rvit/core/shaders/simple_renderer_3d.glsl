@@ -39,11 +39,12 @@ void main() {
   gl_PointSize = {{point_size|default('1.0')}};
   {% endif %}
 
-  gl_PointSize *= 0.4 + 0.6*(z + 1.0)/2.;
+  
 
   tex_coord0 = vec2(0,0);
   vec3 v_pos = vec3(x,y,z);  
   gl_Position = projection_mat * modelview_mat * vec4(v_pos, 1.0);
+  gl_PointSize *= 1.0-(0.0+0.95*(pow(gl_Position.z,2)*10.0 + 1.0))/2000;
 }
 
 ---FRAGMENT SHADER---
@@ -63,4 +64,5 @@ void main (void){
 //   }
 //   a += float(float(gl_PointCoord) == float(0.0)) * frag_color.a;
   gl_FragColor = vec4(frag_color.rgb,0.9);
+  //gl_FragColor = vec4(1,1,1,0.9);
 }
