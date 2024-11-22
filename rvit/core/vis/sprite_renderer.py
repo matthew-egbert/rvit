@@ -58,6 +58,7 @@ class SpriteRenderer(xy_bounds,x_data,y_data,rot_data,color1d_data,size_data,gra
             
         if self.enabled:
             super().update()
+            self.clear_fbo()
             if self.n_elements > 0:
                 tri_indices = np.array([(n, n+1, n+2, n, n+2, n+3)
                                         for n in range(0,self.n_elements*self.vertices_per_datum,4)])

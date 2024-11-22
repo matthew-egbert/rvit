@@ -4,13 +4,20 @@ import numpy as np
 
 class Model(object):
     def __init__(self, *args, **kwargs):
-        self.pos = np.zeros((3,1))
+        N = 100
+        self.pos = np.zeros((3,N))
 
         ## iteratively update the positions of the particles
         def iterate(arg):
-            self.pos[:2,0] = [self.pos[0]+np.random.randn()*0.01,
-                              self.pos[1]+np.random.randn()*0.01]
-            self.pos[2,0] += np.random.rand()*0.01
+            ## random walk
+            self.pos[0,:] += np.random.randn(N)*0.001
+            self.pos[1,:] += np.random.randn(N)*0.001
+            self.pos[2,:] += np.random.randn(N)*0.01
+
+            ## with periodic boundary conditions
+            self.pos[0,:] = np.mod(self.pos[0,:]+1,2.0)-1.0
+            self.pos[1,:] = np.mod(self.pos[1,:]+1,2.0)-1.0
+                            
 
         ## start a thread to call the iterate fn as
         ## frequently as possible

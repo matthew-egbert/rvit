@@ -35,6 +35,7 @@ class xy_bounds(RVIVisualizer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(**kwargs)
+        self.updateProjectionMatrix()
         self.updateModelViewMatrix()
         self.data_minimum = self.data_maximum = 0.0
         
@@ -49,14 +50,16 @@ class xy_bounds(RVIVisualizer):
         #double eyex, double eyey, double eyez, double centerx, double
         #centery, double centerz, double upx, double upy, double upz)¶
         p = rvit.core.BUTTON_BORDER_HEIGHT
-        m.scale(2.0 * self.width / w,
-                2.0 * (self.height - p) / h, 1.0)
+        # m.scale(2.0 * self.width / w,
+        #         2.0 * (self.height - p) / h, 1.0)
 
         self.stencil.size = self.size
         self.stencil.pos = self.pos
-        m.translate(-1.0 + (self.pos[0]) * 2.0 / w,
-                    -1.0 + (self.pos[1]) * 2.0 / h,
-                    0.0)
+        # m.translate(-1.0 + (self.pos[0]) * 2.0 / w,
+        #             -1.0 + (self.pos[1]) * 2.0 / h,
+        #             0.0)        
+        m.translate(-1,-1,0)
+        m.scale(2,2,1)
         self.render_context['projection_mat'] = m
 
     def updateModelViewMatrix(self):              
@@ -91,19 +94,19 @@ class xy_bounds(RVIVisualizer):
         self.updateModelViewMatrix() 
         
     def on_xmin(self, obj, value):
-        self.updateModelViewMatrix()
+        self.updateProjectionMatrix()
         self.updateModelViewMatrix()
 
     def on_xmax(self, obj, value):
-        self.updateModelViewMatrix()
+        self.updateProjectionMatrix()        
         self.updateModelViewMatrix()
 
     def on_ymin(self, obj, value):
-        self.updateModelViewMatrix()
+        self.updateProjectionMatrix()        
         self.updateModelViewMatrix()
 
     def on_ymax(self, obj, value):
-        self.updateModelViewMatrix()
+        self.updateProjectionMatrix()        
         self.updateModelViewMatrix()
 
 
@@ -116,7 +119,7 @@ class xyz_bounds(xy_bounds) :
     #     super().__init__(**kwargs)
     
     def on_zmin(self, obj, value):        
-        self.updateModelViewMatrix()
+        self.updateProjectionMatrix()        
         self.updateModelViewMatrix()
 
     def on_zmax(self, obj, value):
@@ -126,6 +129,9 @@ class xyz_bounds(xy_bounds) :
     def updateProjectionMatrix(self):                                    
         w = float(Window.width)
         h = float(Window.height)
+
+        self.stencil.size = self.size
+        self.stencil.pos = self.pos
         
         p = rvit.core.BUTTON_BORDER_HEIGHT
         sx = self.width / w

@@ -76,9 +76,10 @@ class VectorTracker(xy_bounds,color,gradient):
         np.save(open(inspection_dump_file, 'wb'), self._y)        
         self.launchInspector(inspection_dump_file)
 
-    def update(self):
+    def update(self):            
+        self.clear_fbo()                
         if self.format_has_changed :
-            self.loadShaders()
+            self.loadShaders()            
             self.format_has_changed = False
 
             ## thick line, or area filled up or down
@@ -105,7 +106,7 @@ class VectorTracker(xy_bounds,color,gradient):
                                          n+1, n+k+1, n+k) for n in range(0,self.N*2,2)])
                 self.tri_indices = tri_indices.ravel()[:]
             
-            self.loadShaders()
+            #self.loadShaders()
                 
         exec(self.get_y_command)
         if hasattr(self,'preprocess') :

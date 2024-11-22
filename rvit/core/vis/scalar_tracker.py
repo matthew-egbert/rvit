@@ -57,9 +57,7 @@ class ScalarTracker(xy_bounds,color,gradient):
         self.addConfigurableProperty(color.color, rank = 50)
         
     def on_num_samples(self, obj, value):
-        #self.num_samples = value
         self.N = int(value)        
-        print(self.N)
         self._x = 0
         self.data = np.zeros((int(self.N*2), 2),dtype=np.float32)
         self.data[:self.N,0] = np.linspace(0, 1.0, self.N)
@@ -114,6 +112,8 @@ class ScalarTracker(xy_bounds,color,gradient):
         self.updateModelViewMatrix()
 
         if self.enabled:
+            self.clear_fbo() 
+
             self.curve_mesh.indices = np.arange(self.num_samples)
             self.curve_mesh.vertices = self.data.ravel()
 

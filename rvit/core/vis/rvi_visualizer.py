@@ -77,15 +77,24 @@ class RVIVisualizer(RVIWidget):
         prop = self.property('fps')
         prop.dispatch(self)
 
-        self.render_context = RenderContext()
+        self.render_context = RenderContext(use_parent_projection=False,
+                                            use_parent_frag_modelview=False,
+                                            use_parent_modelview=False)
 
         with self.canvas.before:
             glEnable(gl.GL_PROGRAM_POINT_SIZE)
             glEnable(gl.GL_POINT_SMOOTH)
-            glHint(gl.GL_POINT_SMOOTH_HINT, gl.GL_NICEST)
-            #glEnable(GL_BLEND)
-            #glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-            #Color(1,1,1,1)
+            glHint(gl.GL_POINT_SMOOTH_HINT, gl.GL_NICEST)            
+            
+            ## Set up stencil to prevent from drawing outside of allocated area
+            StencilPush()                        
+            self.stencil = Rectangle(pos=(100,0),size=(10000,10000))            
+            StencilUse()
+            self.stencil_color = Color(*self.background_color)                                
+            
+        with self.canvas.after:
+            StencilPop()
+            pass
 
         self.setup_fbo()
         self.canvas.add(self.fbo_rect)
@@ -160,6 +169,13 @@ class RVIVisualizer(RVIWidget):
         ## add all created buttons to layout (i.e. display them all)
         self.add_widget(self.top_buttons)
 
+
+    def clear_fbo(self) :
+        self.fbo.bind()
+        self.fbo.clear_color = [0,0,0,0]
+        self.fbo.clear_buffer()
+        self.fbo.release() 
+
     def update(self):
         pass
 
@@ -168,8 +184,14 @@ class RVIVisualizer(RVIWidget):
 
     def on_size(self, obj, value):
         self.fbo.size = value
-        # self.render_context['window_size'] = [float(value[0]), float(value[1])]
-        # self.stencil.size = value
+        self.render_context['window_size'] = [float(value[0]), float(value[1])]
+        self.stencil.size = value
+        self.stencil.pos = (0,0)
+        
+        self.setup_fbo()
+        self.update_fbo_rect()
+        #self.on_size(*args)
+        
 
     def on_fps(self, obj, value):
         if self.update_event is not None:
@@ -185,6 +207,7 @@ class RVIVisualizer(RVIWidget):
         #self.fbo.size = (512,512)#[int(x) for x in self.size]
         self.setup_fbo()
         self.update_fbo_rect()
+        #self.on_size(*args)
 
     def update_fbo_rect(self, *args):
         # Update the rectangle's size and position
