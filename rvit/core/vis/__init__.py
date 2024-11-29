@@ -5,3 +5,4 @@
 # from . import sprite_renderer
 
 # from . import line_renderer_3d
+# from . import cube_outline_renderer

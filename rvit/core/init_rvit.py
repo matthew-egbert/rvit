@@ -70,7 +70,7 @@ def activate(rvit_path=None):
 def disactivate():
     rvit.core.pars.close()
 
-def init_rvit(model_object,rvit_string=None,rvit_file=None,window_size=(900,900)):
+def init_rvit(model_object,rvit_string=None,rvit_file=None,window_size=(900,900),widgets=[]):
     """Initializes rvit. This must be run for RVIT to do
     anything. Generally run immediately after the simulation/artifact
     has been instantiated. See :ref:`Getting Started`!
@@ -107,15 +107,15 @@ def init_rvit(model_object,rvit_string=None,rvit_file=None,window_size=(900,900)
                 return Builder.load_string(rvit_kv_string, filename='rvit.kv')
             else:
                 raise Error('Either rvit_file or rvit_string must be passed to init_rvit')
-
-
-
             
         def on_stop(self):
             disactivate()
 
     activate()
-    app = RvitApp().run()
+    app = RvitApp()
+    
+    app.run()
+    return app
 
 def rvit_reconnect():
     ## TODO: document rvit_reconnect, which tells all rvit widgets to reload their targets

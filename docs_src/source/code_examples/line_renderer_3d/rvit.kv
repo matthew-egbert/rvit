@@ -1,17 +1,57 @@
 #:kivy 1.0
 #:import LineRenderer3D rvit.core.vis.line_renderer_3d
 #:import PointRenderer3D rvit.core.vis.point_renderer_3d
+#:import CubeOutline rvit.core.vis.cube_outline_renderer
 
 
-FloatLayout:     
-    # LineRenderer3D: # A Visualizer 
+FloatLayout:
+    FloatLayout:
+        pos_hint: {'x':0.5, 'y':0.0} 
+        size_hint: (0.5,1.0)       
+
+        # canvas.before:
+        #     Color:
+        #         rgba: 0, 1, 0, 0.5  # Green background for visualization
+        #     Rectangle:
+        #         pos: self.pos
+        #         size: self.size
+        # Button:
+        #     text: 'Update'
+        #     size_hint: (0.1,0.1)
+        #     pos_hint: {'x':0.0, 'y':0.9}
+            
+        
+        CubeOutline:
+            color: [1.0,0.0,0.0,0.5]  
+            unique_name: 'cube'
+            # size_hint: (1.0,1.0)
+            # pos_hint: {'x':0.0, 'y':0.0}   
+
+        PointRenderer3D: # A Visualizer 
+            x_data: 'dots[:,0]'         # a DataSource
+            y_data: 'dots[:,1]'         # a DataSource
+            z_data: 'dots[:,2]'         # a DataSource
+            color1d_data: 'colors_1d'   # a DataSource
+            color: [1.0,0.0,0.0,0.5] 
+            unique_name: 'dots'   # a unique identifier for this visualizer
+
+
+    # CubeOutline: # A Visualizer 
+    #     pos_hint: {'x':0.5, 'y':0.0} # parameter (from Kivy Widget) 
+    #     size_hint: (0.5,1.0)       # parameter (from Kivy Widget) 
+    #     color: [1.0,0.0,0.0,0.5]  # parameter (from PointRenderer's
+    #                                #            component `color`)
+    #     unique_name: 'cube'   # a unique identifier for this visualizer
+
+    # PointRenderer3D: # A Visualizer 
     #     x_data: 'dots[:,0]'         # a DataSource
     #     y_data: 'dots[:,1]'         # a DataSource
     #     z_data: 'dots[:,2]'         # a DataSource
-    #     indices: 'inds'
+    #     color1d_data: 'colors_1d'
+    #     #indices: 'inds'
     #     pos_hint: {'x':0.5, 'y':0.0} # parameter (from Kivy Widget) 
     #     size_hint: (0.5,1.0)       # parameter (from Kivy Widget) 
-    #     color: [1.0,0.0,1.0,0.5]  # parameter (from PointRenderer's
+    #     color: [1.0,0.0,0.0,0.5]  # parameter (from PointRenderer's
     #                                #            component `color`)
     #     unique_name: 'dots'   # a unique identifier for this visualizer
 
@@ -20,39 +60,18 @@ FloatLayout:
     #     y_data: 'dots[:,1]'         # a DataSource
     #     z_data: 'dots[:,2]'         # a DataSource
     #     pos_hint: {'x':0.0, 'y':0.0} # parameter (from Kivy Widget) 
-    #     size_hint: (0.5,1.0)       # parameter (from Kivy Widget) 
+    #     size_hint: (0.25,0.5)       # parameter (from Kivy Widget) 
     #     color: [1.0,0.0,0.0,0.5]  # parameter (from PointRenderer's
     #                                #            component `color`)
     #     unique_name: 'dots'   # a unique identifier for this visualizer
-    
-    PointRenderer3D: # A Visualizer 
-        x_data: 'dots[:,0]'         # a DataSource
-        y_data: 'dots[:,1]'         # a DataSource
-        z_data: 'dots[:,2]'         # a DataSource
-        #indices: 'inds'
-        pos_hint: {'x':0.5, 'y':0.0} # parameter (from Kivy Widget) 
-        size_hint: (0.5,1.0)       # parameter (from Kivy Widget) 
-        color: [1.0,0.0,0.0,0.5]  # parameter (from PointRenderer's
-                                   #            component `color`)
-        unique_name: 'dots'   # a unique identifier for this visualizer
 
-    PointRenderer3D: # A VisualizerLineRenderer3D: # A Visualizer 
-        x_data: 'dots[:,0]'         # a DataSource
-        y_data: 'dots[:,1]'         # a DataSource
-        z_data: 'dots[:,2]'         # a DataSource
-        pos_hint: {'x':0.0, 'y':0.0} # parameter (from Kivy Widget) 
-        size_hint: (0.25,0.5)       # parameter (from Kivy Widget) 
-        color: [1.0,0.0,0.0,0.5]  # parameter (from PointRenderer's
-                                   #            component `color`)
-        unique_name: 'dots'   # a unique identifier for this visualizer
-
-    LineRenderer3D: # A Visualizer 
-        x_data: 'dots[:,0]'         # a DataSource
-        y_data: 'dots[:,1]'         # a DataSource
-        z_data: 'dots[:,2]'         # a DataSource
-        indices: 'inds'
-        pos_hint: {'x':0.0, 'y':0.0} # parameter (from Kivy Widget) 
-        size_hint: (0.25,0.5)       # parameter (from Kivy Widget) 
-        color: [1.0,0.0,1.0,0.5]  # parameter (from PointRenderer's
-                                   #            component `color`)
-        unique_name: 'dots'   # a unique identifier for this visualizer
+    # LineRenderer3D: # A Visualizer 
+    #     x_data: 'dots[:,0]'         # a DataSource
+    #     y_data: 'dots[:,1]'         # a DataSource
+    #     z_data: 'dots[:,2]'         # a DataSource
+    #     indices: 'inds'
+    #     pos_hint: {'x':0.0, 'y':0.0} # parameter (from Kivy Widget) 
+    #     size_hint: (0.25,0.5)       # parameter (from Kivy Widget) 
+    #     color: [1.0,0.0,1.0,0.5]  # parameter (from PointRenderer's
+    #                                #            component `color`)
+    #     unique_name: 'dots'   # a unique identifier for this visualizer

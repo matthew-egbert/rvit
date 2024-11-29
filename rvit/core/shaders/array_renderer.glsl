@@ -44,10 +44,8 @@ uniform sampler2D array_texture;
 {% if uses_gradient == True -%}
 uniform sampler2D gradient_texture;
 {% endif -%}
-{% if uses_gradient == True %}
 uniform float vmin; // scales gradient
 uniform float vmax; // scales gradient
-{% endif %}
 
 void main (){
   // vec4 t = texture2D(texture0, tex_coord0);

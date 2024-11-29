@@ -41,6 +41,13 @@ if __name__ == '__main__':
         'fmt' : (b'y', 1, 'float'),
     })
     classes += generate_data_source_class({
+        'property_name' : 'z_data',
+        'variable_name' : 'zs',
+        'docstring' : 'vector containing the z-values of data to be plotted.',
+        'attribute_defn' : 'attribute float z;',
+        'fmt' : (b'z', 1, 'float'),
+    })
+    classes += generate_data_source_class({
         'property_name' : 'rot_data',
         'variable_name' : 'rots',
         'docstring' : 'vector containing the way each datum is to be rotated (in radians)',

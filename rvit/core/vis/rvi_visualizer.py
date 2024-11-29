@@ -64,8 +64,11 @@ class RVIVisualizer(RVIWidget):
 
     background_color = ListProperty([0.0] * 4)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):        
+        kwargs.setdefault('size_hint', (0.0, 0.0))
+        kwargs.setdefault('pos_hint', {'x': 0.0, 'y': 0.0})        
         super().__init__(**kwargs)
+
         self.configurable_properties = {}
         self.update_event = None
         self.shader_substitutions = defaultdict(list)
@@ -102,14 +105,15 @@ class RVIVisualizer(RVIWidget):
         self.addControlBar()
 
         self.bind(size=self.update_fbo_size, pos=self.update_fbo_rect)
+        self.size_hint = (1, 1)
+        self.pos_hint = {'x' : 0, 'y' : 0}
 
     def setup_fbo(self) :
         if hasattr(self,'fbo'):
             self.canvas.remove(self.fbo)
             self.canvas.remove(self.fbo_rect)
 
-        self.fbo = Fbo(size=(self.size))
-        print(self.size)
+        self.fbo = Fbo(pos=(self.pos),size=(self.size))        
         self.fbo.add(self.render_context)
 
         self.fbo_rect = Rectangle(size=(100,100), texture=self.fbo.texture)
@@ -189,9 +193,8 @@ class RVIVisualizer(RVIWidget):
         self.stencil.pos = (0,0)
         
         self.setup_fbo()
-        self.update_fbo_rect()
-        #self.on_size(*args)
-        
+        self.update_fbo_rect()        
+        #self.on_size(*args)        
 
     def on_fps(self, obj, value):
         if self.update_event is not None:
@@ -204,16 +207,10 @@ class RVIVisualizer(RVIWidget):
 
     def update_fbo_size(self, *args):
         # Update FBO size
-        #self.fbo.size = (512,512)#[int(x) for x in self.size]
         self.setup_fbo()
         self.update_fbo_rect()
-        #self.on_size(*args)
 
     def update_fbo_rect(self, *args):
         # Update the rectangle's size and position
         self.fbo_rect.size = self.size
         self.fbo_rect.pos = self.pos
-        # self.erase_rect.size = self.size
-        # self.erase_rect.pos = self.pos
-
-        print(self.fbo_rect.size, self.fbo_rect.pos)

@@ -20,6 +20,8 @@ import glm ## opengl transformation matrix library
 
 # from data_sources import color1d_data
 
+
+
 class xy_bounds(RVIVisualizer):
     """Provides four configurable parameters that determine the limits of a 2D display.
     """
@@ -114,10 +116,9 @@ class xyz_bounds(xy_bounds) :
     zmin = NumericProperty(-1.) #: z-coord of left border 
     zmax = NumericProperty(1.)  #: z-coord of right border 
     timer_for_wiggle = 0.0
+    WOBBLE_ITERATOR_EXISTS = False
     
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(**kwargs)
-    
+   
     def on_zmin(self, obj, value):        
         self.updateProjectionMatrix()        
         self.updateModelViewMatrix()
@@ -135,23 +136,15 @@ class xyz_bounds(xy_bounds) :
         
         p = rvit.core.BUTTON_BORDER_HEIGHT
         sx = self.width / w
-        sy = (self.height - p) / h        
-        # dx = (self.pos[0]-w/2+(self.width/2))/(w/2)
-        # dy = (self.pos[1]-h/2+(self.height/2))/(h/2)        
+        sy = (self.height - p) / h           
         rx = np.arctan2(0.05,0.1)
                                 
         g = glm.mat4()
         g = glm.perspective(0.2*np.pi/2, 1, 0.1, 10000)
         g = glm.translate(g,glm.vec3(0,0,-2))
-        #g = glm.rotate(g,rx,glm.vec3(0,1,0))
         k = kivy.graphics.transformation.Matrix()        
         k.set(array=g.to_list())
-        
-        # print(g)
-        
-
-        #self.stencil.size = self.size        
-        #self.stencil.pos = (self.pos[0]),self.pos[1]        
+    
         self.render_context['projection_mat'] = k
                 
     def updateModelViewMatrix(self):
@@ -160,7 +153,6 @@ class xyz_bounds(xy_bounds) :
         ymin = self.ymin
         ymax = self.ymax
         if hasattr(self,'data_minimum'):
-            #print(self.xmin,self.xmax,self.ymin,self.ymax,self.autoymin,self.autoymax)
             if self.autoymin:
                 ymin = self.data_minimum
             if self.autoymax:
@@ -180,23 +172,28 @@ class xyz_bounds(xy_bounds) :
         h = float(Window.height)
         dx = (self.pos[0]-w/2+(self.width/2))/(w/2)
         dy = (self.pos[1]-h/2+(self.height/2))/(h/2) 
-        #m.translate(dx,dy,0)
 
         ## rotates the target a bit to make 3D aspects easier to see
         def iterate(arg):
             wiggle_matrix = kivy.graphics.transformation.Matrix().identity()
-            k = 1.0#np.pi*2
+            k = 0.2#np.pi*2
             wiggle_matrix.rotate(k*0.05*np.sin(xyz_bounds.timer_for_wiggle),
                                  -1,0,0)
             # wiggle_matrix.rotate(k*0.4*xyz_bounds.timer_for_wiggle,#np.cos(xyz_bounds.timer_for_wiggle),
             #                      0,1,0)
             wiggle_matrix.rotate(k*0.4*np.cos(xyz_bounds.timer_for_wiggle),
-                                 0,1,0)
-            xyz_bounds.timer_for_wiggle+=0.02
+                                 0,1,0)            
             self.render_context['modelview_mat'] = m.multiply(wiggle_matrix)
 
-        # start a thread to call the iterate fn regularly
-        Clock.schedule_interval(iterate,1.0/30)
+        def step_wobble_forward(arg) :
+            xyz_bounds.timer_for_wiggle+=0.1
+
+        if not xyz_bounds.WOBBLE_ITERATOR_EXISTS :
+            xyz_bounds.WOBBLE_ITERATOR_EXISTS = True
+            # start a thread to call the iterate fn regularly
+            Clock.schedule_interval(step_wobble_forward,1.0/30.0)
+            
+        Clock.schedule_interval(iterate,1.0/30.0)
         
         self.render_context['modelview_mat'] = m
         

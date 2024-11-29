@@ -19,7 +19,7 @@ if platform == 'linux':
 
 from rvit.core import init_rvit
 
-class DiffusionModel(object):
+class Model(object):
     def __init__(self, *args, **kwargs):
         l,h = -1.0,1.0
         self.pos = np.array([[l,l,l],                             
@@ -34,14 +34,15 @@ class DiffusionModel(object):
 
         self.inds = [0,1,1,2,2,3,3,0,
                      4,5,5,6,6,7,7,4,
-                     0,4,1,5,2,6,3,7]
+                     0,4,1,5,2,6,3,7]                
         
         self.dots = np.random.rand(100,3)*2-1
+        self.colors_1d = np.linspace(0,1,len(self.dots))
 
         init_rvit(self,rvit_file='rvit.kv') ## <-- Starts RVIT
 
 if __name__ == '__main__':
-    model = DiffusionModel()
+    model = Model()
     ## An alternative, equivalent way to start rvit...
     # init_rvit(model ,rvit_file='rvit.kv') 
 
