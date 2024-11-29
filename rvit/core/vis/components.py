@@ -204,7 +204,6 @@ class color(RVIVisualizer):
     cases (e.g. the color_1d data source) the alpha component still is used.
 
     """
-
     r = BoundedNumericProperty(1,min=0,max=1)
     g = BoundedNumericProperty(1,min=0,max=1)
     b = BoundedNumericProperty(1,min=0,max=1)

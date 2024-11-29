@@ -25,5 +25,4 @@ class RVIButton(Button):
 
     def on_press(self):
         s = 'self.simulation.%s' % (self.function)
-        print(s)
         exec(s)

@@ -8,7 +8,7 @@ if platform == 'linux':
     ratio = 1.
     w = 1920
     Config.set('graphics', 'width', str(int(w)))
-    Config.set('graphics', 'height', str(int(w/2)))
+    Config.set('graphics', 'height', str(int(w)))
     Config.set('graphics', 'fullscreen', 'false')
     Config.set('graphics', 'maxfps', '60')
     Config.set('postproc', 'maxfps', '60')
@@ -21,9 +21,18 @@ from rvit.core import init_rvit
 
 class Model(object):
     def __init__(self, *args, **kwargs):
-        l,h = -1.0,1.0        
-        self.dots = np.random.rand(1000,3)*2-1
-        self.colors_1d = self.dots[:,1]
+        self.x = 0.0
+        self.y = 0.0
+
+        ## iteratively update the positions of the particles
+        def iterate(arg):
+            ## random walk
+            self.x += np.random.randn()*0.01
+            self.y += np.random.randn()*0.01
+                            
+        ## start a thread to call the iterate fn as
+        ## frequently as possible
+        Clock.schedule_interval(iterate,0.0)
         
         init_rvit(self,rvit_file='rvit.kv') ## <-- Starts RVIT
 

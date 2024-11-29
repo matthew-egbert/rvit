@@ -42,7 +42,6 @@ class BoundsProperty(ReferenceListProperty):
     def get_configuration_subpanel(self,prop,owner,key):
         def on_text(instance, value, index = 0, sub_prop_name = ''):
             try:
-                print(owner,index,value)
                 if value == 'down' :
                     prop.setitem(owner, index, True)
                 elif value == 'normal' :

@@ -7,32 +7,23 @@
 FloatLayout:
     FloatLayout:
         pos_hint: {'x':0.5, 'y':0.0} 
-        size_hint: (0.5,1.0)       
-
-        # canvas.before:
-        #     Color:
-        #         rgba: 0, 1, 0, 0.5  # Green background for visualization
-        #     Rectangle:
-        #         pos: self.pos
-        #         size: self.size
-        # Button:
-        #     text: 'Update'
-        #     size_hint: (0.1,0.1)
-        #     pos_hint: {'x':0.0, 'y':0.9}
-            
+        size_hint: (0.5,1.0)                   
         
         CubeOutline:
-            color: [1.0,0.0,0.0,0.5]  
+            color: [0.0,1.0,1.0,1.0]  
             unique_name: 'cube'
-            # size_hint: (1.0,1.0)
-            # pos_hint: {'x':0.0, 'y':0.0}   
 
         PointRenderer3D: # A Visualizer 
             x_data: 'dots[:,0]'         # a DataSource
             y_data: 'dots[:,1]'         # a DataSource
             z_data: 'dots[:,2]'         # a DataSource
             color1d_data: 'colors_1d'   # a DataSource
-            color: [1.0,0.0,0.0,0.5] 
+            #gradient: 'viridis'         # a colormap
+            gradient: 'Greys_r'         # a colormap
+            vmin: -1.0                   # minimum value for colormap
+            vmax: 1.0
+            point_size: 0.5
+            color: [1.0,0.0,1.0,0.8] 
             unique_name: 'dots'   # a unique identifier for this visualizer
 
 

@@ -20,19 +20,6 @@ class SimpleRenderer3D(xyz_bounds,x_data,y_data,z_data,color1d_data,size_data,gr
         self.shader_fn='simple_renderer_3d.glsl'
 
         l,h = -1.0,1.0
-        self.cube_xyz = np.array([[l,l,l],                             
-                             [l,l,h],
-                             [l,h,h],
-                             [l,h,l],
-                             [h,l,l],
-                             [h,l,h],
-                             [h,h,h],
-                             [h,h,l],
-                             ])
-
-        self.cube_inds = [0,1,1,2,2,3,3,0,
-                          4,5,5,6,6,7,7,4,
-                          0,4,1,5,2,6,3,7]
 
     def update(self):
         if self.format_has_changed :
@@ -66,15 +53,16 @@ class SimpleRenderer3D(xyz_bounds,x_data,y_data,z_data,color1d_data,size_data,gr
         ## set the meshes shaders to the generated glsl code
         self.render_context.shader.vs = self.shaders['vs']
         self.render_context.shader.fs = self.shaders['fs']
-
-        # self.fbo.shader.vs = self.shaders['vs']
-        # self.fbo.shader.fs = self.shaders['fs']
         
         if self.render_context.shader.success == False :
             print('Shader compilation failed')
             print(self.shaders['vs'])
             print(self.shaders['fs'])
             quit()
+
+
+        # print(self.shaders['vs'])
+        # print(self.shaders['fs'])
 
         self.render_context['vmin'] = self.vmin
         self.render_context['vmax'] = self.vmax
@@ -88,15 +76,6 @@ class SimpleRenderer3D(xyz_bounds,x_data,y_data,z_data,color1d_data,size_data,gr
         ######
         self.mesh = Mesh(mode=mesh_mode, fmt=self.fmt)
         self.render_context.add(self.mesh)
-        print(self.render_context.children)
-
-        # if hasattr(self,'cube_mesh'):
-        #     self.render_context.remove(self.cube_mesh)
-
-        # self.cube_mesh = Mesh(mode='lines', fmt=self.fmt)
-        # self.cube_mesh.indices = self.cube_inds
-        # self.cube_mesh.vertices = self.cube_xyz.flatten()                
-        # self.render_context.add(self.cube_mesh)
         
         self.format_has_changed = True
 

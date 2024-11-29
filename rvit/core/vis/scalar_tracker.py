@@ -118,7 +118,7 @@ class ScalarTracker(xy_bounds,color,gradient):
             self.curve_mesh.vertices = self.data.ravel()
 
             self.fill_mesh.indices = self.tri_indices
-            self.fill_mesh.vertices = self.data.ravel()
+            self.fill_mesh.vertices = self.data.ravel()       
             self.render_context.ask_update()
 
     def loadShaders(self):

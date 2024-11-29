@@ -1,4 +1,5 @@
 import numpy as np
+import kivy.app
 from collections import defaultdict
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.button import Button
@@ -98,16 +99,13 @@ class RVIWidget(FloatLayout):
     def reconnect(self):
         need_reset = True
         for k, v in self.properties().items():
-            # print(type(v))
             if issubclass(type(v),DataTargettingProperty):
                 if v.get(self) != v.defaultvalue:
-                    # print(v)
                     if need_reset:
                         self.shader_substitutions = defaultdict(list)
                         self.fmt = []
                         self.n_data_sources = 0
                         need_reset = False
-                    # print(k,v.get(self),v.defaultvalue)a
                     # v.set(self,v.get(self))
                     v.dispatch(self)
             # else :
@@ -152,7 +150,23 @@ class RVIWidget(FloatLayout):
         call(instructions)
 
     def inspect(self):
-        inspection_dump_file = self.createInspectionDumpFile()
-        np.save(open(inspection_dump_file, 'wb'), self.a)
-        self.launchInspector(inspection_dump_file)
-                
+        # inspection_dump_file = self.createInspectionDumpFile()
+        # np.save(open(inspection_dump_file, 'wb'), self.a)
+        # self.launchInspector(inspection_dump_file)
+        app = kivy.app.App.get_running_app()
+        X = app.get_simulation()
+
+        import threading
+        from IPython import embed
+        banner =  'The model is in the variable `X` \n'
+        banner += 'The specific widget data is in the variable `self.a` \n'
+        embed(banner1="The model is in the variable `x`", exit_msg="")
+        # # def start_ipython():
+        # #     embed()
+
+        # # Start IPython shell in a separate thread
+        # ipython_thread = threading.Thread(target=embed, daemon=True)
+        # ipython_thread.start()
+
+        
+        
