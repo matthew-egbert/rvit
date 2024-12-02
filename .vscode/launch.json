@@ -8,7 +8,7 @@
             "name": "Python Debugger: Current File",
             "type": "debugpy",
             "request": "launch",
-            "program": "docs_src/source/code_examples/tracker_2d/main.py",
+            "program": "docs_src/source/code_examples/tracker_3d/main.py",
             //"program": "docs_src/source/code_examples/line_renderer_3d/main.py",
             //"program": "docs_src/source/code_examples/sprite_renderer/main.py",
             //"program": "docs_src/source/code_examples/array_renderer/main.py",
