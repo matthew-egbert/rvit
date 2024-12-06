@@ -22,6 +22,7 @@ class SimpleRenderer3D(xyz_bounds,x_data,y_data,z_data,color1d_data,size_data,gr
         l,h = -1.0,1.0
 
     def update(self):
+        self.updateModelViewMatrix()
         if self.format_has_changed :
             self.loadShaders()
             self.format_has_changed = False

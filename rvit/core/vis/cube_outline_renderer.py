@@ -40,6 +40,7 @@ class CubeOutline(xyz_bounds,color):
 
 
     def update(self):
+        self.updateModelViewMatrix()
         if self.format_has_changed :
             self.shader_substitutions['attributes'].append('attribute float x;')
             self.shader_substitutions['attributes'].append('attribute float y;')
@@ -108,6 +109,7 @@ class CubeOutline(xyz_bounds,color):
         # self.render_context.add(self.cube_mesh)
 
         self.format_has_changed = True
+        
 
     def on_indices(self, inst, value):
         if value != '':

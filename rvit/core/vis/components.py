@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 import numpy as np
 from kivy.graphics.transformation import Matrix as KMatrix
-
+import time
 import glm ## opengl transformation matrix library
 
 # from data_sources import color1d_data
@@ -173,29 +173,38 @@ class xyz_bounds(xy_bounds) :
         dx = (self.pos[0]-w/2+(self.width/2))/(w/2)
         dy = (self.pos[1]-h/2+(self.height/2))/(h/2) 
 
-        ## rotates the target a bit to make 3D aspects easier to see
-        def iterate(arg):
-            wiggle_matrix = kivy.graphics.transformation.Matrix().identity()
-            k = 0.2#np.pi*2
-            wiggle_matrix.rotate(k*0.05*np.sin(xyz_bounds.timer_for_wiggle),
-                                 -1,0,0)
-            # wiggle_matrix.rotate(k*0.4*xyz_bounds.timer_for_wiggle,#np.cos(xyz_bounds.timer_for_wiggle),
-            #                      0,1,0)
-            wiggle_matrix.rotate(k*0.4*np.cos(xyz_bounds.timer_for_wiggle),
-                                 0,1,0)            
-            self.render_context['modelview_mat'] = m.multiply(wiggle_matrix)
+        # ## rotates the target a bit to make 3D aspects easier to see
+        # def iterate(arg):
+        #     wiggle_matrix = kivy.graphics.transformation.Matrix().identity()
+        #     k = 0.2#np.pi*2
+        #     wiggle_matrix.rotate(k*0.05*np.sin(xyz_bounds.timer_for_wiggle),
+        #                          -1,0,0)
+        #     # wiggle_matrix.rotate(k*0.4*xyz_bounds.timer_for_wiggle,#np.cos(xyz_bounds.timer_for_wiggle),
+        #     #                      0,1,0)
+        #     wiggle_matrix.rotate(k*0.4*np.cos(xyz_bounds.timer_for_wiggle),
+        #                          0,1,0)            
+        #     self.render_context['modelview_mat'] = m.multiply(wiggle_matrix)
 
-        def step_wobble_forward(arg) :
-            xyz_bounds.timer_for_wiggle+=0.1
+        # def step_wobble_forward(arg) :
+        #     xyz_bounds.timer_for_wiggle+=0.1
 
-        if not xyz_bounds.WOBBLE_ITERATOR_EXISTS :
-            xyz_bounds.WOBBLE_ITERATOR_EXISTS = True
-            # start a thread to call the iterate fn regularly
-            Clock.schedule_interval(step_wobble_forward,1.0/30.0)
+        # if not xyz_bounds.WOBBLE_ITERATOR_EXISTS :
+        #     xyz_bounds.WOBBLE_ITERATOR_EXISTS = True
+        #     # start a thread to call the iterate fn regularly
+        #     Clock.schedule_interval(step_wobble_forward,1.0/30.0)
             
-        Clock.schedule_interval(iterate,1.0/30.0)
+        # Clock.schedule_interval(iterate,1.0/30.0)
         
-        self.render_context['modelview_mat'] = m
+        # self.render_context['modelview_mat'] = m
+
+        ms = (time.time_ns()//1000000)
+        sec = ms / 1000
+        wiggle_matrix = kivy.graphics.transformation.Matrix().identity()        
+        # wiggle_matrix.rotate(0.2*0.05*np.sin(sec),
+        #                      -1,0,0)
+        wiggle_matrix.rotate(np.pi/16*np.cos(sec)+np.pi/16*sec,
+                             0,1,0)            
+        self.render_context['modelview_mat'] = m.multiply(wiggle_matrix)
         
 class color(RVIVisualizer):
     """Provides a single 4-tuple parameter [R,G,B,A] that can be used to
