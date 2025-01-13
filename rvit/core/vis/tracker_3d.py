@@ -164,7 +164,7 @@ class Tracker3D(xyz_bounds,color,gradient):
         if hasattr(self,'mesh'):
             self.render_context.remove(self.mesh)
         fmt =[(b'v_pos', 3, 'float')]
-        self.mesh = Mesh(mode='line_strip', fmt=fmt)
+        self.mesh = Mesh(mode='points', fmt=fmt)
         self.render_context.add(self.mesh)
 
 

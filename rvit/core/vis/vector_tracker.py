@@ -9,6 +9,7 @@ from kivy.graphics.opengl import *
 from rvit.core.configurable_property import ConfigurableProperty
 import rvit.core.glsl_utils as glsl_utils
 
+#from rvit.core.rvi_widget import rvi_annotated_exceptions
 from rvit.core.vis.simple_renderer import SimpleRenderer
 from rvit.core.vis.components import *
 from rvit.core.vis.data_sources import *
@@ -76,6 +77,7 @@ class VectorTracker(xy_bounds,color,gradient):
         np.save(open(inspection_dump_file, 'wb'), self._y)        
         self.launchInspector(inspection_dump_file)
 
+    #@rvi_annotated_exceptions
     def update(self):            
         self.clear_fbo()                
         if self.format_has_changed :

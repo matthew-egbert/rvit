@@ -8,7 +8,7 @@ from rvit.core.vis.data_sources import *
 import rvit.core.glsl_utils as glsl_utils
 import kivy.core.image as kci
 
-class SpriteRenderer(xy_bounds,x_data,y_data,rot_data,color1d_data,size_data,gradient):
+class SpriteRenderer(xy_bounds,color,x_data,y_data,rot_data,color1d_data,size_data,gradient):
     """The SpriteRenderer is used to display an image one or more
     times. It takes x,y and (optionally) rotation coordinates that
     specify the position of the image(s).
@@ -80,6 +80,10 @@ class SpriteRenderer(xy_bounds,x_data,y_data,rot_data,color1d_data,size_data,gra
         ## set the meshes shaders to the generated glsl code
         self.render_context.shader.vs = self.shaders['vs']
         self.render_context.shader.fs = self.shaders['fs']
+
+        print(self.shaders['vs'])
+        print(self.shaders['fs'])
+        
 
         ## replace any previous mesh with the new mesh
         if hasattr(self,'mesh'):

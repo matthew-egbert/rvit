@@ -27,9 +27,15 @@ mat2 rotate2d(float _angle){
 }
 
 
+vec3 hsv2rgb(vec3 c) {
+  vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+  vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+  return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
+
 void main() {
   {% if 'attribute float color1D;' in attributes %}
-  vec3 rgb = hsv2rgb(vec3(color1D,1.0,1.0));
+  vec3 rgb = hsv2rgb(vec3(0.5+color1D,1.0,1.0));
   frag_color = vec4(rgb,color.w) ;
   {% else %}
   frag_color = color;
@@ -47,7 +53,7 @@ void main() {
   float theta = 0.0;
   {% endif %}
 
-  frag_color = color * vec4(0.0, 1.0, 1.0, 0.5);
+  //frag_color = color;// * vec4(0.0, 1.0, 1.0, 0.5);
   vec2 v_pos = vec2(x,y);
   float ox = float(ll_ul_ur_lr > 1.0);
   float oy = float(ll_ul_ur_lr > 0.0 && ll_ul_ur_lr < 3.0);
@@ -76,8 +82,7 @@ uniform sampler2D texture0;
 
 void main (){
   vec4 t = texture2D(texture0, tex_coord0);
-  gl_FragColor = t;//vec4(t.r,t.g,t.b,1.0);
-  //gl_FragColor = vec4(0.0,1.0,0.0,1.0);//vec4(tex_coord0.x,tex_coord0.x,tex_coord0.y,1.0);
+  gl_FragColor = t*frag_color;
 }
 
 /* Local Variables: */

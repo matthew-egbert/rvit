@@ -200,8 +200,8 @@ class xyz_bounds(xy_bounds) :
         ms = (time.time_ns()//1000000)
         sec = ms / 1000
         wiggle_matrix = kivy.graphics.transformation.Matrix().identity()        
-        # wiggle_matrix.rotate(0.2*0.05*np.sin(sec),
-        #                      -1,0,0)
+        wiggle_matrix.rotate(np.pi/100*np.sin(sec),
+                             1,0,0)
         wiggle_matrix.rotate(np.pi/16*np.cos(sec)+np.pi/16*sec,
                              0,1,0)            
         self.render_context['modelview_mat'] = m.multiply(wiggle_matrix)

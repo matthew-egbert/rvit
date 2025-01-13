@@ -1,34 +1,60 @@
-import numpy as np
 import kivy.app
 from collections import defaultdict
-from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
-from kivy.uix.label import Label
-from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.stacklayout import StackLayout
-from kivy.properties import ObjectProperty, StringProperty, NumericProperty, OptionProperty, BooleanProperty, ListProperty
-from kivy.core.window import Window
-from kivy.graphics.transformation import Matrix
-from functools import partial
+from kivy.properties import StringProperty, BooleanProperty
 import os
 from kivy.graphics.context_instructions import *
-from kivy.graphics import RenderContext
-from kivy.clock import Clock
+from kivy.graphics.stencil_instructions import *
 
 import rvit.core
 from rvit.core.configurable_property import ConfigurableProperty
-from kivy.uix.stencilview import StencilView
-from kivy.uix.widget import Widget
-from kivy.graphics import Color, Rectangle
 
-from rvit.core import glsl_utils
-from kivy.graphics.stencil_instructions import *
+
+
+#from functools import wraps
+# def rvi_annotated_exceptions(method):
+#     @wraps(method)
+#     def _impl(self, *method_args, **method_kwargs):        
+#         #return method(self, *method_args, **method_kwargs)
+#         try: 
+#             return method(self, *method_args, **method_kwargs)
+#         except Exception as e:
+#             message = self.unique_name
+#             e.args = (f"{e.args[0]}\n{message}", *e.args[1:])
+#     return _impl
+
 
 class DataTargettingProperty(StringProperty):
     pass
+
+# def rvi_annotated_exceptions(func):
+#     def wrapper(*args, **kwargs):
+#         try:
+#             return func(*args, **kwargs)
+#         except Exception as e:
+#             # Append the custom message to the exception
+#             message = self.unique_name
+#             e.args = (f"{e.args[0]}\n{message}", *e.args[1:])
+#             raise
+#         return wrapper
+
+# def rvi_annotated_exceptions(num_rep):
+#     def decorator_rvi_annotated_exceptions(func):
+#         @functools.wraps(func)
+#         def wrapper_rvi_annotated_exceptions(*args, **kwargs):
+#             try:
+#                 return func(*args, **kwargs)
+#             except Exception as e:
+#                 # Append the custom message to the exception
+#                 message = args[num_rep].unique_name
+#                 e.args = (f"{e.args[0]}\n{message}", *e.args[1:])
+#                 raise
+#             return 
+#         return wrapper_rvi_annotated_exceptions
+#     return decorator_rvi_annotated_exceptions
 
 class RVIWidget(FloatLayout):
     """ Both visualizing and modifying widgets inherit from this class. """
@@ -156,7 +182,6 @@ class RVIWidget(FloatLayout):
         app = kivy.app.App.get_running_app()
         X = app.get_simulation()
 
-        import threading
         from IPython import embed
         banner =  'The model is in the variable `X` \n'
         banner += 'The specific widget data is in the variable `self.a` \n'

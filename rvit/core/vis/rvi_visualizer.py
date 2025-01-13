@@ -46,6 +46,7 @@ class CustomLabel(Label):
         self.bg_rect.size = self.size
         self.bg_rect.pos = self.pos
 
+
 class RVIVisualizer(RVIWidget):
     """All Visualizers have the following properties. """
 
@@ -118,7 +119,7 @@ class RVIVisualizer(RVIWidget):
 
         self.fbo_rect = Rectangle(size=(100,100), texture=self.fbo.texture)
         self.canvas.add(self.fbo)
-        self.canvas.add(self.fbo_rect)#.texture=self.fbo.texture
+        self.canvas.add(self.fbo_rect)
         
 
     def addControlBar(self):
