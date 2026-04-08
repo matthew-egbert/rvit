@@ -9,11 +9,11 @@
             "type": "debugpy",
             "request": "launch",
             //"program": "docs_src/source/code_examples/tracker_3d/main.py",
-            "program": "docs_src/source/code_examples/vector_tracker/main.py",
+            //"program": "docs_src/source/code_examples/vector_tracker/main.py",
             //"program": "docs_src/source/code_examples/line_renderer_3d/main.py",
             //"program": "docs_src/source/code_examples/sprite_renderer/main.py",
             //"program": "docs_src/source/code_examples/array_renderer/main.py",
-            //"program": "examples/kuramoto/main.py",
+            "program": "examples/kuramoto/main.py",
             "console": "integratedTerminal"
         }
     ]

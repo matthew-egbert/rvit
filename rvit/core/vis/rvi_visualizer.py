@@ -173,6 +173,7 @@ class RVIVisualizer(RVIWidget):
 
         ## add all created buttons to layout (i.e. display them all)
         self.add_widget(self.top_buttons)
+        self.on_show_controls(self, self.show_controls)
 
 
     def clear_fbo(self) :

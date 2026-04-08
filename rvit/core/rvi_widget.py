@@ -115,11 +115,12 @@ class RVIWidget(FloatLayout):
 
                 
     def on_show_controls(self, inst, value):
-        if value == True:
-            self.add_widget(self.top_buttons)
-        else:
-            if self.top_buttons in self.children:
-                self.remove_widget(self.top_buttons)
+        if not hasattr(self, 'top_buttons'):
+            return
+
+        self.top_buttons.opacity = 1.0 if value else 0.0
+        self.top_buttons.disabled = not value
+        self.top_buttons.height = rvit.core.BUTTON_BORDER_HEIGHT if value else 0
                 
 
     def reconnect(self):
