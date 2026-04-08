@@ -182,6 +182,7 @@ class RVIVisualizer(RVIWidget):
         self.fbo.release() 
 
     def update(self):
+        self.clear_fbo()
         pass
 
     def on_background_color(self,obj,value):

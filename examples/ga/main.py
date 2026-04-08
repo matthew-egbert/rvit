@@ -4,10 +4,10 @@ from kivy.config import Config
 if platform == 'linux':
     ratio = 2.0
     # w = 1920/2
-    w = 1500
+    w = 2000
     Config.set('graphics', 'width', str(int(w)))
     Config.set('graphics', 'height', str(int(w / 2)))
-    #Config.set('graphics', 'fullscreen', 'auto')
+    Config.set('graphics', 'fullscreen', 'auto')
 
 from kivy.app import App
 from kivy.uix.widget import Widget
@@ -42,7 +42,7 @@ class Model(object):
         self.lump_scale = 0.0
         self.gradient_scale = 0.1
         self.mutation_rate = 0.01
-        self.POP_SIZE = 50
+        self.POP_SIZE = 100
         self.deme_size = int(self.POP_SIZE / 2)
         self.its_per_frame = 1
         self.n_steps = 512

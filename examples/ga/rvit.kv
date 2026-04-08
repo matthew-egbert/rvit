@@ -2,6 +2,7 @@
 #:import ArrayRenderer rvit.core.vis.array_renderer
 #:import LineRenderer rvit.core.vis.line_renderer
 #:import PointRenderer rvit.core.vis.point_renderer
+#:import SpriteRenderer rvit.core.vis.sprite_renderer
 #:import VectorTracker rvit.core.vis.vector_tracker
 #:import VectorTracker rvit.core.vis.scalar_tracker
 #:import RVIButton rvit.core.int.rvi_button
@@ -22,14 +23,17 @@ FloatLayout:
     PointRenderer:
         x_data: 'genomes[:,0]'         # a DataSource
         y_data: 'genomes[:,1]'         # a DataSource
+        xmin: 0.0
+        xmax: 1.0
+        ymin: 0.0
+        ymax: 1.0
         pos_hint: {'x':0.0, 'y':0.0}
         size_hint:  (0.5,1.0)
-        point_size: 0.5
-        xmin: 0
-        ymin: 0
-        # secondary_varname: 'fitnesses'
-        show_controls: False
-        color: [1.0,0.1,1.0,0.9]  # parameter (from PointRenderer's
+        point_size: 1.0
+        color: [1.0,0.1,1.0,1.0]  
+        show_controls: True
+        #image: 'lightbulb.png'
+        # color: [1.0,0.1,1.0,1.0]  # parameter (from PointRenderer's
         unique_name: 'genomes' ## oddity: this has to come after everything else
     
     RVIButton:

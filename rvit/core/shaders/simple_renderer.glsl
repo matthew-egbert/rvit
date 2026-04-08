@@ -16,6 +16,11 @@ uniform mat4       modelview_mat;
 uniform mat4       projection_mat;
 uniform vec4       color;
 
+{% if uses_gradient == True %}
+uniform float      vmin; // scales gradient
+uniform float      vmax; // scales gradient
+{% endif %}
+
 {{ vertex_shader_functions | join('\n') }}
 
 vec3 hsv2rgb(vec3 c) {
@@ -23,7 +28,6 @@ vec3 hsv2rgb(vec3 c) {
   vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
   return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 }
-
 
 void main() {
   {% if 'attribute float color1D;' in attributes %}
@@ -39,7 +43,10 @@ void main() {
   gl_PointSize = {{point_size|default('1.0')}};
   {% endif %}
 
-  tex_coord0 = vec2(0,0);
+  {% if uses_gradient == True %}
+    tex_coord0 = vec2(0.0,(color1D-vmin)/(vmax-vmin));
+  {% endif %}
+
   vec2 v_pos = vec2(x,y);
   gl_Position = projection_mat * modelview_mat * vec4(v_pos.xy, 0.0, 1.0);
 }
@@ -54,11 +61,16 @@ void main() {
 varying vec4 frag_color;
 varying vec2 tex_coord0;
 
-void main (void){
-  float a = step(0.5,2.0*(0.5-distance(vec2(0.5,0.5),gl_PointCoord))) * frag_color.a;
-  // if(float(gl_PointCoord) == float(0.0)) {
-  //   a = frag_color.a;
-  // }
-  a += float(float(gl_PointCoord) == float(0.0)) * frag_color.a;
-  gl_FragColor = vec4(frag_color.rgb,a);
+/* uniform texture samplers */
+uniform sampler2D gradient_texture;
+
+void main (void){  
+  {% if uses_gradient == True %}
+    vec4 t = texture2D(gradient_texture, tex_coord0);
+    gl_FragColor = vec4(t.rgb,1.0);
+  {% else %}
+    float a = step(0.5,2.0*(0.5-distance(vec2(0.5,0.5),gl_PointCoord))) * frag_color.a;  
+    a += float(float(gl_PointCoord) == float(0.0)) * frag_color.a;
+    gl_FragColor = vec4(frag_color.rgb,a);
+  {% endif %}
 }

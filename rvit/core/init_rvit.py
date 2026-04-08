@@ -83,7 +83,7 @@ def init_rvit(model_object,rvit_string=None,rvit_file=None,window_size=(900,900)
     Either `rvit_file` or `rvit_string` must be provided. The former overrides the latter.
 
     """
-    import pkg_resources
+    #import pkg_resources
     from kivy import platform
     from kivy.config import Config
     
